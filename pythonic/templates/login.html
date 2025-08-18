@@ -1,0 +1,127 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8">
+            <div class="card shadow-lg border-0 my-5" style="border-radius: 0;">
+                <div class="card-header bg-white py-4 border-0 text-center">
+                    <div class="qc-logo mx-auto mb-3" style="width: 80px; height: 80px;">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="50" cy="50" r="45" fill="white" stroke="#8D6E63" stroke-width="2"/>
+                            <path d="M35,30 L65,30 L70,50 L65,70 L35,70 L30,50 Z" fill="#5D4037"/>
+                            <text x="50" y="58" font-family="Montserrat" font-size="36" font-weight="700" fill="#EFEBE9" text-anchor="middle" letter-spacing="1">α</text>
+                        </svg>
+                    </div>
+                    <h2 class="h3 mb-0">Accédez à votre espace</h2>
+                    <p class="text-muted mt-2">Connectez-vous pour gérer votre espace de travail</p>
+                </div>
+                
+                <div class="card-body px-5 py-4">
+                    <form method="POST" class="needs-validation" novalidate>
+                        {{ form.hidden_tag() }}
+                        
+                        <div class="mb-4">
+                            {{ form.email.label(class="form-label text-muted small mb-1") }}
+                            <div class="input-group">
+                                <span class="input-group-text bg-transparent" style="border-right: none;">
+                                    <i class="bi bi-envelope text-muted"></i>
+                                </span>
+                                {% if form.email.errors %}
+                                    {{ form.email(class="form-control form-control-lg is-invalid", style="border-left: none;") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.email.errors %}
+                                            <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.email(class="form-control form-control-lg", style="border-left: none;") }}
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            {{ form.password.label(class="form-label text-muted small mb-1") }}
+                            <div class="input-group">
+                                <span class="input-group-text bg-transparent" style="border-right: none;">
+                                    <i class="bi bi-lock text-muted"></i>
+                                </span>
+                                {% if form.password.errors %}
+                                    {{ form.password(class="form-control form-control-lg is-invalid", style="border-left: none;") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.password.errors %}
+                                            <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.password(class="form-control form-control-lg", style="border-left: none;") }}
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <div class="form-check">
+                                {{ form.remember(class="form-check-input", style="border-color: var(--marron-clair);") }}
+                                {{ form.remember.label(class="form-check-label small text-muted") }}
+                            </div>
+                            <a href="{{ url_for('users.reset_request') }}" class="small text-decoration-none" style="color: var(--marron-clair);">Mot de passe oublié ?</a>
+                        </div>
+                        
+                        <div class="d-grid mb-4">
+                            {{ form.submit(class="btn btn-primary btn-lg text-uppercase py-3", style="letter-spacing: 1px;") }}
+                        </div>
+                        
+                        <div class="text-center pt-3 border-top">
+                            <p class="small text-muted mb-2">Vous n'avez pas encore de compte ?</p>
+                            <a href="{{ url_for('users.register') }}" class="btn btn-outline-primary px-4">
+                                Créer un compte
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        border: 1px solid rgba(141, 110, 99, 0.15);
+        overflow: hidden;
+    }
+    
+    .card-header {
+        background-color: var(--beige-clair);
+    }
+    
+    .form-control {
+        border-radius: 0;
+        border-color: rgba(141, 110, 99, 0.3);
+        padding: 12px 15px;
+        transition: all 0.3s ease;
+    }
+    
+    .form-control:focus {
+        box-shadow: none;
+        border-color: var(--marron-clair);
+    }
+    
+    .input-group-text {
+        border-color: rgba(141, 110, 99, 0.3);
+        background-color: var(--beige-clair);
+        color: var(--marron-clair);
+    }
+    
+    .btn-outline-primary {
+        border-width: 2px;
+    }
+    
+    .invalid-feedback {
+        font-size: 0.85rem;
+    }
+    
+    .form-check-input:checked {
+        background-color: var(--marron-dore);
+        border-color: var(--marron-dore);
+    }
+</style>
+{% endblock content %}

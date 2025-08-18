@@ -1,0 +1,1476 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<!-- Hero Section (inchangé) -->
+<section class="hero-section bg-light" aria-labelledby="hero-heading">
+  <div class="container py-5">
+    <div class="row align-items-center">
+      <div class="col-lg-6 order-lg-1 order-2">
+        <h1 id="hero-heading" class="display-4 fw-bold mb-4">Votre espace de travail <span class="text-primary">sur-mesure</span></h1>
+        <p class="lead mb-4">Découvrez nos espaces de coworking modernes et flexibles. Réservez en quelques clics l'espace parfait pour votre productivité.</p>
+        <div class="d-flex gap-3">
+          <a href="#booking" class="btn btn-primary btn-lg px-4" aria-label="Réserver un espace maintenant">Réserver maintenant</a>
+          <a href="#spaces" class="btn btn-outline-primary btn-lg px-4" aria-label="Découvrir nos espaces de coworking">Découvrir nos espaces</a>
+        </div>
+      </div>
+      <div class="col-lg-6 order-lg-2 order-1 mb-4 mb-lg-0">
+        <img src="{{url_for('static', filename='thumb.jpg')}}" 
+             class="img-fluid rounded shadow-lg" 
+             alt="Espace de coworking lumineux avec des postes de travail modernes"
+             loading="lazy"
+             width="800"
+             height="600">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Features Section (inchangé) -->
+<section class="py-5 bg-white" aria-labelledby="features-heading">
+  <div class="container">
+    <h2 id="features-heading" class="visually-hidden">Nos avantages</h2>
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-3">
+        <div class="p-4 rounded-3 border h-100">
+          <div class="feature-icon mb-3">
+            <i class="bi bi-calendar-check fs-1 text-primary" aria-hidden="true"></i>
+          </div>
+          <h3 class="h4">Réservation facile</h3>
+          <p class="mb-0">Réservez en ligne en quelques clics</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3">
+        <div class="p-4 rounded-3 border h-100">
+          <div class="feature-icon mb-3">
+            <i class="bi bi-arrows-angle-contract fs-1 text-primary" aria-hidden="true"></i>
+          </div>
+          <h3 class="h4">Espaces flexibles</h3>
+          <p class="mb-0">Adaptés à tous vos besoins</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3">
+        <div class="p-4 rounded-3 border h-100">
+          <div class="feature-icon mb-3">
+            <i class="bi bi-wifi fs-1 text-primary" aria-hidden="true"></i>
+          </div>
+          <h3 class="h4">Wi-Fi ultra rapide</h3>
+          <p class="mb-0">Fibre optique 1Gb/s</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3">
+        <div class="p-4 rounded-3 border h-100">
+          <div class="feature-icon mb-3">
+            <i class="bi bi-clock fs-1 text-primary" aria-hidden="true"></i>
+          </div>
+          <h3 class="h4">Accès 24h/24</h3>
+          <p class="mb-0">Accès sécurisé à toute heure</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Workspace Section (modifié) -->
+
+<section id="spaces" class="py-5 bg-light" aria-labelledby="spaces-heading">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 id="spaces-heading" class="fw-bold">Nos Espaces de Travail</h2>
+      <p class="lead">Choisissez l'espace qui correspond parfaitement à vos besoins</p>
+    </div>
+    
+    <div class="row g-4 align-items-stretch">
+      <!-- Bureau Privé -->
+      <div class="col-lg-4">
+        <article class="card h-100 border-0 shadow-sm">
+          <div class="position-relative">
+            <img src="{{ url_for('static', filename='post1.jpg') }}" 
+                 class="card-img-top" 
+                 alt="Bureau privé moderne"
+                 loading="lazy"
+                 style="height: 200px; object-fit: cover;">
+          </div>
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h3 class="h4 card-title mb-0">Bureau Privé</h3>
+              <span class="badge bg-light text-dark">1 personne</span>
+            </div>
+            <p class="card-text">Espace de travail privé et silencieux pour une productivité maximale.</p>
+            <ul class="list-group list-group-flush mb-3">
+              <li class="list-group-item d-flex align-items-center">
+                <i class="bi bi-check-circle-fill text-success me-2" aria-hidden="true"></i>
+                Wi-Fi haut débit
+              </li>
+              <li class="list-group-item d-flex align-items-center">
+                <i class="bi bi-check-circle-fill text-success me-2" aria-hidden="true"></i>
+                Climatisation individuelle
+              </li>
+              <li class="list-group-item d-flex align-items-center">
+                <i class="bi bi-check-circle-fill text-success me-2" aria-hidden="true"></i>
+                Casier sécurisé
+              </li>
+            </ul>
+          </div>
+          <div class="card-footer bg-white border-0">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <div>
+                <span class="h5">30dh/h</span>
+                <span class="text-muted" aria-hidden="true"> | </span>
+                <span class="h5">300dh/mois</span>
+              </div>
+            </div>
+            <a href="#booking" class="btn btn-primary w-100" aria-label="Réserver un Bureau Privé">Réserver maintenant</a>
+          </div>
+        </article>
+      </div>
+      
+      <!-- Open Space -->
+      <div class="col-lg-4">
+        <article class="card h-100 border-0 shadow-sm">
+          <div class="position-relative">
+            <img src="{{ url_for('static', filename='post2.jpg') }}" 
+                 class="card-img-top" 
+                 alt="Open space collaboratif"
+                 loading="lazy"
+                 style="height: 200px; object-fit: cover;">
+          </div>
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h3 class="h4 card-title mb-0">Open Space</h3>
+              <span class="badge bg-light text-dark">Promo</span>
+            </div>
+            <p class="card-text">Espace collaboratif dynamique pour les travailleurs indépendants et petites équipes.</p>
+            <ul class="list-group list-group-flush mb-3">
+              <li class="list-group-item d-flex align-items-center">
+                <i class="bi bi-check-circle-fill text-success me-2" aria-hidden="true"></i>
+                Wi-Fi ultra rapide
+              </li>
+              <li class="list-group-item d-flex align-items-center">
+                <i class="bi bi-check-circle-fill text-success me-2" aria-hidden="true"></i>
+                Accès 24/7
+              </li>
+              <li class="list-group-item d-flex align-items-center">
+                <i class="bi bi-check-circle-fill text-success me-2" aria-hidden="true"></i>
+                Café gratuit
+              </li>
+            </ul>
+          </div>
+          <div class="card-footer bg-white border-0">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <div>
+                <span class="h5">30dh/jour</span>
+                <span class="text-muted" aria-hidden="true"> | </span>
+                <span class="h5">700dh/mois</span>
+              </div>
+            </div>
+            <a href="#booking" class="btn btn-primary w-100" aria-label="Réserver l'Open Space">Réserver maintenant</a>
+          </div>
+        </article>
+      </div>
+      
+      <!-- Salle de Réunion -->
+      <div class="col-lg-4">
+        <article class="card h-100 border-0 shadow-sm d-flex flex-column">
+          <div class="position-relative flex-grow-0">
+            <div id="meetingRoomImageCarousel" class="carousel slide" style="height: 200px;">
+              <div class="carousel-inner h-100">
+                <div class="carousel-item active h-100">
+                  <img src="{{ url_for('static', filename='post1.jpg') }}" 
+                       class="d-block w-100 h-100" 
+                       alt="Petite salle de réunion pour 8 personnes"
+                       style="object-fit: cover;">
+                </div>
+                <div class="carousel-item h-100">
+                  <img src="{{ url_for('static', filename='post2.jpg') }}" 
+                       class="d-block w-100 h-100" 
+                       alt="Salle de réunion moyenne pour 15 personnes"
+                       style="object-fit: cover;">
+                </div>
+                <div class="carousel-item h-100">
+                  <img src="{{ url_for('static', filename='post3.jpg') }}" 
+                       class="d-block w-100 h-100" 
+                       alt="Grande salle de réunion pour 23 personnes"
+                       style="object-fit: cover;">
+                </div>
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#meetingRoomMaster" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#meetingRoomMaster" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>
+          </div>
+          <div class="card-body flex-grow-1">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h3 class="h4 card-title mb-0">Salle de Réunion</h3>
+              <span class="badge bg-light text-dark">8-23 personnes</span>
+            </div>
+            <p class="card-text">Espace professionnel pour vos réunions, présentations et formations.</p>
+            
+            <div id="meetingRoomCarousel" class="carousel slide mb-3" style="height: 180px;">
+              <div class="carousel-inner h-100">
+                <div class="carousel-item active h-100">
+                  <h5 class="h6">8 personnes</h5>
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex align-items-center">
+                      <i class="bi bi-check-circle-fill text-success me-2" aria-hidden="true"></i>
+                      Écran tactile 55"
+                    </li>
+                    <li class="list-group-item d-flex align-items-center">
+                      <i class="bi bi-check-circle-fill text-success me-2" aria-hidden="true"></i>
+                      50dh/h
+                    </li>
+                    <li class="list-group-item d-flex align-items-center">
+                      <i class="bi bi-check-circle-fill text-success me-2" aria-hidden="true"></i>
+                      5000dh/mois
+                    </li>
+                  </ul>
+                </div>
+                <div class="carousel-item h-100">
+                  <h5 class="h6">15 personnes</h5>
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex align-items-center">
+                      <i class="bi bi-check-circle-fill text-success me-2" aria-hidden="true"></i>
+                      Écran tactile 75" + vidéoprojecteur
+                    </li>
+                    <li class="list-group-item d-flex align-items-center">
+                      <i class="bi bi-check-circle-fill text-success me-2" aria-hidden="true"></i>
+                      100dh/h
+                    </li>
+                    <li class="list-group-item d-flex align-items-center">
+                      <i class="bi bi-check-circle-fill text-success me-2" aria-hidden="true"></i>
+                      6500dh/mois
+                    </li>
+                  </ul>
+                </div>
+                <div class="carousel-item h-100">
+                  <h5 class="h6">23 personnes</h5>
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex align-items-center">
+                      <i class="bi bi-check-circle-fill text-success me-2" aria-hidden="true"></i>
+                      Écran tactile 85" + système audio
+                    </li>
+                    <li class="list-group-item d-flex align-items-center">
+                      <i class="bi bi-check-circle-fill text-success me-2" aria-hidden="true"></i>
+                      150dh/h
+                    </li>
+                    <li class="list-group-item d-flex align-items-center">
+                      <i class="bi bi-check-circle-fill text-success me-2" aria-hidden="true"></i>
+                      8000dh/mois
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer bg-white border-0">
+            <a href="#booking" class="btn btn-primary w-100" aria-label="Réserver une Salle de Réunion">Réserver maintenant</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+/* Styles pour les boutons de navigation dans l'image */
+#meetingRoomImageCarousel .carousel-control-prev,
+#meetingRoomImageCarousel .carousel-control-next {
+  width: 30px;
+  height: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 50%;
+}
+#meetingRoomImageCarousel .carousel-control-prev {
+  left: 10px;
+}
+#meetingRoomImageCarousel .carousel-control-next {
+  right: 10px;
+}
+
+/* Ajustement pour le contenu des carrousels */
+#meetingRoomCarousel .carousel-item {
+  padding: 5px;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Configuration du défilement automatique (5 secondes)
+  const intervalTime = 5000;
+  let carouselInterval;
+  
+  // Initialiser les carrousels
+  const textCarousel = new bootstrap.Carousel(document.getElementById('meetingRoomCarousel'), {
+    interval: false,
+    wrap: true
+  });
+  
+  const imageCarousel = new bootstrap.Carousel(document.getElementById('meetingRoomImageCarousel'), {
+    interval: false,
+    wrap: true
+  });
+
+  // Fonction pour synchroniser les carrousels
+  const syncCarousels = (toIndex) => {
+    textCarousel.to(toIndex);
+    imageCarousel.to(toIndex);
+  };
+
+  // Écouter les événements de slide
+  document.getElementById('meetingRoomCarousel').addEventListener('slide.bs.carousel', function(event) {
+    syncCarousels(event.to);
+    resetInterval();
+  });
+
+  // Gérer les boutons de navigation
+  document.querySelectorAll('[data-bs-target="#meetingRoomMaster"]').forEach(button => {
+    button.addEventListener('click', function(e) {
+      e.preventDefault();
+      const direction = this.getAttribute('data-bs-slide');
+      
+      if (direction === 'prev') {
+        textCarousel.prev();
+        imageCarousel.prev();
+      } else {
+        textCarousel.next();
+        imageCarousel.next();
+      }
+      
+      resetInterval();
+    });
+  });
+
+  // Fonction pour réinitialiser l'intervalle
+  function resetInterval() {
+    clearInterval(carouselInterval);
+    carouselInterval = setInterval(() => {
+      textCarousel.next();
+      imageCarousel.next();
+    }, intervalTime);
+  }
+
+  // Démarrer l'intervalle initial
+  resetInterval();
+
+  // Pause au survol
+  const carouselContainer = document.querySelector('#meetingRoomImageCarousel');
+  carouselContainer.addEventListener('mouseenter', () => {
+    clearInterval(carouselInterval);
+  });
+  carouselContainer.addEventListener('mouseleave', resetInterval);
+});
+</script>
+
+<!-- Booking Section - Formulaire Ultra Pro -->
+<section id="booking" class="py-5 bg-white" aria-labelledby="booking-heading">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 id="booking-heading" class="fw-bold display-5 mb-3">Formulaire de Réservation Premium</h2>
+      <p class="lead text-muted">Remplissez ce formulaire détaillé pour une réservation sur mesure</p>
+    </div>
+    
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <div class="bg-light p-4 p-lg-5 rounded-4 shadow-sm">
+          <!-- Indicateur d'étapes -->
+          <ul class="nav nav-pills nav-justified mb-5" id="bookingSteps" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" id="step1-tab" data-bs-toggle="pill" data-bs-target="#step1" type="button" role="tab">
+                <span class="step-number">1</span> Type
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="step2-tab" data-bs-toggle="pill" data-bs-target="#step2" type="button" role="tab" disabled>
+                <span class="step-number">2</span> Espace
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="step3-tab" data-bs-toggle="pill" data-bs-target="#step3" type="button" role="tab" disabled>
+                <span class="step-number">3</span> Dates
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="step4-tab" data-bs-toggle="pill" data-bs-target="#step4" type="button" role="tab" disabled>
+                <span class="step-number">4</span> Infos
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="step5-tab" data-bs-toggle="pill" data-bs-target="#step5" type="button" role="tab" disabled>
+                <span class="step-number">5</span> Paiement
+              </button>
+            </li>
+          </ul>
+          
+          <form id="premiumBookingForm" method="POST" action="{{ url_for('reservation.booking_form') }}" novalidate>
+            <div class="tab-content" id="bookingStepsContent">
+              <!-- Étape 1: Type de Réservation -->
+              <div class="tab-pane fade show active" id="step1" role="tabpanel" aria-labelledby="step1-tab">
+                <h3 class="h4 mb-4 border-bottom pb-2">Type de Réservation</h3>
+                <div class="row g-4">
+                  <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm hover-effect">
+                      <div class="card-body text-center">
+                        <i class="bi bi-clock-history fs-1 text-primary mb-3"></i>
+                        <h4 class="h5">À l'heure</h4>
+                        <p class="text-muted small">Flexibilité maximale</p>
+                        <div class="form-check d-flex justify-content-center">
+                          <input class="form-check-input" type="radio" name="bookingType" id="hourlyBooking" value="hourly" checked>
+                          <label class="form-check-label ms-2" for="hourlyBooking">
+                            Choix par heure
+                          </label>
+                          <input type="hidden" name="totalPrice" id="totalPrice" value="">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm hover-effect">
+                      <div class="card-body text-center">
+                        <i class="bi bi-calendar-day fs-1 text-primary mb-3"></i>
+                        <h4 class="h5">À la journée</h4>
+                        <p class="text-muted small">Accès journée complète</p>
+                        <div class="form-check d-flex justify-content-center">
+                          <input class="form-check-input" type="radio" name="bookingType" id="dailyBooking" value="daily">
+                          <label class="form-check-label ms-2" for="dailyBooking">
+                            Choix par jour
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm hover-effect">
+                      <div class="card-body text-center">
+                        <i class="bi bi-calendar-month fs-1 text-primary mb-3"></i>
+                        <h4 class="h5">Au mois</h4>
+                        <p class="text-muted small">Solution économique</p>
+                        <div class="form-check d-flex justify-content-center">
+                          <input class="form-check-input" type="radio" name="bookingType" id="monthlyBooking" value="monthly">
+                          <label class="form-check-label ms-2" for="monthlyBooking">
+                            Choix par mois
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="d-flex justify-content-between mt-5">
+                  <button type="button" class="btn btn-secondary" disabled>Précédent</button>
+                  <button type="button" class="btn btn-primary next-step" data-next="#step2">Suivant</button>
+                </div>
+              </div>
+              
+              <!-- Étape 2: Sélection de l'Espace -->
+              <div class="tab-pane fade" id="step2" role="tabpanel" aria-labelledby="step2-tab">
+                <h3 class="h4 mb-4 border-bottom pb-2">Sélection de l'Espace</h3>
+                <div class="row g-4">
+                  <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm hover-effect">
+                      <div class="card-body">
+                        <h4 class="h5">Bureau Privé</h4>
+                        <ul class="list-unstyled text-muted small mb-3">
+                          <li class="mb-1"><i class="bi bi-person-fill me-2"></i> 1 personne</li>
+                          <li class="mb-1"><i class="bi bi-wifi me-2"></i> Wi-Fi haut débit</li>
+                          <li><i class="bi bi-lock-fill me-2"></i> Espace privé</li>
+                        </ul>
+                        <div class="form-check">
+                          <input class="form-check-input" type="radio" name="spaceType" id="privateOffice" value="private" checked data-price-hourly="50" data-price-daily="300" data-price-monthly="2000">
+                          <label class="form-check-label" for="privateOffice">
+                            Sélectionner
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm hover-effect">
+                      <div class="card-body">
+                        <h4 class="h5">Open Space</h4>
+                        <ul class="list-unstyled text-muted small mb-3">
+                          <li class="mb-1"><i class="bi bi-people-fill me-2"></i> Espace partagé</li>
+                          <li class="mb-1"><i class="bi bi-cup-hot-fill me-2"></i> Café gratuit</li>
+                          <li><i class="bi bi-clock-fill me-2"></i> Accès 24/7</li>
+                        </ul>
+                        <div class="form-check">
+                          <input class="form-check-input" type="radio" name="spaceType" id="openSpace" value="open" data-price-hourly="30" data-price-daily="200" data-price-monthly="1500">
+                          <label class="form-check-label" for="openSpace">
+                            Sélectionner
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm hover-effect">
+                      <div class="card-body">
+                        <h4 class="h5">Salle de Réunion</h4>
+                        <ul class="list-unstyled text-muted small mb-3">
+                          <li class="mb-1"><i class="bi bi-person-video3 me-2"></i> 8-23 personnes</li>
+                          <li class="mb-1"><i class="bi bi-tv-fill me-2"></i> Équipement pro</li>
+                          <li><i class="bi bi-collection-play-fill me-2"></i> Vidéoconférence</li>
+                        </ul>
+                        <div class="form-check">
+                          <input class="form-check-input" type="radio" name="spaceType" id="meetingRoom" value="meeting" data-price-hourly="50" data-price-daily="400" data-price-monthly="3000">
+                          <label class="form-check-label" for="meetingRoom">
+                            Sélectionner
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Options supplémentaires pour la salle de réunion -->
+                <div class="mt-4" id="meetingRoomOptions" style="display: none;">
+                  <h5 class="h6 mb-3">Options de la Salle de Réunion</h5>
+                  <div class="row g-3">
+                    <div class="col-md-6">
+                      <label for="meetingCapacity" class="form-label">Capacité</label>
+                      <select class="form-select" id="meetingCapacity">
+                        <option value="8" data-price-hourly="50" data-price-daily="400" data-price-monthly="3000">8 personnes (50dh/h)</option>
+                        <option value="15" data-price-hourly="100" data-price-daily="600" data-price-monthly="4500">15 personnes (100dh/h)</option>
+                        <option value="23" data-price-hourly="150" data-price-daily="800" data-price-monthly="6000">23 personnes (150dh/h)</option>
+                      </select>
+                    </div>
+                    <div class="col-md-6">
+                      <label for="equipmentNeeds" class="form-label">Équipement supplémentaire</label>
+                      <select class="form-select" id="equipmentNeeds" name="equipmentNeeds" multiple>
+                        <option value="projector" data-price="50">Vidéoprojecteur (+50dh)</option>
+                        <option value="whiteboard" data-price="100">Tableau blanc interactif (+100dh)</option>
+                        <option value="catering" data-price="200">Service de restauration (+200dh)</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="d-flex justify-content-between mt-5">
+                  <button type="button" class="btn btn-secondary prev-step" data-prev="#step1">Précédent</button>
+                  <button type="button" class="btn btn-primary next-step" data-next="#step3">Suivant</button>
+                </div>
+              </div>
+              
+              <!-- Étape 3: Dates et Horaires -->
+              <div class="tab-pane fade" id="step3" role="tabpanel" aria-labelledby="step3-tab">
+                <h3 class="h4 mb-4 border-bottom pb-2">Dates et Horaires</h3>
+                <div class="row g-4">
+                  <div class="col-md-6">
+                    <div class="card h-100 border-0 shadow-sm">
+                      <div class="card-body">
+                        <h5 class="h6 mb-3">Période de réservation</h5>
+                        
+                        <!-- Champ de date pour réservation à l'heure -->
+                        <div id="hourlyFields">
+                          <div class="mb-3">
+                            <label for="hourlyDate" class="form-label">Date <span class="text-danger">*</span></label>
+                            <input type="date" class="form-control" id="hourlyDate" name="hourlyDate" required>
+                          </div>
+                          <div class="row g-3">
+                            <div class="col-md-6">
+                              <label for="startTime" class="form-label">Heure de début <span class="text-danger">*</span></label>
+                              <input type="time" class="form-control" id="startTime" name="startTime" required>
+                            </div>
+                            <div class="col-md-6">
+                              <label for="endTime" class="form-label">Heure de fin <span class="text-danger">*</span></label>
+                              <input type="time" class="form-control" id="endTime" name="endTime" required>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <!-- Champ de date pour réservation à la journée -->
+                        <div id="dailyFields" style="display: none;">
+                          <div class="mb-3">
+                            <label for="dailyStartDate" class="form-label">Date de début <span class="text-danger">*</span></label>
+                            <input type="date" class="form-control" id="dailyStartDate" name="dailyStartDate" required>
+                          </div>
+                          <div class="mb-3">
+                            <label for="dailyEndDate" class="form-label">Date de fin <span class="text-danger">*</span></label>
+                            <input type="date" class="form-control" id="dailyEndDate" name="dailyEndDate" required>
+                          </div>
+                        </div>
+                        
+                        <!-- Champ de date pour réservation mensuelle -->
+                        <div id="monthlyFields" style="display: none;">
+                          <div class="mb-3">
+                            <label for="monthlyStartDate" class="form-label">Date de début <span class="text-danger">*</span></label>
+                            <input type="date" class="form-control" id="monthlyStartDate" name="monthlyStartDate" required>
+                          </div>
+                          <div class="mb-3">
+                            <label for="monthlyDuration" class="form-label">Durée <span class="text-danger">*</span></label>
+                            <select class="form-select" id="monthlyDuration" name="monthlyDuration" required>
+                              <option value="1">1 mois</option>
+                              <option value="3">3 mois (-5%)</option>
+                              <option value="6">6 mois (-10%)</option>
+                              <option value="12">12 mois (-15%)</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="card h-100 border-0 shadow-sm">
+                      <div class="card-body">
+                        <h5 class="h6 mb-3">Récapitulatif des tarifs</h5>
+                        <div class="table-responsive">
+                          <table class="table table-borderless">
+                            <tbody>
+                              <tr>
+                                <td class="text-muted">Type de réservation</td>
+                                <td class="text-end" id="priceType">À l'heure</td>
+                              </tr>
+                              <tr>
+                                <td class="text-muted">Espace sélectionné</td>
+                                <td class="text-end" id="priceSpace">Bureau Privé</td>
+                              </tr>
+                              <tr>
+                                <td class="text-muted">Durée</td>
+                                <td class="text-end" id="priceDuration">0h</td>
+                              </tr>
+                              <tr>
+                                <td class="text-muted">Options</td>
+                                <td class="text-end" id="priceOptions">-</td>
+                              </tr>
+                              <tr class="border-top">
+                                <td class="fw-bold">Total estimé</td>
+                                <td class="text-end fw-bold text-primary" id="priceTotal">0dh</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="alert alert-info mt-3">
+                          <i class="bi bi-info-circle me-2"></i> Le prix final sera confirmé après validation de votre demande.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="d-flex justify-content-between mt-5">
+                  <button type="button" class="btn btn-secondary prev-step" data-prev="#step2">Précédent</button>
+                  <button type="button" class="btn btn-primary next-step" data-next="#step4">Suivant</button>
+                </div>
+              </div>
+              
+              <!-- Étape 4: Informations Personnelles -->
+              <div class="tab-pane fade" id="step4" role="tabpanel" aria-labelledby="step4-tab">
+                <h3 class="h4 mb-4 border-bottom pb-2">Informations Personnelles</h3>
+                <div class="row g-4">
+                  <div class="col-md-6">
+                    <div class="mb-3">
+                      <label for="fullName" class="form-label">Nom complet <span class="text-danger">*</span></label>
+                      <input type="text" class="form-control" id="fullName" name="fullName" required>
+                    </div>
+                    <div class="mb-3">
+                      <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                      <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                    <div class="mb-3">
+                      <label for="phone" class="form-label">Téléphone <span class="text-danger">*</span></label>
+                      <input type="tel" class="form-control" id="phone" name="phone" required>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="mb-3">
+                      <label for="company" class="form-label">Entreprise</label>
+                      <input type="text" class="form-control" id="company" name="company">
+                    </div>
+                    <div class="mb-3">
+                      <label for="notes" class="form-label">Demandes spéciales</label>
+                      <textarea class="form-control" id="notes" rows="3" name="notes"></textarea>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="d-flex justify-content-between mt-5">
+                  <button type="button" class="btn btn-secondary prev-step" data-prev="#step3">Précédent</button>
+                  <button type="button" class="btn btn-primary next-step" data-next="#step5">Suivant</button>
+                </div>
+              </div>
+              
+              <!-- Étape 5: Paiement et Conditions -->
+              <div class="tab-pane fade" id="step5" role="tabpanel" aria-labelledby="step5-tab">
+                <h3 class="h4 mb-4 border-bottom pb-2">Paiement et Conditions</h3>
+                <div class="mb-3">
+                  <label for="paymentMethod" class="form-label">Méthode de paiement <span class="text-danger">*</span></label>
+                  <select class="form-select" id="paymentMethod" name="paymentMethod" required>
+                    <option value="" selected disabled>Sélectionner</option>
+                    <option value="credit">Carte de crédit</option>
+                    <option value="transfer">Virement bancaire</option>
+                    <option value="cash">Espèces (sur place)</option>
+                  </select>
+                </div>
+                
+                <div class="form-check mb-3">
+                  <input class="form-check-input" type="checkbox" id="termsCheck" name="termsCheck" required>
+                  <label class="form-check-label" for="termsCheck">
+                    J'accepte les <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">conditions générales</a> <span class="text-danger">*</span>
+                  </label>
+                </div>
+                
+                <div class="form-check mb-3">
+                  <input class="form-check-input" type="checkbox" id="newsletterCheck" name="newsletterCheck">
+                  <label class="form-check-label" for="newsletterCheck">
+                    Je souhaite recevoir les offres promotionnelles par email
+                  </label>
+                </div>
+                
+                <div class="d-flex justify-content-between mt-5">
+                  <button type="button" class="btn btn-secondary prev-step" data-prev="#step4">Précédent</button>
+                  <button type="submit" class="btn btn-success">
+                    <i class="bi bi-check-circle me-2"></i> Confirmer la réservation
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Modal des Conditions Générales -->
+<div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="termsModalLabel">Conditions Générales de Réservation</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Contenu des conditions générales -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .step-number {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 50%;
+    background-color: #e9ecef;
+    margin-right: 8px;
+    text-align: center;
+  }
+  
+  .nav-pills .nav-link.active .step-number {
+    background-color: #0d6efd;
+    color: white;
+  }
+  
+  .nav-pills .nav-link:not(.active) {
+    color: #6c757d;
+  }
+  
+  .hover-effect:hover {
+    transform: translateY(-5px);
+    transition: transform 0.3s ease;
+  }
+  /* Couleur des étapes inactives */
+.nav-pills .nav-link {
+  color: #6c757d; /* gris par défaut */
+  border: 1px solid transparent;
+}
+
+/* Étape active = marron */
+.nav-pills .nav-link.active {
+  background-color: #8B4513 !important; /* marron */
+  color: #fff !important;
+}
+
+/* Cercle avec numéro = marron quand actif */
+.nav-pills .nav-link.active .step-number {
+  background-color: #5c3310 !important; /* marron plus foncé */
+  color: #fff !important;
+}
+
+/* Étapes non actives (cercles gris) */
+.step-number {
+  background-color: #e9ecef;
+  color: #6c757d;
+  transition: all 0.3s ease;
+}
+
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Gestion des étapes
+  const nextButtons = document.querySelectorAll('.next-step');
+  const prevButtons = document.querySelectorAll('.prev-step');
+  const navLinks = document.querySelectorAll('.nav-link');
+  const tabPanes = document.querySelectorAll('.tab-pane');
+
+  // Activer/désactiver les onglets
+  function updateTabStatus() {
+    const activePane = document.querySelector('.tab-pane.active');
+    const currentStep = activePane ? activePane.id : 'step1';
+    
+    navLinks.forEach(link => {
+      const tabId = link.id.replace('-tab', '');
+      if (tabId === currentStep) {
+        link.classList.add('active');
+        link.removeAttribute('disabled');
+      } else {
+        link.classList.remove('active');
+        // Désactiver seulement les onglets suivants, pas précédents
+        if (parseInt(tabId.replace('step', '')) > parseInt(currentStep.replace('step', ''))) {
+          link.setAttribute('disabled', 'disabled');
+        } else {
+          link.removeAttribute('disabled');
+        }
+      }
+    });
+  }
+
+  nextButtons.forEach(button => {
+    button.addEventListener('click', function(e) {
+      e.preventDefault();
+      const nextStep = this.getAttribute('data-next');
+      
+      // Validation avant de passer à l'étape suivante
+      if (!validateCurrentStep(this.closest('.tab-pane').id)) {
+        return;
+      }
+
+      // Activer l'onglet et contenu suivant
+      document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active', 'show'));
+      document.querySelector(nextStep).classList.add('active', 'show');
+      
+      updateTabStatus();
+      calculatePrice();
+    });
+  });
+
+  prevButtons.forEach(button => {
+    button.addEventListener('click', function(e) {
+      e.preventDefault();
+      const prevStep = this.getAttribute('data-prev');
+
+      // Activer l'onglet et contenu précédent
+      document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active', 'show'));
+      document.querySelector(prevStep).classList.add('active', 'show');
+      
+      updateTabStatus();
+    });
+  });
+
+  // Validation de l'étape courante
+  function validateCurrentStep(stepId) {
+    let isValid = true;
+    
+    if (stepId === 'step1') {
+      if (!document.querySelector('input[name="bookingType"]:checked')) {
+        alert('Veuillez sélectionner un type de réservation');
+        isValid = false;
+      }
+    } else if (stepId === 'step2') {
+      if (!document.querySelector('input[name="spaceType"]:checked')) {
+        alert('Veuillez sélectionner un type d\'espace');
+        isValid = false;
+      }
+    } else if (stepId === 'step3') {
+      const bookingType = document.querySelector('input[name="bookingType"]:checked').value;
+      
+      if (bookingType === 'hourly') {
+        if (!document.getElementById('hourlyDate').value || 
+            !document.getElementById('startTime').value || 
+            !document.getElementById('endTime').value) {
+          alert('Veuillez remplir tous les champs de date et heure');
+          isValid = false;
+        }
+      } else if (bookingType === 'daily') {
+        if (!document.getElementById('dailyStartDate').value || 
+            !document.getElementById('dailyEndDate').value) {
+          alert('Veuillez remplir les dates de début et fin');
+          isValid = false;
+        }
+      } else if (bookingType === 'monthly') {
+        if (!document.getElementById('monthlyStartDate').value || 
+            !document.getElementById('monthlyDuration').value) {
+          alert('Veuillez remplir la date de début et la durée');
+          isValid = false;
+        }
+      }
+    }
+    
+    return isValid;
+  }
+
+  // Gestion du type de réservation
+  const bookingTypeRadios = document.querySelectorAll('input[name="bookingType"]');
+  const hourlyFields = document.getElementById('hourlyFields');
+  const dailyFields = document.getElementById('dailyFields');
+  const monthlyFields = document.getElementById('monthlyFields');
+  
+  bookingTypeRadios.forEach(radio => {
+    radio.addEventListener('change', function() {
+      // Masquer tous les champs de date
+      hourlyFields.style.display = 'none';
+      dailyFields.style.display = 'none';
+      monthlyFields.style.display = 'none';
+      
+      // Afficher les champs correspondants
+      if (this.value === 'hourly') {
+        hourlyFields.style.display = 'block';
+        document.getElementById('priceType').textContent = 'À l\'heure';
+      } else if (this.value === 'daily') {
+        dailyFields.style.display = 'block';
+        document.getElementById('priceType').textContent = 'À la journée';
+      } else if (this.value === 'monthly') {
+        monthlyFields.style.display = 'block';
+        document.getElementById('priceType').textContent = 'Au mois';
+      }
+      
+      calculatePrice();
+    });
+  });
+  
+  // Gestion du type d'espace
+  const spaceTypeRadios = document.querySelectorAll('input[name="spaceType"]');
+  const meetingRoomOptions = document.getElementById('meetingRoomOptions');
+  
+  spaceTypeRadios.forEach(radio => {
+    radio.addEventListener('change', function() {
+      if (this.value === 'meeting') {
+        meetingRoomOptions.style.display = 'block';
+      } else {
+        meetingRoomOptions.style.display = 'none';
+      }
+      
+      updateSpaceName();
+      calculatePrice();
+    });
+  });
+  
+  // Mise à jour du nom de l'espace dans le récapitulatif
+  function updateSpaceName() {
+    const selectedSpace = document.querySelector('input[name="spaceType"]:checked');
+    if (!selectedSpace) return;
+    
+    let spaceName = '';
+    
+    if (selectedSpace.id === 'privateOffice') {
+      spaceName = 'Bureau Privé';
+    } else if (selectedSpace.id === 'openSpace') {
+      spaceName = 'Open Space';
+    } else if (selectedSpace.id === 'meetingRoom') {
+      const capacitySelect = document.getElementById('meetingCapacity');
+      if (capacitySelect) {
+        const capacity = capacitySelect.options[capacitySelect.selectedIndex].text;
+        spaceName = 'Salle de Réunion (' + capacity.split(' ')[0] + ' pers)';
+      } else {
+        spaceName = 'Salle de Réunion';
+      }
+    }
+    
+    document.getElementById('priceSpace').textContent = spaceName;
+  }
+  
+  // Calcul du prix
+  function calculatePrice() {
+    const bookingTypeRadio = document.querySelector('input[name="bookingType"]:checked');
+    const spaceTypeRadio = document.querySelector('input[name="spaceType"]:checked');
+    
+    if (!bookingTypeRadio || !spaceTypeRadio) return;
+    
+    const bookingType = bookingTypeRadio.value;
+    const spaceType = spaceTypeRadio.value;
+    let price = 0;
+    let durationText = '';
+    
+    // Prix de base selon le type d'espace
+    if (bookingType === 'hourly') {
+      price = parseFloat(spaceTypeRadio.dataset.priceHourly) || 0;
+      
+      // Calcul de la durée pour réservation à l'heure
+      const startTime = document.getElementById('startTime').value;
+      const endTime = document.getElementById('endTime').value;
+      
+      if (startTime && endTime) {
+        const startHour = parseInt(startTime.split(':')[0]);
+        const endHour = parseInt(endTime.split(':')[0]);
+        const duration = endHour - startHour;
+        durationText = duration > 0 ? duration + 'h' : '0h';
+        price *= duration > 0 ? duration : 0;
+      }
+    } 
+    else if (bookingType === 'daily') {
+      price = parseFloat(spaceTypeRadio.dataset.priceDaily) || 0;
+      
+      // Calcul du nombre de jours
+      const startDate = new Date(document.getElementById('dailyStartDate').value);
+      const endDate = new Date(document.getElementById('dailyEndDate').value);
+      
+      if (startDate && endDate && !isNaN(startDate.getTime()) && !isNaN(endDate.getTime())) {
+        const diffTime = Math.abs(endDate - startDate);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+        durationText = diffDays + ' jour(s)';
+        price *= diffDays;
+      }
+    } 
+    else if (bookingType === 'monthly') {
+      price = parseFloat(spaceTypeRadio.dataset.priceMonthly) || 0;
+      const duration = parseInt(document.getElementById('monthlyDuration').value) || 0;
+      durationText = duration + ' mois';
+      price *= duration;
+      
+      // Application des remises pour durée longue
+      if (duration === 3) {
+        price *= 0.95;
+      } else if (duration === 6) {
+        price *= 0.90;
+      } else if (duration === 12) {
+        price *= 0.85;
+      }
+    }
+    
+    // Ajout des options pour salle de réunion
+    if (spaceType === 'meeting') {
+      const meetingCapacity = document.getElementById('meetingCapacity');
+      if (meetingCapacity) {
+        const selectedOption = meetingCapacity.options[meetingCapacity.selectedIndex];
+        const capacityPrice = parseFloat(selectedOption.dataset.priceHourly) || 0;
+        
+        if (bookingType === 'hourly') {
+          price = capacityPrice;
+          
+          // Recalcul de la durée pour les salles
+          const startTime = document.getElementById('startTime').value;
+          const endTime = document.getElementById('endTime').value;
+          
+          if (startTime && endTime) {
+            const duration = parseInt(endTime.split(':')[0]) - parseInt(startTime.split(':')[0]);
+            durationText = duration > 0 ? duration + 'h' : '0h';
+            price *= duration > 0 ? duration : 0;
+          }
+        } else if (bookingType === 'daily') {
+          price = parseFloat(selectedOption.dataset.priceDaily) || 0;
+          
+          const startDate = new Date(document.getElementById('dailyStartDate').value);
+          const endDate = new Date(document.getElementById('dailyEndDate').value);
+          
+          if (startDate && endDate && !isNaN(startDate.getTime()) && !isNaN(endDate.getTime())) {
+            const diffDays = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24)) + 1;
+            durationText = diffDays + ' jour(s)';
+            price *= diffDays;
+          }
+        } else if (bookingType === 'monthly') {
+          price = parseFloat(selectedOption.dataset.priceMonthly) || 0;
+          const duration = parseInt(document.getElementById('monthlyDuration').value) || 0;
+          durationText = duration + ' mois';
+          price *= duration;
+          
+          if (duration === 3) {
+            price *= 0.95;
+          } else if (duration === 6) {
+            price *= 0.90;
+          } else if (duration === 12) {
+            price *= 0.85;
+          }
+        }
+      }
+      
+      // Ajout du prix des équipements supplémentaires
+      const equipmentOptions = document.getElementById('equipmentNeeds');
+      let optionsText = [];
+      let optionsPrice = 0;
+      
+      if (equipmentOptions) {
+        for (let i = 0; i < equipmentOptions.options.length; i++) {
+          if (equipmentOptions.options[i].selected) {
+            const optionPrice = parseFloat(equipmentOptions.options[i].dataset.price) || 0;
+            optionsPrice += optionPrice;
+            optionsText.push(equipmentOptions.options[i].text.split(' ')[0]);
+          }
+        }
+      }
+      
+      if (optionsText.length > 0) {
+        document.getElementById('priceOptions').textContent = optionsText.join(', ');
+        // Calcul du prix des options selon la durée
+        if (bookingType === 'hourly') {
+          const duration = parseInt(durationText) || 1;
+          price += optionsPrice * duration;
+        } else if (bookingType === 'daily') {
+          const days = parseInt(durationText.split(' ')[0]) || 1;
+          price += optionsPrice * days;
+        } else {
+          price += optionsPrice;
+        }
+      } else {
+        document.getElementById('priceOptions').textContent = '-';
+      }
+    }
+    
+    document.getElementById('priceDuration').textContent = durationText || '0h';
+    document.getElementById('priceTotal').textContent = Math.round(price) + 'dh';
+    
+    // Mettre à jour le champ caché totalPrice
+    const totalPriceInput = document.querySelector('input[name="totalPrice"]');
+    if (totalPriceInput) {
+      totalPriceInput.value = Math.round(price);
+    }
+  }
+  
+  // Validation avant soumission
+  const bookingForm = document.getElementById('premiumBookingForm');
+  if (bookingForm) {
+    bookingForm.addEventListener('submit', function(e) {
+      // Valider toutes les étapes
+      if (!validateCurrentStep('step1') || 
+          !validateCurrentStep('step2') || 
+          !validateCurrentStep('step3')) {
+        e.preventDefault();
+        alert('Veuillez remplir tous les champs obligatoires');
+        return;
+      }
+      
+      // Validation des informations personnelles
+      if (!document.getElementById('fullName').value || 
+          !document.getElementById('email').value || 
+          !document.getElementById('phone').value) {
+        e.preventDefault();
+        alert('Veuillez remplir tous les champs d\'informations personnelles');
+        return;
+      }
+      
+      // Validation des conditions générales
+      if (!document.getElementById('termsCheck').checked) {
+        e.preventDefault();
+        alert('Veuillez accepter les conditions générales');
+        return;
+      }
+    });
+  }
+  
+  // Écouteurs pour les changements affectant le prix
+  document.getElementById('startTime')?.addEventListener('change', calculatePrice);
+  document.getElementById('endTime')?.addEventListener('change', calculatePrice);
+  document.getElementById('hourlyDate')?.addEventListener('change', calculatePrice);
+  document.getElementById('dailyStartDate')?.addEventListener('change', calculatePrice);
+  document.getElementById('dailyEndDate')?.addEventListener('change', calculatePrice);
+  document.getElementById('monthlyStartDate')?.addEventListener('change', calculatePrice);
+  document.getElementById('monthlyDuration')?.addEventListener('change', calculatePrice);
+  document.getElementById('meetingCapacity')?.addEventListener('change', function() {
+    updateSpaceName();
+    calculatePrice();
+  });
+  document.getElementById('equipmentNeeds')?.addEventListener('change', calculatePrice);
+  
+  // Initialisation
+  updateTabStatus();
+  updateSpaceName();
+  calculatePrice();
+});
+</script>
+
+<!-- Contact Section -->
+<section id="contact" class="py-5 bg-white" aria-labelledby="contact-heading">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-lg-6">
+        <h2 id="contact-heading" class="fw-bold mb-4">Contactez-Nous</h2>
+        <p class="lead">Une question, une demande spécifique ou besoin d'aide ? Notre équipe est là pour vous accompagner.</p>
+        
+        <div class="mt-5">
+          <h3 class="h5 fw-bold mb-3">Nos Coordonnées</h3>
+          <address>
+            <ul class="list-unstyled">
+              <li class="mb-3 d-flex">
+                <i class="bi bi-geo-alt-fill text-primary me-2 mt-1" aria-hidden="true"></i>
+                <span>123 Boulevard de l'Innovation<br>75011 Paris, France</span>
+              </li>
+              <li class="mb-3 d-flex">
+                <i class="bi bi-telephone-fill text-primary me-2 mt-1" aria-hidden="true"></i>
+                <span><a href="tel:+33123456789">+33 1 23 45 67 89</a></span>
+              </li>
+              <li class="mb-3 d-flex">
+                <i class="bi bi-envelope-fill text-primary me-2 mt-1" aria-hidden="true"></i>
+                <span><a href="mailto:contact@cowork-plus.fr">contact@cowork-plus.fr</a></span>
+              </li>
+            </ul>
+          </address>
+          
+          <h3 class="h5 fw-bold mt-4 mb-3">Horaires d'accueil</h3>
+          <ul class="list-unstyled">
+            <li class="mb-2 d-flex">
+              <i class="bi bi-clock text-primary me-2 mt-1" aria-hidden="true"></i>
+              <span>Lundi - Vendredi: 8h00 - 20h00</span>
+            </li>
+            <li class="mb-2 d-flex">
+              <i class="bi bi-clock text-primary me-2 mt-1" aria-hidden="true"></i>
+              <span>Samedi: 9h00 - 18h00</span>
+            </li>
+            <li class="mb-2 d-flex">
+              <i class="bi bi-clock text-primary me-2 mt-1" aria-hidden="true"></i>
+              <span>Dimanche: 10h00 - 16h00</span>
+            </li>
+          </ul>
+          
+          <div class="mt-4">
+            <a href="#booking" class="btn btn-primary" aria-label="Réserver une visite de nos espaces">
+              <i class="bi bi-calendar-event me-2" aria-hidden="true"></i>Réserver une visite
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-lg-6">
+        <div class="bg-light p-4 rounded-3">
+          <h3 class="h5 fw-bold mb-4">Envoyez-nous un message</h3>
+          <form id="contactForm" novalidate method="POST" action="{{ url_for('contact.contact_form') }}">
+            <div class="mb-3">
+              <label for="fullName" class="form-label">Nom complet <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="fullName" name="fullName" placeholder="Votre nom" required>
+              <div class="invalid-feedback">Veuillez entrer votre nom complet</div>
+            </div>
+            
+            <div class="mb-3">
+              <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+              <input type="email" class="form-control" id="email" name="email" placeholder="votre@email.com" required>
+              <div class="invalid-feedback">Veuillez entrer une adresse email valide</div>
+            </div>
+            
+            <div class="mb-3">
+              <label for="subject" class="form-label">Sujet <span class="text-danger">*</span></label>
+              <select class="form-select" id="subject" name="subject" required>
+                <option value="" selected disabled>Choisissez un sujet</option>
+                <option value="Réservation">Réservation</option>
+                <option value="Question générale">Question générale</option>
+                <option value="Support technique">Support technique</option>
+                <option value="Autre">Autre</option>
+              </select>
+              <div class="invalid-feedback">Veuillez sélectionner un sujet</div>
+            </div>
+            
+            <div class="mb-3">
+              <label for="message" class="form-label">Message <span class="text-danger">*</span></label>
+              <textarea class="form-control" id="message" name="message" rows="5" placeholder="Décrivez votre demande en détail..." required></textarea>
+              <div class="invalid-feedback">Veuillez entrer votre message</div>
+            </div>
+            
+            <button type="submit" class="btn btn-primary w-100">Envoyer le message</button>
+            <p class="small text-muted mt-2">* Champs obligatoires. Nous nous engageons à protéger vos données personnelles.</p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="py-5 bg-light" aria-labelledby="faq-heading">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 id="faq-heading" class="fw-bold">Questions Fréquentes</h2>
+      <p class="lead">Trouvez rapidement les réponses à vos questions les plus courantes</p>
+    </div>
+    
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="accordion" id="faqAccordion">
+          
+          <!-- FAQ Item 1 -->
+          <div class="accordion-item mb-3 border-0 shadow-sm">
+            <h3 class="accordion-header" id="headingOne">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                Comment puis-je réserver un espace ?
+              </button>
+            </h3>
+            <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#faqAccordion">
+              <div class="accordion-body">
+                La réservation se fait en ligne via notre plateforme. Sélectionnez simplement l'espace, la date et l'horaire qui vous conviennent, puis finalisez votre paiement. Vous recevrez une confirmation par email.
+              </div>
+            </div>
+          </div>
+          
+          <!-- FAQ Item 2 -->
+          <div class="accordion-item mb-3 border-0 shadow-sm">
+            <h3 class="accordion-header" id="headingTwo">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                Quels sont les moyens de paiement acceptés ?
+              </button>
+            </h3>
+            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#faqAccordion">
+              <div class="accordion-body">
+                Nous acceptons les cartes bancaires (Visa, MasterCard, American Express), les virements bancaires, ainsi que PayPal. Les paiements en espèces ne sont pas acceptés.
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Item 3 -->
+          <div class="accordion-item mb-3 border-0 shadow-sm">
+            <h3 class="accordion-header" id="headingThree">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                Puis-je annuler ou modifier ma réservation ?
+              </button>
+            </h3>
+            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#faqAccordion">
+              <div class="accordion-body">
+                Oui, vous pouvez annuler ou modifier votre réservation selon nos conditions d'annulation. Les détails vous seront indiqués lors de la réservation.
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Item 4 -->
+          <div class="accordion-item mb-3 border-0 shadow-sm">
+            <h3 class="accordion-header" id="headingFour">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                Les espaces sont-ils équipés ?
+              </button>
+            </h3>
+            <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#faqAccordion">
+              <div class="accordion-body">
+                Oui, nos espaces sont équipés de mobilier ergonomique, connexion Wi-Fi haut débit et matériel de présentation. 
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Item 5 -->
+          <div class="accordion-item mb-3 border-0 shadow-sm">
+            <h3 class="accordion-header" id="headingFive">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                Y a-t-il un service de restauration ?
+              </button>
+            </h3>
+            <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#faqAccordion">
+              <div class="accordion-body">
+                Nous proposons un service de café et boissons sur place. Pour les repas, vous trouverez plusieurs options de restauration à proximité.
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Item 6 -->
+          <div class="accordion-item mb-3 border-0 shadow-sm">
+            <h3 class="accordion-header" id="headingSix">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                Puis-je avoir une adresse de domiciliation ?
+              </button>
+            </h3>
+            <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix" data-bs-parent="#faqAccordion">
+              <div class="accordion-body">
+                Oui, nous proposons un service de domiciliation commerciale qui vous permet d'utiliser notre adresse pour votre entreprise.
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Item 7 -->
+          <div class="accordion-item mb-3 border-0 shadow-sm">
+            <h3 class="accordion-header" id="headingSeven">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                Les espaces sont-ils accessibles en dehors des heures d'ouverture ?
+              </button>
+            </h3>
+            <div id="collapseSeven" class="accordion-collapse collapse" aria-labelledby="headingSeven" data-bs-parent="#faqAccordion">
+              <div class="accordion-body">
+                Oui, nos membres peuvent accéder à certains espaces 24h/24 et 7j/7 grâce à un système sécurisé.
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Item 8 -->
+          <div class="accordion-item mb-3 border-0 shadow-sm">
+            <h3 class="accordion-header" id="headingEight">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
+                Comment fonctionne le système de facturation ?
+              </button>
+            </h3>
+            <div id="collapseEight" class="accordion-collapse collapse" aria-labelledby="headingEight" data-bs-parent="#faqAccordion">
+              <div class="accordion-body">
+                La facturation est mensuelle et vous recevez une facture détaillée par email. Vous pouvez également consulter vos factures dans votre espace client.
+              </div>
+            </div>
+          </div>
+
+        </div>
+        
+        <div class="text-center mt-4">
+          <p>Vous ne trouvez pas la réponse à votre question ?</p>
+          <a href="#contact" class="btn btn-outline-primary">Contactez-nous</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+{% endblock content %}
+
+{% block scripts %}
+<script>
+// Enhanced booking system with validation
+document.addEventListener('DOMContentLoaded', function() {
+  // Space selection
+  const spaceCards = document.querySelectorAll('.space-card');
+  const nextToStep2Btn = document.getElementById('nextToStep2');
+  
+  spaceCards.forEach(card => {
+    card.addEventListener('click', function() {
+      spaceCards.forEach(c => c.classList.remove('border-primary'));
+      this.classList.add('border-primary');
+      nextToStep2Btn.disabled = false;
+    });
+    
+    // Add keyboard accessibility
+    card.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        this.click();
+      }
+    });
+  });
+  
+  // Date and time selection
+  const bookingDate = document.getElementById('bookingDate');
+  const startTime = document.getElementById('startTime');
+  const endTime = document.getElementById('endTime');
+  const nextToStep3Btn = document.getElementById('nextToStep3');
+  
+  startTime.addEventListener('change', function() {
+    if (this.value) {
+      endTime.disabled = false;
+      // Populate end times based on start time
+      // This is a simplified example - you'd implement your actual logic here
+      endTime.innerHTML = '<option value="" selected disabled>Sélectionner</option>';
+      const startHour = parseInt(this.value.split(':')[0]);
+      for (let i = startHour + 1; i <= 20; i++) {
+        endTime.innerHTML += `<option value="${i}:00">${i}:00</option>`;
+      }
+    } else {
+      endTime.disabled = true;
+    }
+    nextToStep3Btn.disabled = true;
+  });
+  
+  endTime.addEventListener('change', function() {
+    nextToStep3Btn.disabled = !this.value;
+  });
+  
+  // Form validation for contact form
+  const contactForm = document.getElementById('contactForm');
+  if (contactForm) {
+    contactForm.addEventListener('submit', function(event) {
+      if (!this.checkValidity()) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      this.classList.add('was-validated');
+    }, false);
+  }
+});
+</script>
+{% endblock %}

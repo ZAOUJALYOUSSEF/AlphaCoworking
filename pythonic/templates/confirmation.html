@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="alert alert-success">
+        <h4><i class="bi bi-check-circle-fill"></i> Réservation confirmée</h4>
+        <p>Votre réservation #{{ booking.id }} a été enregistrée.</p>
+        <p>Vous recevrez un email de confirmation.</p>
+        <a href="/" class="btn btn-primary">Retour à l'accueil</a>
+    </div>
+</div>
+{% endblock %}

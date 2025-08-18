@@ -1,0 +1,137 @@
+{% extends "dashboard.html" %}
+
+{% block bookings %}
+<div class="container-fluid mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2><i class="bi bi-calendar-check me-2"></i> Gestion des Réservations</h2>
+        
+        <div class="dropdown">
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="statusFilter" data-bs-toggle="dropdown">
+                <i class="bi bi-funnel me-1"></i>
+                {% if status_filter %}{{ status_filter|capitalize }}{% else %}Tous les statuts{% endif %}
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{{ url_for('reservation.admin_bookings') }}">Toutes</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="{{ url_for('reservation.admin_bookings', status='pending') }}">En attente</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('reservation.admin_bookings', status='confirmed') }}">Confirmées</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('reservation.admin_bookings', status='cancelled') }}">Annulées</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('reservation.admin_bookings', status='completed') }}">Terminées</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>#</th>
+                            <th>Client</th>
+                            <th>Type</th>
+                            <th>Dates</th>
+                            <th>Espace</th>
+                            <th>Montant</th>
+                            <th>Statut</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for booking in bookings.items %}
+                        <tr>
+                            <td>{{ booking.id }}</td>
+                            <td>
+                                {{ booking.full_name }}<br>
+                                <small class="text-muted">{{ booking.email }}</small>
+                            </td>
+                            <td>
+                                {% if booking.booking_type == 'hourly' %}
+                                <span class="badge bg-info">À l'heure</span>
+                                {% elif booking.booking_type == 'daily' %}
+                                <span class="badge bg-primary">Journalier</span>
+                                {% else %}
+                                <span class="badge bg-secondary">Mensuel</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if booking.booking_type == 'hourly' %}
+                                    {{ booking.start_datetime.strftime('%d/%m/%Y %H:%M') }}<br>
+                                    <small>{{ booking.duration }}h</small>
+                                {% elif booking.booking_type == 'daily' %}
+                                    {{ booking.start_datetime.strftime('%d/%m/%Y') }}<br>
+                                    <small>{{ booking.duration }} jour(s)</small>
+                                {% else %}
+                                    {{ booking.start_datetime.strftime('%d/%m/%Y') }}<br>
+                                    <small>{{ booking.duration }} mois</small>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if booking.space_type == 'private' %}
+                                    Bureau Privé
+                                {% elif booking.space_type == 'open' %}
+                                    Open Space
+                                {% else %}
+                                    Salle Réunion
+                                {% endif %}
+                            </td>
+                            <td>{{ booking.total_price }} DH</td>
+                            <td>
+                                <span class="badge rounded-pill 
+                                    {% if booking.status == 'pending' %}bg-warning text-dark
+                                    {% elif booking.status == 'confirmed' %}bg-success
+                                    {% elif booking.status == 'cancelled' %}bg-danger
+                                    {% else %}bg-secondary{% endif %}">
+                                    {{ booking.status|capitalize }}
+                                </span>
+                            </td>
+                            <td>
+                                <a href="{{ url_for('reservation.booking_detail', booking_id=booking.id) }}" 
+                                   class="btn btn-sm btn-outline-primary" title="Voir détails">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="8" class="text-center py-4 text-muted">
+                                Aucune réservation trouvée
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            <nav aria-label="Page navigation" class="mt-4">
+                <ul class="pagination justify-content-center">
+                    {% if bookings.has_prev %}
+                    <li class="page-item">
+                        <a class="page-link" href="{{ url_for('reservation.admin_bookings', page=bookings.prev_num, status=status_filter) }}">
+                            &laquo;
+                        </a>
+                    </li>
+                    {% endif %}
+
+                    {% for num in bookings.iter_pages() %}
+                    <li class="page-item {% if num == bookings.page %}active{% endif %}">
+                        <a class="page-link" href="{{ url_for('reservation.admin_bookings', page=num, status=status_filter) }}">
+                            {{ num }}
+                        </a>
+                    </li>
+                    {% endfor %}
+
+                    {% if bookings.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="{{ url_for('reservation.admin_bookings', page=bookings.next_num, status=status_filter) }}">
+                            &raquo;
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+{% endblock %}
