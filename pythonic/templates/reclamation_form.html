@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card bg-white shadow-sm">
+                <div class="card-header bg-light text-center">
+                    <h3 class="mb-0">Formulaire de Réclamation</h3>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{{ url_for('reclamation_bp.reclamation') }}">
+                        {{ form.hidden_tag() }}
+                        <div class="mb-3">
+                            {{ form.client_name.label(class="form-label") }}
+                            {{ form.client_name(class="form-control", placeholder="Votre nom complet") }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form.client_email.label(class="form-label") }}
+                            {{ form.client_email(class="form-control", placeholder="Votre email") }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form.title.label(class="form-label") }}
+                            {{ form.title(class="form-control", placeholder="Titre de votre réclamation") }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form.description.label(class="form-label") }}
+                            {{ form.description(class="form-control", rows=5, placeholder="Décrivez votre réclamation...") }}
+                        </div>
+                        <div class="d-grid">
+                            {{ form.submit(class="btn btn-primary") }}
+                        </div>
+                    </form>
+                    
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

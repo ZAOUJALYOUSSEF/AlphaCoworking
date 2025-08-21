@@ -1,87 +1,566 @@
 {% extends "layout.html" %}
 {% block content %}
 
+
+
 <!-- Hero Section (inchangé) -->
-<section class="hero-section bg-light" aria-labelledby="hero-heading">
+<section class="hero-section bg-light" aria-labelledby="hero-heading" data-aos="fade-up">
   <div class="container py-5">
     <div class="row align-items-center">
-      <div class="col-lg-6 order-lg-1 order-2">
-        <h1 id="hero-heading" class="display-4 fw-bold mb-4">Votre espace de travail <span class="text-primary">sur-mesure</span></h1>
-        <p class="lead mb-4">Découvrez nos espaces de coworking modernes et flexibles. Réservez en quelques clics l'espace parfait pour votre productivité.</p>
-        <div class="d-flex gap-3">
-          <a href="#booking" class="btn btn-primary btn-lg px-4" aria-label="Réserver un espace maintenant">Réserver maintenant</a>
-          <a href="#spaces" class="btn btn-outline-primary btn-lg px-4" aria-label="Découvrir nos espaces de coworking">Découvrir nos espaces</a>
+      <!-- Texte -->
+      <div class="col-lg-6 order-lg-1 order-2" data-aos="fade-right" data-aos-delay="200">
+        <h1 id="hero-heading" class="display-4 fw-bold mb-4">
+          Votre espace de travail <span class="text-warning">sur-mesure</span>
+        </h1>
+        <p class="lead mb-4" data-aos="fade-right" data-aos-delay="400">
+          Découvrez nos espaces de coworking modernes et flexibles.
+        </p>
+        <div class="d-flex gap-3" data-aos="fade-right" data-aos-delay="600">
+          <a href="#booking" class="btn btn-warning btn-lg px-4">Réserver Maintenant</a>
+          <a href="#spaces" class="btn btn-outline-warning btn-lg px-4">Découvrir nos Espaces</a>
         </div>
       </div>
-      <div class="col-lg-6 order-lg-2 order-1 mb-4 mb-lg-0">
-        <img src="{{url_for('static', filename='thumb.jpg')}}" 
-             class="img-fluid rounded shadow-lg" 
-             alt="Espace de coworking lumineux avec des postes de travail modernes"
-             loading="lazy"
-             width="800"
-             height="600">
+      <!-- Image -->
+      <div class="col-lg-6 order-lg-2 order-1 mb-4 mb-lg-0" data-aos="fade-left" data-aos-delay="200">
+        <img src="{{url_for('static', filename='thumb.jpg')}}" class="img-fluid rounded shadow-lg" alt="Espace de coworking" loading="lazy">
       </div>
     </div>
   </div>
 </section>
 
+
+
+
+
+
+
+
+
+
+
 <!-- Features Section (inchangé) -->
-<section class="py-5 bg-white" aria-labelledby="features-heading">
-  <div class="container">
-    <h2 id="features-heading" class="visually-hidden">Nos avantages</h2>
-    <div class="row g-4">
-      <div class="col-md-6 col-lg-3">
-        <div class="p-4 rounded-3 border h-100">
-          <div class="feature-icon mb-3">
-            <i class="bi bi-calendar-check fs-1 text-primary" aria-hidden="true"></i>
-          </div>
-          <h3 class="h4">Réservation facile</h3>
-          <p class="mb-0">Réservez en ligne en quelques clics</p>
+
+
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    line-height: 1.6;
+}
+
+/* Features Section */
+.features-section {
+    position: relative;
+    padding: 8rem 0;
+    background: linear-gradient(135deg, #f8fafc 0%, #ffffff 50%, #f1f5f9 100%);
+    overflow: hidden;
+}
+
+.features-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle at 25% 25%, rgba(255, 215, 0, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, rgba(255, 107, 0, 0.05) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 2;
+}
+
+/* Section Header */
+.section-header {
+    text-align: center;
+    margin-bottom: 5rem;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 1s ease-out 0.2s forwards;
+}
+
+.section-badge {
+    display: inline-block;
+    padding: 0.5rem 1.5rem;
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 107, 0, 0.1));
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #f59e0b;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.section-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    color: #1e293b;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+}
+
+.section-subtitle {
+    font-size: 1.25rem;
+    color: #64748b;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Features Grid */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.feature-card {
+    position: relative;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 24px;
+    padding: 3rem 2rem;
+    text-align: center;
+    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(20px);
+    overflow: hidden;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(50px);
+}
+
+.feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.02), rgba(255, 107, 0, 0.02));
+    opacity: 0;
+    transition: opacity 0.6s ease;
+}
+
+.feature-card::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+    transform: rotate(-45deg);
+    transition: all 0.8s ease;
+    opacity: 0;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.1),
+        0 0 0 1px rgba(255, 215, 0, 0.2);
+}
+
+.feature-card:hover::before {
+    opacity: 1;
+}
+
+.feature-card:hover::after {
+    opacity: 1;
+    transform: rotate(-45deg) translate(50%, 50%);
+}
+
+.feature-card:nth-child(1) { animation: fadeInUp 0.8s ease-out 0.4s forwards; }
+.feature-card:nth-child(2) { animation: fadeInUp 0.8s ease-out 0.6s forwards; }
+.feature-card:nth-child(3) { animation: fadeInUp 0.8s ease-out 0.8s forwards; }
+.feature-card:nth-child(4) { animation: fadeInUp 0.8s ease-out 1s forwards; }
+
+/* Feature Icon */
+.feature-icon {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 2rem;
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+}
+
+.feature-icon::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(135deg, #FFD700, #FFA500, #FFD700);
+    border-radius: 22px;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+}
+
+.feature-card:hover .feature-icon {
+    transform: scale(1.1) rotate(-5deg);
+    box-shadow: 0 15px 40px rgba(255, 215, 0, 0.4);
+}
+
+.feature-card:hover .feature-icon::before {
+    opacity: 1;
+}
+
+.feature-icon i {
+    font-size: 2rem;
+    color: #000;
+    transition: all 0.6s ease;
+}
+
+.feature-card:hover .feature-icon i {
+    transform: scale(1.1);
+}
+
+/* Feature Content */
+.feature-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 1rem;
+    transition: all 0.6s ease;
+}
+
+.feature-card:hover .feature-title {
+    color: #f59e0b;
+}
+
+.feature-description {
+    font-size: 1rem;
+    color: #64748b;
+    line-height: 1.6;
+    transition: all 0.6s ease;
+}
+
+.feature-card:hover .feature-description {
+    color: #475569;
+}
+
+/* Feature Badge */
+.feature-badge {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    width: 12px;
+    height: 12px;
+    background: linear-gradient(135deg, #FFD700, #FFA500);
+    border-radius: 50%;
+    opacity: 0;
+    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.feature-card:hover .feature-badge {
+    opacity: 1;
+    transform: scale(1.2);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .features-section {
+        padding: 5rem 0;
+    }
+    
+    .container {
+        padding: 0 1rem;
+    }
+    
+    .section-header {
+        margin-bottom: 3rem;
+    }
+    
+    .features-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .feature-card {
+        padding: 2rem 1.5rem;
+    }
+    
+    .feature-icon {
+        width: 70px;
+        height: 70px;
+    }
+    
+    .feature-icon i {
+        font-size: 1.8rem;
+    }
+    
+    .feature-title {
+        font-size: 1.25rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .feature-card {
+        padding: 1.5rem 1rem;
+    }
+    
+    .feature-icon {
+        width: 60px;
+        height: 60px;
+        margin-bottom: 1.5rem;
+    }
+    
+    .feature-icon i {
+        font-size: 1.5rem;
+    }
+}
+</style>
+
+<section class="features-section" aria-labelledby="features-heading">
+    <div class="container">
+        <!-- Section Header -->
+        <div class="section-header">
+            <div class="section-badge">Pourquoi nous choisir</div>
+            <h2 id="features-heading" class="section-title">
+                Des services d'exception pour votre réussite
+            </h2>
+            <p class="section-subtitle">
+                Découvrez nos avantages uniques conçus pour transformer votre expérience de travail 
+                et maximiser votre productivité au quotidien.
+            </p>
         </div>
-      </div>
-      <div class="col-md-6 col-lg-3">
-        <div class="p-4 rounded-3 border h-100">
-          <div class="feature-icon mb-3">
-            <i class="bi bi-arrows-angle-contract fs-1 text-primary" aria-hidden="true"></i>
-          </div>
-          <h3 class="h4">Espaces flexibles</h3>
-          <p class="mb-0">Adaptés à tous vos besoins</p>
+        
+        <!-- Features Grid -->
+        <div class="features-grid">
+            <!-- Feature 1 -->
+            <div class="feature-card">
+                <div class="feature-badge"></div>
+                <div class="feature-icon">
+                    <i class="bi bi-calendar-check"></i>
+                </div>
+                <h3 class="feature-title">Réservation Intelligente</h3>
+                <p class="feature-description">
+                    Système de réservation intuitif avec IA intégrée. 
+                    Réservez votre espace idéal en moins de 30 secondes.
+                </p>
+            </div>
+            
+            <!-- Feature 2 -->
+            <div class="feature-card">
+                <div class="feature-badge"></div>
+                <div class="feature-icon">
+                    <i class="bi bi-arrows-angle-contract"></i>
+                </div>
+                <h3 class="feature-title">Espaces Modulaires</h3>
+                <p class="feature-description">
+                    Configuration dynamique de vos espaces selon vos besoins. 
+                    Du bureau privé à l'open space collaboratif.
+                </p>
+            </div>
+            
+            <!-- Feature 3 -->
+            <div class="feature-card">
+                <div class="feature-badge"></div>
+                <div class="feature-icon">
+                    <i class="bi bi-wifi"></i>
+                </div>
+                <h3 class="feature-title">Connectivité Premium</h3>
+                <p class="feature-description">
+                    Fibre optique ultra-haute vitesse 1Gb/s symétrique. 
+                    Network redondant pour une connexion sans interruption.
+                </p>
+            </div>
+            
+            
         </div>
-      </div>
-      <div class="col-md-6 col-lg-3">
-        <div class="p-4 rounded-3 border h-100">
-          <div class="feature-icon mb-3">
-            <i class="bi bi-wifi fs-1 text-primary" aria-hidden="true"></i>
-          </div>
-          <h3 class="h4">Wi-Fi ultra rapide</h3>
-          <p class="mb-0">Fibre optique 1Gb/s</p>
-        </div>
-      </div>
-      <div class="col-md-6 col-lg-3">
-        <div class="p-4 rounded-3 border h-100">
-          <div class="feature-icon mb-3">
-            <i class="bi bi-clock fs-1 text-primary" aria-hidden="true"></i>
-          </div>
-          <h3 class="h4">Accès 24h/24</h3>
-          <p class="mb-0">Accès sécurisé à toute heure</p>
-        </div>
-      </div>
     </div>
-  </div>
 </section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Intersection Observer for animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -100px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate');
+                
+                // Add stagger animation to feature cards
+                if (entry.target.classList.contains('features-grid')) {
+                    const cards = entry.target.querySelectorAll('.feature-card');
+                    cards.forEach((card, index) => {
+                        setTimeout(() => {
+                            card.style.animationPlayState = 'running';
+                        }, index * 200);
+                    });
+                }
+            }
+        });
+    }, observerOptions);
+    
+    // Observe elements
+    const elementsToObserve = document.querySelectorAll('.section-header, .features-grid');
+    elementsToObserve.forEach(el => observer.observe(el));
+    
+    // Enhanced hover effects
+    const featureCards = document.querySelectorAll('.feature-card');
+    
+    featureCards.forEach((card, index) => {
+        // Add unique colors for each card
+        const colors = [
+            'linear-gradient(135deg, #FFD700 0%, #FFA500 100%)',
+            'linear-gradient(135deg, #FF6B6B 0%, #FF8E8E 100%)',
+            'linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%)',
+            'linear-gradient(135deg, #A8E6CF 0%, #88D8A3 100%)'
+        ];
+        
+        card.addEventListener('mouseenter', () => {
+            const icon = card.querySelector('.feature-icon');
+            if (icon) {
+                icon.style.background = colors[index % colors.length];
+            }
+            
+            // Add ripple effect
+            createRipple(card, event);
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            const icon = card.querySelector('.feature-icon');
+            if (icon) {
+                setTimeout(() => {
+                    icon.style.background = 'linear-gradient(135deg, #FFD700 0%, #FFA500 100%)';
+                }, 200);
+            }
+        });
+        
+        // Add click interaction
+        card.addEventListener('click', () => {
+            card.style.transform = 'scale(0.98)';
+            setTimeout(() => {
+                card.style.transform = '';
+            }, 150);
+        });
+    });
+    
+    // Ripple effect function
+    function createRipple(element, event) {
+        const ripple = document.createElement('div');
+        const rect = element.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        const x = event.clientX - rect.left - size / 2;
+        const y = event.clientY - rect.top - size / 2;
+        
+        ripple.style.cssText = `
+            position: absolute;
+            width: ${size}px;
+            height: ${size}px;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            transform: scale(0);
+            left: ${x}px;
+            top: ${y}px;
+            pointer-events: none;
+            animation: ripple 0.6s ease-out;
+        `;
+        
+        element.appendChild(ripple);
+        
+        ripple.addEventListener('animationend', () => {
+            ripple.remove();
+        });
+    }
+    
+    // Add CSS for ripple animation
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes ripple {
+            to {
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
+    `;
+    document.head.appendChild(style);
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <!-- Workspace Section (modifié) -->
 
-<section id="spaces" class="py-5 bg-light" aria-labelledby="spaces-heading">
+<section id="spaces" class="py-5 bg-light" aria-labelledby="spaces-heading" data-aos="fade-up">
   <div class="container">
-    <div class="text-center mb-5">
+    <div class="text-center mb-5" data-aos="fade-up">
       <h2 id="spaces-heading" class="fw-bold">Nos Espaces de Travail</h2>
       <p class="lead">Choisissez l'espace qui correspond parfaitement à vos besoins</p>
     </div>
     
     <div class="row g-4 align-items-stretch">
       <!-- Bureau Privé -->
-      <div class="col-lg-4">
+      <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
         <article class="card h-100 border-0 shadow-sm">
           <div class="position-relative">
             <img src="{{ url_for('static', filename='post1.jpg') }}" 
@@ -125,7 +604,7 @@
       </div>
       
       <!-- Open Space -->
-      <div class="col-lg-4">
+      <div class="col-lg-4" data-aos="fade-up" data-aos-delay="300">
         <article class="card h-100 border-0 shadow-sm">
           <div class="position-relative">
             <img src="{{ url_for('static', filename='post2.jpg') }}" 
@@ -169,7 +648,7 @@
       </div>
       
       <!-- Salle de Réunion -->
-      <div class="col-lg-4">
+      <div class="col-lg-4" data-aos="fade-up" data-aos-delay="500">
         <article class="card h-100 border-0 shadow-sm d-flex flex-column">
           <div class="position-relative flex-grow-0">
             <div id="meetingRoomImageCarousel" class="carousel slide" style="height: 200px;">
@@ -368,14 +847,14 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <!-- Booking Section - Formulaire Ultra Pro -->
-<section id="booking" class="py-5 bg-white" aria-labelledby="booking-heading">
+<section id="booking" class="py-5 bg-white" aria-labelledby="booking-heading"  data-aos="fade-up">
   <div class="container">
-    <div class="text-center mb-5">
+    <div class="text-center mb-5" data-aos="fade-up">
       <h2 id="booking-heading" class="fw-bold display-5 mb-3">Formulaire de Réservation Premium</h2>
       <p class="lead text-muted">Remplissez ce formulaire détaillé pour une réservation sur mesure</p>
     </div>
     
-    <div class="row justify-content-center">
+    <div class="row justify-content-center" data-aos="fade-up" data-aos-delay="200">
       <div class="col-lg-10">
         <div class="bg-light p-4 p-lg-5 rounded-4 shadow-sm">
           <!-- Indicateur d'étapes -->
@@ -1179,10 +1658,10 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <!-- Contact Section -->
-<section id="contact" class="py-5 bg-white" aria-labelledby="contact-heading">
+<section id="contact" class="py-5 bg-white" aria-labelledby="contact-heading" data-aos="fade-up">
   <div class="container">
-    <div class="row g-4">
-      <div class="col-lg-6">
+    <div class="row g-4" >
+      <div class="col-lg-6"  data-aos="fade-right">
         <h2 id="contact-heading" class="fw-bold mb-4">Contactez-Nous</h2>
         <p class="lead">Une question, une demande spécifique ou besoin d'aide ? Notre équipe est là pour vous accompagner.</p>
         
@@ -1229,7 +1708,7 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
       </div>
       
-      <div class="col-lg-6">
+      <div class="col-lg-6" data-aos="fade-left">
         <div class="bg-light p-4 rounded-3">
           <h3 class="h5 fw-bold mb-4">Envoyez-nous un message</h3>
           <form id="contactForm" novalidate method="POST" action="{{ url_for('contact.contact_form') }}">
@@ -1272,10 +1751,105 @@ document.addEventListener('DOMContentLoaded', function() {
   </div>
 </section>
 
-<!-- FAQ Section -->
-<section class="py-5 bg-light" aria-labelledby="faq-heading">
+
+
+
+<!-- Section Localisation -->
+<section class="py-5" aria-labelledby="location-heading" data-aos="fade-up">
   <div class="container">
-    <div class="text-center mb-5">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <h2 id="location-heading" class="fw-bold">Notre Emplacement</h2>
+      <p class="lead">Retrouvez-nous facilement à Tanger, au cœur de l'action professionnelle</p>
+    </div>
+    <div class="row" data-aos="zoom-in" data-aos-delay="200">
+      <div class="col-12">
+        <div class="ratio ratio-16x9">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3311.451727012225!2d-5.8115828!3d35.7715974!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd0b8157854953a9%3A0x120e4e3d30915116!2sAlpha%20co-working!5e0!3m2!1sfr!2sma!4v1693415000000!5m2!1sfr!2sma"
+            width="600"
+            height="450"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            aria-label="Carte de localisation de notre espace de coworking à Tanger">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<section class="py-5 bg-light" aria-labelledby="testimonials-heading" data-aos="fade-up">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <h2 id="testimonials-heading" class="fw-bold">Ils nous font confiance</h2>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-4"  data-aos="flip-left" data-aos-delay="100">
+        <div class="card h-100 border-0 shadow-sm">
+          <div class="card-body text-center p-4">
+            <div class="mb-3">
+              <i class="bi bi-stars fs-2 text-warning"></i>
+            </div>
+            <p class="card-text">"Un espace incroyable pour travailler en paix. Le Wi-Fi est ultra rapide et l'équipe est toujours disponible."</p>
+            <div class="mt-4">
+              <h5 class="mb-0">Sophie M.</h5>
+              <small class="text-muted">Freelance Designer</small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4"  data-aos="flip-left" data-aos-delay="300">
+        <div class="card h-100 border-0 shadow-sm">
+          <div class="card-body text-center p-4">
+            <div class="mb-3">
+              <i class="bi bi-stars fs-2 text-warning"></i>
+            </div>
+            <p class="card-text">"Un espace incroyable pour travailler en paix. Le Wi-Fi est ultra rapide et l'équipe est toujours disponible."</p>
+            <div class="mt-4">
+              <h5 class="mb-0">Sophie M.</h5>
+              <small class="text-muted">Freelance Designer</small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4"  data-aos="flip-left" data-aos-delay="500">
+        <div class="card h-100 border-0 shadow-sm">
+          <div class="card-body text-center p-4">
+            <div class="mb-3">
+              <i class="bi bi-stars fs-2 text-warning"></i>
+            </div>
+            <p class="card-text">"Un espace incroyable pour travailler en paix. Le Wi-Fi est ultra rapide et l'équipe est toujours disponible."</p>
+            <div class="mt-4">
+              <h5 class="mb-0">Sophie M.</h5>
+              <small class="text-muted">Freelance Designer</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- FAQ Section -->
+<section class="py-5 bg-light" aria-labelledby="faq-heading" data-aos="fade-up">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
       <h2 id="faq-heading" class="fw-bold">Questions Fréquentes</h2>
       <p class="lead">Trouvez rapidement les réponses à vos questions les plus courantes</p>
     </div>
@@ -1285,7 +1859,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="accordion" id="faqAccordion">
           
           <!-- FAQ Item 1 -->
-          <div class="accordion-item mb-3 border-0 shadow-sm">
+          <div class="accordion-item mb-3 border-0 shadow-sm" data-aos="zoom-in" data-aos-delay="100">
             <h3 class="accordion-header" id="headingOne">
               <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
                 Comment puis-je réserver un espace ?
@@ -1299,7 +1873,7 @@ document.addEventListener('DOMContentLoaded', function() {
           </div>
           
           <!-- FAQ Item 2 -->
-          <div class="accordion-item mb-3 border-0 shadow-sm">
+          <div class="accordion-item mb-3 border-0 shadow-sm" data-aos="zoom-in" data-aos-delay="200">
             <h3 class="accordion-header" id="headingTwo">
               <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                 Quels sont les moyens de paiement acceptés ?
@@ -1313,7 +1887,7 @@ document.addEventListener('DOMContentLoaded', function() {
           </div>
 
           <!-- FAQ Item 3 -->
-          <div class="accordion-item mb-3 border-0 shadow-sm">
+          <div class="accordion-item mb-3 border-0 shadow-sm" data-aos="zoom-in" data-aos-delay="300">
             <h3 class="accordion-header" id="headingThree">
               <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                 Puis-je annuler ou modifier ma réservation ?
@@ -1327,7 +1901,7 @@ document.addEventListener('DOMContentLoaded', function() {
           </div>
 
           <!-- FAQ Item 4 -->
-          <div class="accordion-item mb-3 border-0 shadow-sm">
+          <div class="accordion-item mb-3 border-0 shadow-sm" data-aos="zoom-in" data-aos-delay="400">
             <h3 class="accordion-header" id="headingFour">
               <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
                 Les espaces sont-ils équipés ?
@@ -1341,7 +1915,7 @@ document.addEventListener('DOMContentLoaded', function() {
           </div>
 
           <!-- FAQ Item 5 -->
-          <div class="accordion-item mb-3 border-0 shadow-sm">
+          <div class="accordion-item mb-3 border-0 shadow-sm" data-aos="zoom-in" data-aos-delay="500">
             <h3 class="accordion-header" id="headingFive">
               <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
                 Y a-t-il un service de restauration ?
@@ -1355,7 +1929,7 @@ document.addEventListener('DOMContentLoaded', function() {
           </div>
 
           <!-- FAQ Item 6 -->
-          <div class="accordion-item mb-3 border-0 shadow-sm">
+          <div class="accordion-item mb-3 border-0 shadow-sm" data-aos="zoom-in" data-aos-delay="600">
             <h3 class="accordion-header" id="headingSix">
               <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
                 Puis-je avoir une adresse de domiciliation ?
@@ -1369,7 +1943,7 @@ document.addEventListener('DOMContentLoaded', function() {
           </div>
 
           <!-- FAQ Item 7 -->
-          <div class="accordion-item mb-3 border-0 shadow-sm">
+          <div class="accordion-item mb-3 border-0 shadow-sm" data-aos="zoom-in" data-aos-delay="700">
             <h3 class="accordion-header" id="headingSeven">
               <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
                 Les espaces sont-ils accessibles en dehors des heures d'ouverture ?
@@ -1383,7 +1957,7 @@ document.addEventListener('DOMContentLoaded', function() {
           </div>
 
           <!-- FAQ Item 8 -->
-          <div class="accordion-item mb-3 border-0 shadow-sm">
+          <div class="accordion-item mb-3 border-0 shadow-sm"  data-aos="zoom-in" data-aos-delay="800">
             <h3 class="accordion-header" id="headingEight">
               <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
                 Comment fonctionne le système de facturation ?
@@ -1412,6 +1986,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
 {% block scripts %}
 <script>
+
+
+    AOS.init({
+    disable: function() {
+      return window.innerWidth < 768; // Désactive AOS sur mobile
+    }
+  });
 // Enhanced booking system with validation
 document.addEventListener('DOMContentLoaded', function() {
   // Space selection

@@ -56,12 +56,38 @@
                                     Open Space
                                 {% else %}
                                     Salle Réunion
+                                    {% if booking.meeting_capacity %}
+                                        - Capacité : {{ booking.meeting_capacity }} personnes
+                                    {% endif %}
                                 {% endif %}
+                            </p>
+                            <p><strong>Numéro d'espace:</strong><br>
+                                {{ booking.space_number if booking.space_number else 'Non spécifié' }}
                             </p>
                             
                             <p><strong>Méthode de paiement:</strong><br>
                                 {{ booking.payment_method|capitalize }}
                             </p>
+                        </div>
+                    </div>
+                    <!-- Ajout d'une section pour le prix avec un style mis en avant -->
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <div class="alert alert-info p-3">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h5 class="mb-0"><i class="bi bi-currency-dollar me-2"></i> Prix total:</h5>
+                                    <h3 class="mb-0 text-primary">{{ booking.total_price }} DH</h3>
+                                </div>
+                                <small class="text-muted">
+                                    {% if booking.booking_type == 'hourly' %}
+                                        {{ booking.total_price|round(2) }} DH pour {{ booking.duration }} heures
+                                    {% elif booking.booking_type == 'daily' %}
+                                        {{ booking.total_price|round(2) }} DH pour {{ booking.duration }} jours
+                                    {% else %}
+                                        {{ booking.total_price|round(2) }} DH pour {{ booking.duration }} mois
+                                    {% endif %}
+                                </small>
+                            </div>
                         </div>
                     </div>
                     
@@ -127,22 +153,47 @@
                                     <option value="completed" {% if booking.status == 'completed' %}selected{% endif %}>Terminée</option>
                                 </select>
                                 <button class="btn btn-primary" type="submit">
-                                    <i class="bi bi-check-lg"></i>
+                                    <i class="bi bi-check-lg"></i> Mettre à jour
                                 </button>
                             </div>
                         </form>
-                        
-                        <div class="d-flex justify-content-between">
-                            <a href="#" class="btn btn-outline-danger">
-                                <i class="bi bi-trash me-1"></i> Supprimer
+
+                        <div class="d-flex flex-column gap-2">
+                            <a href="{{ url_for('reservation.edit_booking', booking_id=booking.id) }}" class="btn btn-outline-primary d-flex align-items-center justify-content-center">
+                                <i class="bi bi-pencil me-2"></i> Modifier la réservation
                             </a>
-                            <a href="#" class="btn btn-outline-success">
-                                <i class="bi bi-receipt me-1"></i> Facture
+                            <a href="{{ url_for('reservation.generate_invoice', booking_id=booking.id) }}" class="btn btn-outline-success d-flex align-items-center justify-content-center" target="_blank">
+                                <i class="bi bi-file-earmark-pdf me-2"></i> Générer la facture
+                            </a>
+                            <button type="button" class="btn btn-outline-danger d-flex align-items-center justify-content-center" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                                <i class="bi bi-trash me-2"></i> Supprimer la réservation
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal de confirmation de suppression -->
+            <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteModalLabel">Confirmer la suppression</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            Êtes-vous sûr de vouloir supprimer cette réservation ? Cette action est irréversible.
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                            <a href="{{ url_for('reservation.delete_booking', booking_id=booking.id) }}" class="btn btn-danger">
+                                <i class="bi bi-trash me-1"></i> Supprimer définitivement
                             </a>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 </div>

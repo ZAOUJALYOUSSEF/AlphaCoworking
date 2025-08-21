@@ -18,17 +18,7 @@
                     aria-controls="nav-profile" aria-selected="true">Profile</button>
             </a>
 
-            <a class="link" href="/dashboard/new_lesson">
-                <button class="{{'nav-link active' if active_tab=='new_lesson' else 'nav-link'}}" id="nav-newLesson-tab"
-                    data-bs-toggle="tab" data-bs-target="#nav-newLesson" type="button" role="tab"
-                    aria-controls="nav-newLesson" aria-selected="true">New Lesson</button>
-            </a>
-
-            <a class="link" href="/dashboard/user_lessons">
-                <button class="{{'nav-link active' if active_tab=='user_lessons' else 'nav-link'}}"
-                    id="nav-user_lessons-tab" data-bs-toggle="tab" data-bs-target="#nav-Lessons" type="button"
-                    role="tab" aria-controls="nav-Lessons" aria-selected="true">Your Lessons</button>
-            </a>
+            
             <a class="link" href="/dashboard/messages">
                 <button class="{{'nav-link active' if active_tab=='messages' else 'nav-link'}}"
                         id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-Contact" type="button"
@@ -40,6 +30,23 @@
                         type="button" role="tab" aria-controls="nav-bookings" 
                         aria-selected="true">Vos Réservations</button>
             </a>
+            <a class="link" href="/dashboard/admin_stats">
+                <button class="{{'nav-link active' if active_tab=='admin_stats' else 'nav-link'}}" 
+                        id="nav-admin_stats-tab" data-bs-toggle="tab" data-bs-target="#nav-admin_stats" 
+                        type="button" role="tab" aria-controls="nav-admin_stats" 
+                        aria-selected="true">Statistiques Admin</button>
+            </a>
+
+            {% if current_user.email == 'zaoujalyoussef1@gmail.com' %}
+            <a class="link" href="{{ url_for('reclamation_bp.dashboard_reclamations') }}">
+                <button class="{{'nav-link active' if active_tab=='reclamations' else 'nav-link'}}" id="nav-reclamations-tab" type="button">Réclamations</button>
+            </a>
+            {% else %}
+            <a class="link" href="#">
+                <button class="nav-link disabled" id="nav-reclamations-tab" type="button">Réservé au gérant</button>
+            </a>
+            {% endif %}
+
 
 
         </div>
@@ -48,15 +55,10 @@
     <div class="tab-content" id="nav-tabContent">
         <!-- profile -->
         {% block profile %} {% endblock profile%}
-        <!-- New Lesson -->
-        {% block new_lesson %} {% endblock new_lesson %}
-        <!-- User Lessons -->
-        {% block user_lessons %} {% endblock user_lessons %}
         {% block contact %} {% endblock contact %}
         {% block bookings %} {% endblock bookings %}
-
-
-
+        {% block admin_stats %} {% endblock admin_stats %}
+        {% block reclamations %} {% endblock reclamations %}
     </div>
 </div>
 {% endblock content %}

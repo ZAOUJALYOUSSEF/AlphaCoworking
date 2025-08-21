@@ -2,7 +2,7 @@ from flask import Blueprint
 from flask_admin.contrib.sqla import ModelView
 from flask_login import current_user
 from pythonic import admin, db, bcrypt
-from pythonic.models import User, Lesson, Course,Booking,ContactMessage
+from pythonic.models import User, Lesson, Course,Booking,ContactMessage,Reclamation
 from flask_admin import AdminIndexView
 
 adminbp = Blueprint("adminbp", __name__)
@@ -33,3 +33,5 @@ admin.add_view(MyModelView(Lesson, db.session))
 admin.add_view(MyModelView(Course, db.session))
 admin.add_view(MyModelView(Booking, db.session))
 admin.add_view(MyModelView(ContactMessage,db.session))
+admin.add_view(MyModelView(Reclamation,db.session))
+

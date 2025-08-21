@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card bg-white shadow-sm">
+                <div class="card-header bg-light text-center">
+                    <h3 class="mb-0">Détails de la réclamation #{{ reclamation.id }}</h3>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <h5>Client :</h5>
+                        <p>{{ reclamation.client_name }} ({{ reclamation.client_email }})</p>
+                    </div>
+                    <div class="mb-3">
+                        <h5>Titre :</h5>
+                        <p>{{ reclamation.title }}</p>
+                    </div>
+                    <div class="mb-3">
+                        <h5>Description :</h5>
+                        <p>{{ reclamation.description }}</p>
+                    </div>
+                    <div class="mb-3">
+                        <h5>Statut :</h5>
+                        {% if reclamation.status == 'Nouvelle' %}
+                            <span class="badge bg-danger">{{ reclamation.status }}</span>
+                        {% elif reclamation.status == 'En cours' %}
+                            <span class="badge bg-primary">{{ reclamation.status }}</span>
+                        {% elif reclamation.status == 'Résolue' %}
+                            <span class="badge bg-success">{{ reclamation.status }}</span>  <!-- Vert pour "Résolue" -->
+                        {% else %}
+                            <span class="badge bg-secondary">{{ reclamation.status }}</span>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <h5>Date :</h5>
+                        <p>{{ reclamation.created_at.strftime('%d/%m/%Y à %H:%M') }}</p>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <a href="{{ url_for('reclamation_bp.dashboard_reclamations') }}" class="btn btn-outline-primary">
+                            Retour à la liste
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

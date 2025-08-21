@@ -1,0 +1,50 @@
+{% extends "dashboard.html" %}
+{% block reclamations %}
+<div class="container my-4">
+    <h3 class="mb-4">Gestion des Réclamations</h3>
+    {% if reclamations %}
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Client</th>
+                    <th>Email</th>
+                    <th>Titre</th>
+                    <th>Statut</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for reclamation in reclamations %}
+                <tr>
+                    <td>{{ reclamation.id }}</td>
+                    <td>{{ reclamation.client_name }}</td>
+                    <td>{{ reclamation.client_email }}</td>
+                    <td>{{ reclamation.title }}</td>
+                    <td>
+                        {% if reclamation.status == 'Nouvelle' %}
+                            <span class="badge bg-danger">{{ reclamation.status }}</span>
+                        {% elif reclamation.status == 'Résolue' %}
+                            <span class="badge bg-success">{{ reclamation.status }}</span>  <!-- Vert pour "Résolue" -->
+                        {% else %}
+                            <span class="badge bg-secondary">{{ reclamation.status }}</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ reclamation.created_at.strftime('%d/%m/%Y') }}</td>
+                    <td>
+                        <a href="{{ url_for('reclamation_bp.reclamation_detail', reclamation_id=reclamation.id) }}" class="btn btn-sm btn-outline-primary">
+                            Voir
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="alert alert-info">Aucune réclamation pour le moment.</div>
+    {% endif %}
+</div>
+{% endblock reclamations %}

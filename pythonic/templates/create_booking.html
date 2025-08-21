@@ -1,0 +1,312 @@
+{% extends "dashboard.html" %}
+
+{% block bookings %}
+<div class="container-fluid mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2><i class="bi bi-calendar-plus me-2"></i> Nouvelle Réservation</h2>
+        <a href="{{ url_for('reservation.admin_bookings') }}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left me-1"></i> Retour
+        </a>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <form method="POST" action="{{ url_for('reservation.save_booking') }}">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label for="bookingType" class="form-label">Type de Réservation *</label>
+                        <select class="form-select" id="bookingType" name="bookingType" required>
+                            <option value="hourly">À l'heure</option>
+                            <option value="daily">Journalier</option>
+                            <option value="monthly">Mensuel</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="spaceType" class="form-label">Type d'Espace *</label>
+                        <select class="form-select" id="spaceType" name="spaceType" required>
+                            <option value="private">Bureau Privé</option>
+                            <option value="open">Open Space</option>
+                            <option value="meeting">Salle Réunion</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6" id="meetingCapacityField" style="display: none;">
+                        <label for="meetingCapacity" class="form-label">Capacité de la salle *</label>
+                        <select class="form-select" id="meetingCapacity" name="meetingCapacity">
+                            <option value="8">8 personnes</option>
+                            <option value="15">15 personnes</option>
+                            <option value="23">23 personnes</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="spaceNumber" class="form-label">Numéro/Nom d'espace *</label>
+                        <input type="text" class="form-control" id="spaceNumber" name="spaceNumber"
+                            placeholder="" required>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="startDatetime" class="form-label">Date/Heure de Début *</label>
+                        <input type="datetime-local" class="form-control" id="startDatetime" name="startDatetime" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="endDatetime" class="form-label">Date/Heure de Fin *</label>
+                        <input type="datetime-local" class="form-control" id="endDatetime" name="endDatetime" required>
+                    </div>
+                    <!-- Durée avec unité dynamique -->
+                    <div class="col-md-4">
+                        <label for="duration" class="form-label">Durée *</label>
+                        <div class="input-group">
+                            <input type="number" class="form-control" id="duration" name="duration" value="" required>
+                            <span class="input-group-text" id="durationUnit">mois</span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="fullName" class="form-label">Nom Complet *</label>
+                        <input type="text" class="form-control" id="fullName" name="fullName" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="email" class="form-label">Email *</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="phone" class="form-label">Téléphone *</label>
+                        <input type="text" class="form-control" id="phone" name="phone" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="company" class="form-label">Entreprise</label>
+                        <input type="text" class="form-control" id="company" name="company">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="paymentMethod" class="form-label">Méthode de Paiement *</label>
+                        <select class="form-select" id="paymentMethod" name="paymentMethod" required>
+                            <option value="" selected disabled>Choisir...</option>
+                            <option value="cash">Espèces</option>
+                            <option value="card">Carte Bancaire</option>
+                            <option value="transfer">Virement</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="totalPrice" class="form-label">Prix Total *</label>
+                        <div class="input-group">
+                            <input type="number" step="0.01" class="form-control" id="totalPrice" name="totalPrice" required>
+                            <span class="input-group-text">DH</span>
+                        </div>
+                        <small class="text-muted">Prix calculé automatiquement en fonction des options sélectionnées</small>
+                    </div>
+
+
+                    <div class="col-md-4">
+                        <label for="status" class="form-label">Statut</label>
+                        <select class="form-select" id="status" name="status">
+                            <option value="pending" selected>En attente</option>
+                            <option value="confirmed">Confirmée</option>
+                            <option value="cancelled">Annulée</option>
+                            <option value="completed">Terminée</option>
+                        </select>
+                    </div>
+                    <div class="col-12">
+                        <label for="specialRequests" class="form-label">Demandes Spéciales</label>
+                        <textarea class="form-control" id="specialRequests" name="specialRequests" rows="2"></textarea>
+                    </div>
+                    <div class="col-12">
+                        <label for="additionalEquipment" class="form-label">Équipements Supplémentaires</label>
+                        <input type="text" class="form-control" id="additionalEquipment" name="additionalEquipment" placeholder="Ex: ['projecteur', 'tableau']">
+                    </div>
+                </div>
+                <div class="d-flex justify-content-end mt-4">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-save me-1"></i> Enregistrer
+                    </button>
+                    <a href="{{ url_for('reservation.admin_bookings') }}" class="btn btn-outline-secondary ms-2">
+                        <i class="bi bi-x me-1"></i> Annuler
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    // Fonction pour mettre à jour l'unité de durée
+function updateDurationUnit() {
+    const bookingTypeSelect = document.getElementById('bookingType');
+    const durationUnitText = document.getElementById('durationUnit');
+
+    if (bookingTypeSelect && durationUnitText) {
+        const bookingType = bookingTypeSelect.value;
+
+        if (bookingType === 'hourly') {
+            durationUnitText.textContent = 'heures';
+        } else if (bookingType === 'daily') {
+            durationUnitText.textContent = 'jours';
+        } else if (bookingType === 'monthly') {
+            durationUnitText.textContent = 'mois';
+        }
+    }
+}
+
+// Fonction pour afficher/masquer le champ de capacité de la salle
+function toggleCapacityField() {
+    const spaceType = document.getElementById('spaceType').value;
+    const meetingCapacityField = document.getElementById('meetingCapacityField');
+
+    if (spaceType === 'meeting') {
+        meetingCapacityField.style.display = 'block';
+    } else {
+        meetingCapacityField.style.display = 'none';
+        // Réinitialiser la sélection lorsque le champ est masqué
+        document.getElementById('meetingCapacity').selectedIndex = 0;
+    }
+    calculatePrice();
+}
+
+// Fonction pour calculer la durée en fonction des dates
+function calculateDurationFromDates() {
+    const startDateInput = document.getElementById('startDatetime');
+    const endDateInput = document.getElementById('endDatetime');
+    const bookingType = document.getElementById('bookingType').value;
+    const durationInput = document.getElementById('duration');
+
+    if (!startDateInput || !endDateInput || !durationInput) return;
+
+    const startDate = new Date(startDateInput.value);
+    const endDate = new Date(endDateInput.value);
+
+    if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) return;
+
+    let duration = 0;
+    const diffTime = Math.abs(endDate - startDate);
+
+    if (bookingType === 'hourly') {
+        duration = Math.ceil(diffTime / (1000 * 60 * 60)); // heures
+    } else if (bookingType === 'daily') {
+        duration = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); // jours
+    } else if (bookingType === 'monthly') {
+        // Calcul approximatif des mois
+        let months = (endDate.getFullYear() - startDate.getFullYear()) * 12;
+        months += endDate.getMonth() - startDate.getMonth();
+        if (endDate.getDate() < startDate.getDate()) {
+            months--;
+        }
+        duration = Math.max(1, months);
+    }
+
+    durationInput.value = duration || '';
+    calculatePrice();
+}
+
+// Fonction pour calculer le prix
+function calculatePrice() {
+    const bookingType = document.getElementById('bookingType').value;
+    const spaceType = document.getElementById('spaceType').value;
+    const meetingCapacity = document.getElementById('meetingCapacity')?.value;
+    let duration = parseInt(document.getElementById('duration').value) || 0;
+
+    // Calculer la durée si elle n'est pas définie
+    if (!duration) {
+        calculateDurationFromDates();
+        duration = parseInt(document.getElementById('duration').value) || 0;
+    }
+
+    // Tarifs de base
+    let pricePerUnit = 0;
+
+    if (spaceType === 'private') {
+        if (bookingType === 'hourly') pricePerUnit = 30;
+        else if (bookingType === 'monthly') pricePerUnit = 3000;
+    }
+    else if (spaceType === 'open') {
+        if (bookingType === 'daily') pricePerUnit = 30;
+        else if (bookingType === 'monthly') pricePerUnit = 700;
+    }
+    else if (spaceType === 'meeting') {
+        if (bookingType === 'hourly') {
+            if (meetingCapacity === '8') pricePerUnit = 50;
+            else if (meetingCapacity === '15') pricePerUnit = 100;
+            else if (meetingCapacity === '23') pricePerUnit = 150;
+        }
+        else if (bookingType === 'monthly') {
+            if (meetingCapacity === '8') pricePerUnit = 5000;
+            else if (meetingCapacity === '15') pricePerUnit = 6500;
+            else if (meetingCapacity === '23') pricePerUnit = 8000;
+        }
+    }
+
+    // Calcul du prix total
+    let totalPrice = 0;
+    if (pricePerUnit && duration) {
+        totalPrice = pricePerUnit * duration;
+
+        // Réductions pour les réservations mensuelles longues
+        if (bookingType === 'monthly' && duration > 0) {
+            if (duration >= 3) totalPrice *= 0.95; // 5% de réduction pour 3 mois
+            if (duration >= 6) totalPrice *= 0.90; // 10% pour 6 mois
+            if (duration >= 12) totalPrice *= 0.85; // 15% pour 12 mois
+        }
+    }
+
+    // Mettre à jour le champ prix
+    const totalPriceField = document.getElementById('totalPrice');
+    if (totalPriceField) {
+        totalPriceField.value = Math.round(totalPrice * 100) / 100;
+    }
+}
+
+// Initialisation
+document.addEventListener('DOMContentLoaded', function() {
+    const bookingTypeSelect = document.getElementById('bookingType');
+    const spaceTypeSelect = document.getElementById('spaceType');
+    const startDateInput = document.getElementById('startDatetime');
+    const endDateInput = document.getElementById('endDatetime');
+    const durationInput = document.getElementById('duration');
+
+    // Événement pour changer le type de réservation
+    if (bookingTypeSelect) {
+        bookingTypeSelect.addEventListener('change', function() {
+            updateDurationUnit();
+            calculateDurationFromDates();
+            calculatePrice();
+        });
+    }
+
+    // Événement pour changer le type d'espace
+    if (spaceTypeSelect) {
+        spaceTypeSelect.addEventListener('change', function() {
+            toggleCapacityField();
+            calculatePrice();
+        });
+    }
+
+    // Événements pour les dates
+    if (startDateInput && endDateInput) {
+        startDateInput.addEventListener('change', calculateDurationFromDates);
+        endDateInput.addEventListener('change', calculateDurationFromDates);
+    }
+
+    // Événement pour la durée
+    if (durationInput) {
+        durationInput.addEventListener('input', calculatePrice);
+    }
+
+    // Événement pour la capacité de la salle
+    const meetingCapacitySelect = document.getElementById('meetingCapacity');
+    if (meetingCapacitySelect) {
+        meetingCapacitySelect.addEventListener('change', calculatePrice);
+    }
+
+    // Initialisation
+    updateDurationUnit();
+    toggleCapacityField();
+    calculatePrice();
+});
+
+
+
+
+
+
+</script>
+
+{% endblock %}

@@ -8,6 +8,9 @@ class Config:
     MAIL_USERNAME = "zaouj2005@yandex.com"
     MAIL_PASSWORD = "nmspthtyhtgywyjd"
 
+    MAIL_RECIPIENT = "zaoujalyoussef3@gmail.com"
+
+
     SECRET_KEY = "5f4d8e3b2a1c9f7e6d5c4b3a2d1e0f9e8d7c6b5a4f3e2d1c0b9a8f7e6d5c4b"
     SQLALCHEMY_DATABASE_URI = "sqlite:///monsite.db"
     SQLALCHEMY_TRACK_MODIFICATIONS = False

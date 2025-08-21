@@ -1,25 +1,88 @@
 {% extends "dashboard.html" %}
 
 {% block bookings %}
+
 <div class="container-fluid mt-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2><i class="bi bi-calendar-check me-2"></i> Gestion des Réservations</h2>
-        
-        <div class="dropdown">
-            <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="statusFilter" data-bs-toggle="dropdown">
-                <i class="bi bi-funnel me-1"></i>
-                {% if status_filter %}{{ status_filter|capitalize }}{% else %}Tous les statuts{% endif %}
-            </button>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{{ url_for('reservation.admin_bookings') }}">Toutes</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="{{ url_for('reservation.admin_bookings', status='pending') }}">En attente</a></li>
-                <li><a class="dropdown-item" href="{{ url_for('reservation.admin_bookings', status='confirmed') }}">Confirmées</a></li>
-                <li><a class="dropdown-item" href="{{ url_for('reservation.admin_bookings', status='cancelled') }}">Annulées</a></li>
-                <li><a class="dropdown-item" href="{{ url_for('reservation.admin_bookings', status='completed') }}">Terminées</a></li>
-            </ul>
+        <div class="d-flex align-items-center gap-3">
+            <!-- Formulaire de recherche existant -->
+            <form class="d-flex" method="GET" action="{{ url_for('reservation.admin_bookings') }}">
+                <div class="input-group">
+                    <input class="form-control" type="search" name="search" placeholder="Rechercher par nom" value="{{ search_query if search_query else '' }}">
+                    <button class="btn btn-outline-secondary" type="submit">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+                    <!-- Champs cachés pour conserver les autres filtres -->
+                {% if date_filter %}
+                <input type="hidden" name="date" value="{{ date_filter }}">
+                {% endif %}
+                {% if status_filter %}
+                <input type="hidden" name="status" value="{{ status_filter }}">
+                {% endif %}
+                <input type="hidden" name="page" value="1">
+            </form>
+
+
+
+            <!-- Bouton Nouvelle Réservation -->
+            <a href="{{ url_for('reservation.create_booking') }}" class="btn btn-primary">
+                <i class="bi bi-plus-lg me-1"></i> Nouvelle Réservation
+            </a>
+
+            <!-- Filtre de statut existant -->
+            <div class="dropdown">
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="statusFilter" data-bs-toggle="dropdown">
+                    <i class="bi bi-funnel me-1"></i>
+                    {% if status_filter %}{{ status_filter|capitalize }}{% else %}Tous les statuts{% endif %}
+                </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{{ url_for('reservation.admin_bookings',
+                                status=None,
+                                search=search_query if search_query else '',
+                                date=date_filter if date_filter else '',
+                                page=1) }}">Toutes</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="{{ url_for('reservation.admin_bookings',
+                                status='pending',
+                                search=search_query if search_query else '',
+                                date=date_filter if date_filter else '',
+                                page=1) }}">En attente</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('reservation.admin_bookings',
+                                status='confirmed',
+                                search=search_query if search_query else '',
+                                date=date_filter if date_filter else '',
+                                page=1) }}">Confirmées</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('reservation.admin_bookings',
+                                status='cancelled',
+                                search=search_query if search_query else '',
+                                date=date_filter if date_filter else '',
+                                page=1) }}">Annulées</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('reservation.admin_bookings',
+                                status='completed',
+                                search=search_query if search_query else '',
+                                date=date_filter if date_filter else '',
+                                page=1) }}">Terminées</a></li>
+                    </ul>
+
+            </div>
         </div>
     </div>
+
+        {% if search_query %}
+        <div class="alert alert-info mt-3">
+            Résultats de la recherche pour "<strong>{{ search_query }}</strong>"
+            {% if date_filter %}- Filtré par date: <strong>{{ date_filter }}</strong>{% endif %}
+        </div>
+        {% elif date_filter %}
+        <div class="alert alert-info mt-3">
+            Filtré par date: <strong>{{ date_filter }}</strong>
+        </div>
+        {% endif %}
+
+
+
 
     <div class="card shadow-sm">
         <div class="card-body">
@@ -69,12 +132,23 @@
                             <td>
                                 {% if booking.space_type == 'private' %}
                                     Bureau Privé
+                                    {% if booking.space_number %}
+                                    <span class="badge bg-light text-dark ms-1">{{ booking.space_number }}</span>
+                                    {% endif %}
                                 {% elif booking.space_type == 'open' %}
                                     Open Space
+                                    {% if booking.space_number %}
+                                    <span class="badge bg-light text-dark ms-1">{{ booking.space_number }}</span>
+                                    {% endif %}
                                 {% else %}
                                     Salle Réunion
+                                    {% if booking.meeting_capacity %}
+                                        - Capacité : {{ booking.meeting_capacity }} personnes
+                                        <span class="badge bg-light text-dark ms-1">{{ booking.space_number }}</span>
+                                    {% endif %}
                                 {% endif %}
                             </td>
+
                             <td>{{ booking.total_price }} DH</td>
                             <td>
                                 <span class="badge rounded-pill 
@@ -104,34 +178,182 @@
             </div>
 
             <!-- Pagination -->
+            <!-- Pagination -->
+            <!-- Pagination -->
             <nav aria-label="Page navigation" class="mt-4">
                 <ul class="pagination justify-content-center">
                     {% if bookings.has_prev %}
                     <li class="page-item">
-                        <a class="page-link" href="{{ url_for('reservation.admin_bookings', page=bookings.prev_num, status=status_filter) }}">
+                        <a class="page-link" href="{{ url_for('reservation.admin_bookings',
+                                page=bookings.prev_num,
+                                status=status_filter if status_filter else '',
+                                search=search_query if search_query else '',
+                                date=date_filter if date_filter else '') }}">
                             &laquo;
                         </a>
                     </li>
                     {% endif %}
-
                     {% for num in bookings.iter_pages() %}
                     <li class="page-item {% if num == bookings.page %}active{% endif %}">
-                        <a class="page-link" href="{{ url_for('reservation.admin_bookings', page=num, status=status_filter) }}">
+                        <a class="page-link" href="{{ url_for('reservation.admin_bookings',
+                                page=num,
+                                status=status_filter if status_filter else '',
+                                search=search_query if search_query else '',
+                                date=date_filter if date_filter else '') }}">
                             {{ num }}
                         </a>
                     </li>
                     {% endfor %}
-
                     {% if bookings.has_next %}
                     <li class="page-item">
-                        <a class="page-link" href="{{ url_for('reservation.admin_bookings', page=bookings.next_num, status=status_filter) }}">
+                        <a class="page-link" href="{{ url_for('reservation.admin_bookings',
+                                page=bookings.next_num,
+                                status=status_filter if status_filter else '',
+                                search=search_query if search_query else '',
+                                date=date_filter if date_filter else '') }}">
                             &raquo;
                         </a>
                     </li>
                     {% endif %}
                 </ul>
             </nav>
+
+            <!-- Filtre de date en bas à droite -->
+            <!-- Filtre de date en bas à droite avec un meilleur design -->
+            <div class="row mt-4">
+                <div class="col-md-12 d-flex justify-content-end">
+                    <div class="card shadow-sm" style="width: 350px;">
+                        <div class="card-body p-3">
+                            <form method="GET" action="{{ url_for('reservation.admin_bookings') }}" class="d-flex align-items-center">
+                                <!-- Input date avec style amélioré -->
+                                <div class="input-group me-2 flex-grow-1">
+                                    <span class="input-group-text bg-light border-end-0">
+                                        <i class="bi bi-calendar"></i>
+                                    </span>
+                                    <input type="date"
+                                        class="form-control border-start-0"
+                                        name="date"
+                                        id="dateFilter"
+                                        value="{{ date_filter if date_filter else '' }}"
+                                        style="padding-left: 0;">
+                                </div>
+
+                                <!-- Bouton Filtrer avec meilleur style -->
+                                <button type="submit"
+                                        class="btn btn-primary d-flex align-items-center justify-content-center me-2"
+                                        style="width: 120px; height: 40px; padding: 0 1rem;">
+                                    <i class="bi bi-filter me-1"></i>
+                                    <span>Filtrer</span>
+                                </button>
+
+                                <!-- Bouton Réinitialiser conditionnel -->
+                                {% if date_filter %}
+                                <a href="{{ url_for('reservation.admin_bookings',
+                                        status=status_filter if status_filter else '',
+                                        search=search_query if search_query else '',
+                                        page=1) }}"
+                                class="btn btn-outline-danger d-flex align-items-center justify-content-center"
+                                style="width: 40px; height: 40px; padding: 0;">
+                                    <i class="bi bi-x-lg"></i>
+                                </a>
+                                {% endif %}
+
+                                <!-- Champs cachés pour préserver les autres filtres -->
+                                {% if status_filter %}
+                                <input type="hidden" name="status" value="{{ status_filter }}">
+                                {% endif %}
+                                {% if search_query %}
+                                <input type="hidden" name="search" value="{{ search_query }}">
+                                {% endif %}
+                                <input type="hidden" name="page" value="1">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
         </div>
     </div>
 </div>
+<style>
+    .badge.bg-light.text-dark {
+        font-size: 0.8em;
+        font-weight: normal;
+        padding: 0.2em 0.4em;
+    }
+    <style>
+    /* Style pour le filtre de date */
+    .date-filter-card {
+        transition: all 0.3s ease;
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .date-filter-card:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+    #dateFilter {
+        border-top-right-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
+    }
+    .input-group-text {
+        border-top-left-radius: 10px !important;
+        border-bottom-left-radius: 10px !important;
+        background-color: #f8f9fa !important;
+    }
+
+    /* Pour mobile */
+    @media (max-width: 768px) {
+        .card[style*="width: 350px"] {
+            width: 100% !important;
+        }
+        .d-flex.form {
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .d-flex.form button {
+            width: 100% !important;
+        }
+    }
+</style>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const dateFilterForm = document.querySelector('#dateFilterForm');
+
+    // Empêcher la soumission automatique quand on change la date
+    const dateInput = document.getElementById('dateFilter');
+    if (dateInput) {
+        dateInput.addEventListener('change', function(e) {
+            // Ne pas empêcher la soumission, mais on pourrait ajouter une validation ici
+        });
+
+        // Si vous voulez une soumission automatique quand une date est sélectionnée :
+        // dateFilterForm.addEventListener('change', function() {
+        //     this.submit();
+        // });
+    }
+
+    // Ajout d'un effet de hover sur le bouton de réinitialisation
+    const resetButtons = document.querySelectorAll('.btn-outline-danger');
+    resetButtons.forEach(button => {
+        button.addEventListener('mouseenter', function() {
+            this.style.transform = 'scale(1.05)';
+        });
+        button.addEventListener('mouseleave', function() {
+            this.style.transform = 'scale(1)';
+        });
+    });
+});
+</script>
+
+</script>
+
+
+
 {% endblock %}

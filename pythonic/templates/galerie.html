@@ -1,0 +1,519 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+    <style>
+        :root {
+            --primary-gold: #B8952A;
+            --dark-gold: #9A7D22;
+            --light-gold: #D4B83A;
+            --elegant-dark: #1a1a1a;
+            --elegant-gray: #2d2d2d;
+            --soft-white: #fafafa;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, var(--elegant-dark) 0%, var(--elegant-gray) 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="0.5" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            padding: 120px 0 80px;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 300;
+            letter-spacing: -2px;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, #ffffff 0%, var(--light-gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            font-weight: 300;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Filter Navigation */
+        .filter-nav {
+            background: white;
+            border-radius: 60px;
+            padding: 8px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            display: inline-flex;
+            margin: 60px 0;
+        }
+
+        .filter-btn {
+            padding: 16px 32px;
+            border: none;
+            background: transparent;
+            border-radius: 50px;
+            font-weight: 500;
+            color: var(--elegant-dark);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .filter-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--primary-gold) 0%, var(--dark-gold) 100%);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: -1;
+        }
+
+        .filter-btn.active::before,
+        .filter-btn:hover::before {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .filter-btn.active,
+        .filter-btn:hover {
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(184, 149, 42, 0.3);
+        }
+
+        /* Gallery Grid */
+        .gallery-container {
+            padding: 0 20px 120px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: pointer;
+            background: white;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform: translateY(0);
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.15);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.9));
+            padding: 30px;
+            transform: translateY(100%);
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+
+        .gallery-overlay h3 {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            transform: translateY(30px);
+            opacity: 0;
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.1s;
+        }
+
+        .gallery-overlay p {
+            color: rgba(255,255,255,0.8);
+            font-size: 1rem;
+            margin: 0;
+            transform: translateY(30px);
+            opacity: 0;
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.2s;
+        }
+
+        .gallery-item:hover .gallery-overlay h3,
+        .gallery-item:hover .gallery-overlay p {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .gallery-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, var(--primary-gold) 0%, var(--dark-gold) 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.3s;
+        }
+
+        .gallery-item:hover .gallery-badge {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Modal */
+        .modal-content {
+            background: transparent;
+            border: none;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .modal-body {
+            padding: 0;
+        }
+
+        .modal img {
+            width: 100%;
+            max-height: 80vh;
+            object-fit: contain;
+            border-radius: 20px;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--elegant-dark) 0%, var(--primary-gold) 100%);
+            color: white;
+            text-align: center;
+            padding: 100px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60"><defs><pattern id="dots" width="60" height="60" patternUnits="userSpaceOnUse"><circle cx="30" cy="30" r="1.5" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="60" height="60" fill="url(%23dots)"/></svg>');
+            animation: float 20s linear infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateX(-50%) translateY(-50%) rotate(0deg); }
+            100% { transform: translateX(-50%) translateY(-50%) rotate(360deg); }
+        }
+
+        .cta-btn {
+            background: white;
+            color: var(--elegant-dark);
+            padding: 18px 40px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            z-index: 2;
+        }
+
+        .cta-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--primary-gold) 0%, var(--light-gold) 100%);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: -1;
+        }
+
+        .cta-btn:hover::before {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .cta-btn:hover {
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        /* Animations */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .fade-in-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 20px;
+            }
+            
+            .filter-nav {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            
+            .filter-btn {
+                padding: 12px 24px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-content text-center">
+                <h1 class="hero-title fade-in-up">Galerie d'Excellence</h1>
+                <p class="hero-subtitle fade-in-up">Découvrez nos espaces premium conçus pour l'excellence, alliant sophistication et fonctionnalité dans chaque détail.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filter Navigation -->
+    <section class="py-5">
+        <div class="container text-center">
+            <div class="filter-nav fade-in-up">
+                <button class="filter-btn active" data-filter="*">
+                    <i class="fas fa-th me-2"></i>Tous les Espaces
+                </button>
+                <button class="filter-btn" data-filter="bureaux">
+                    <i class="fas fa-briefcase me-2"></i>Bureaux Privatifs
+                </button>
+                <button class="filter-btn" data-filter="open-space">
+                    <i class="fas fa-users me-2"></i>Open Space
+                </button>
+                <button class="filter-btn" data-filter="salles">
+                    <i class="fas fa-presentation-screen me-2"></i>Salles de Réunion
+                </button>
+                <button class="filter-btn" data-filter="communs">
+                    <i class="fas fa-coffee me-2"></i>Espaces Communs
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery -->
+    <section class="gallery-container">
+        <div class="gallery-grid" id="galleryGrid">
+            <!-- Gallery Items -->
+        </div>
+    </section>
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="galleryModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img src="" id="modalImage" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    
+    <script>
+        // Gallery data with all 15 images
+        const galleryData = [
+            { src: '/static/post1.jpg', title: 'Bureau Exécutif Premium', desc: 'Espace privatif haut de gamme avec vue panoramique', category: 'bureaux', badge: 'Premium' },
+            { src: '/static/post2.jpg', title: 'Open Space Innovation', desc: 'Environnement collaboratif moderne et inspirant', category: 'open-space', badge: 'Innovant' },
+            { src: '/static/post3.jpg', title: 'Salle de Réunion Prestige', desc: 'Équipement technologique de pointe pour vos réunions', category: 'salles', badge: 'Tech' },
+            { src: '/static/post4.jpg', title: 'Espace Détente Premium', desc: 'Zone de relaxation avec design contemporain', category: 'communs', badge: 'Confort' },
+            { src: '/static/post5.jpg', title: 'Bureau Directorial', desc: 'Espace de direction avec finitions luxueuses', category: 'bureaux', badge: 'Luxe' },
+            { src: '/static/post6.jpg', title: 'Hub Collaboratif', desc: 'Centre névralgique pour le travail en équipe', category: 'open-space', badge: 'Dynamique' },
+            { src: '/static/post7.jpg', title: 'Salle de Conférence', desc: 'Auditorium professionnel pour grandes présentations', category: 'salles', badge: 'Grand Format' },
+            { src: '/static/post8.jpg', title: 'Lounge Exécutif', desc: 'Espace de networking haut de gamme', category: 'communs', badge: 'Élégance' },
+            { src: '/static/post9.jpg', title: 'Studio Créatif', desc: 'Environnement inspirant pour les équipes créatives', category: 'bureaux', badge: 'Créatif' },
+            { src: '/static/post10.jpg', title: 'Espace Coworking Plus', desc: 'Zone de travail flexible et moderne', category: 'open-space', badge: 'Flexibilité' },
+            { src: '/static/post11.jpg', title: 'Boardroom Excellence', desc: 'Salle de conseil d\'administration prestigieuse', category: 'salles', badge: 'Prestige' },
+            { src: '/static/post12.jpg', title: 'Café Business', desc: 'Point de rencontre avec service premium', category: 'communs', badge: 'Premium' },
+            { src: '/static/post1.jpg', title: 'Suite Executive', desc: 'Bureau de direction avec salon intégré', category: 'bureaux', badge: 'Suite' },
+            { src: '/static/post2.jpg', title: 'Atelier Innovation', desc: 'Espace modulable pour sessions créatives', category: 'open-space', badge: 'Modulable' },
+            { src: '/static/post3.jpg', title: 'Salon VIP', desc: 'Espace d\'accueil exclusif pour clients privilégiés', category: 'communs', badge: 'VIP' }
+        ];
+
+        // Initialize gallery
+        function initializeGallery() {
+            const grid = document.getElementById('galleryGrid');
+            grid.innerHTML = '';
+
+            galleryData.forEach((item, index) => {
+                const galleryItem = document.createElement('div');
+                galleryItem.className = `gallery-item ${item.category} fade-in-up`;
+                galleryItem.innerHTML = `
+                    <img src="${item.src}" alt="${item.title}" loading="lazy">
+                    <div class="gallery-badge">${item.badge}</div>
+                    <div class="gallery-overlay">
+                        <h3>${item.title}</h3>
+                        <p>${item.desc}</p>
+                    </div>
+                `;
+                
+                // Add click event for modal
+                galleryItem.addEventListener('click', () => {
+                    document.getElementById('modalImage').src = item.src;
+                    new bootstrap.Modal(document.getElementById('galleryModal')).show();
+                });
+                
+                grid.appendChild(galleryItem);
+            });
+        }
+
+        // Filter functionality
+        function setupFilters() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const galleryItems = document.querySelectorAll('.gallery-item');
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Update active button
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+
+                    const filter = button.getAttribute('data-filter');
+                    
+                    galleryItems.forEach(item => {
+                        if (filter === '*' || item.classList.contains(filter)) {
+                            item.style.display = 'block';
+                            setTimeout(() => {
+                                item.style.opacity = '1';
+                                item.style.transform = 'translateY(0)';
+                            }, 100);
+                        } else {
+                            item.style.opacity = '0';
+                            item.style.transform = 'translateY(20px)';
+                            setTimeout(() => {
+                                item.style.display = 'none';
+                            }, 300);
+                        }
+                    });
+                });
+            });
+        }
+
+        // Scroll animations
+        function setupScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '50px'
+            });
+
+            document.querySelectorAll('.fade-in-up').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeGallery();
+            setupFilters();
+            setupScrollAnimations();
+            
+            // Staggered animation for gallery items
+            setTimeout(() => {
+                document.querySelectorAll('.gallery-item').forEach((item, index) => {
+                    setTimeout(() => {
+                        item.classList.add('visible');
+                    }, index * 100);
+                });
+            }, 500);
+        });
+
+        // Close modal on outside click
+        document.getElementById('galleryModal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) {
+                bootstrap.Modal.getInstance(e.target).hide();
+            }
+        });
+    </script>
+
+{% endblock %}

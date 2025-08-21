@@ -1,0 +1,557 @@
+{% extends "dashboard.html" %}
+{% block admin_stats %}
+<div class="tab-pane fade show active" id="nav-admin_stats" role="tabpanel" aria-labelledby="nav-admin_stats-tab">
+    <!-- Filtres -->
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Filtres de période</h5>
+        </div>
+        <div class="card-body">
+            <form method="GET" action="" class="row g-3 align-items-center">
+                <div class="col-md-2">
+                    <label class="form-label">Type de période:</label>
+                    <select name="filter_type" class="form-select" id="filterType">
+                        <option value="day" {% if filter_type == 'day' %}selected{% endif %}>Jour</option>
+                        <option value="month" {% if filter_type == 'month' %}selected{% endif %}>Mois</option>
+                        <option value="year" {% if filter_type == 'year' %}selected{% endif %}>Année</option>
+                    </select>
+                </div>
+                <!-- Filtres de date -->
+
+                <div class="col-md-2" id="dayFilter" {% if filter_type != 'day' %}style="display: none;"{% endif %}>
+                    <label class="form-label">Jour :</label>
+                    <input 
+                        type="date" 
+                        name="selected_date" 
+                        value="{{ selected_date }}" 
+                        class="form-control">
+                </div>
+                <div class="col-md-2" id="monthFilter" {% if filter_type != 'month' %}style="display: none;"{% endif %}>
+                    <label class="form-label">Mois:</label>
+                    <select name="selected_month" class="form-select">
+                        {% for year in range(2023, 2040) %}
+                            <optgroup label="{{ year }}">
+                                {% for month in range(1, 13) %}
+                                    {% set month_date = datetime(year, month, 1) %}
+                                    <option value="{{ year }}-{{ '%02d'|format(month) }}"
+                                            {% if (selected_month and selected_month == '%s-%02d'|format(year, month)) %}selected{% endif %}>
+                                        {{ month_date.strftime('%B %Y') }}
+                                    </option>
+                                {% endfor %}
+                            </optgroup>
+                        {% endfor %}
+                    </select>
+                </div>
+
+
+                <div class="col-md-2" id="yearFilter" {% if filter_type != 'year' %}style="display: none;"{% endif %}>
+                    <label class="form-label">Année :</label>
+                    <select name="selected_year" class="form-select">
+                        {% for year in years %}
+                            <option value="{{ year }}" {% if year == selected_year %}selected{% endif %}>
+                                {{ year }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+
+                <!-- Filtre par type d'espace -->
+                <div class="col-md-3">
+                    <label class="form-label">Type d'espace:</label>
+                    <select name="space_type" class="form-select">
+                        <option value="all">Tous les types</option>
+                        {% for space_type in available_space_types %}
+                        <option value="{{ space_type }}" {% if space_type == selected_space_type %}selected{% endif %}>
+                            {{ space_type }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label d-block">&nbsp;</label>
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="fas fa-filter me-1"></i> Appliquer
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Cartes de statistiques -->
+    <div class="row mb-4">
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Messages non lus</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ unread_messages }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-envelope fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Profit journalier {{ title_suffix }}</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ daily_profit }} DH</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-euro-sign fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Réservations (période)</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ total_bookings_period }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-danger shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Taux d'annulation</div>
+                            <div class="row no-gutters align-items-center">
+                                <div class="col-auto">
+                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ cancellation_rate }}%</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-times-circle fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <!-- Comparaison avec la période précédente -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card shadow">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Comparaison avec la période précédente</h6>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Nombre de réservations</h5>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h2 class="mb-0">{{ comparison_data.period.bookings }}</h2>
+                                            <p class="mb-0">{{ prev_period_label }}: {{ comparison_data.previous_period.bookings }}</p>
+                                        </div>
+                                        <div class="text-right">
+                                            {% if comparison_data.variations.bookings >= 0 %}
+                                            <span class="text-success">
+                                                <i class="fas fa-arrow-up"></i> {{ comparison_data.variations.bookings|round(1) }}%
+                                            </span>
+                                            {% else %}
+                                            <span class="text-danger">
+                                                <i class="fas fa-arrow-down"></i> {{ comparison_data.variations.bookings|round(1)|abs }}%
+                                            </span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="progress mt-3" style="height: 10px;">
+                                        <div class="progress-bar bg-info"
+                                             role="progressbar"
+                                             style="width: {% if comparison_data.previous_period.bookings > 0 %}{{ (comparison_data.period.bookings/comparison_data.previous_period.bookings)*100|round(1) }}{% else %}100{% endif %}%"
+                                             aria-valuenow="{% if comparison_data.previous_period.bookings > 0 %}{{ (comparison_data.period.bookings/comparison_data.previous_period.bookings)*100|round(1) }}{% else %}100{% endif %}"
+                                             aria-valuemin="0"
+                                             aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Revenu</h5>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h2 class="mb-0">{{ comparison_data.period.daily_profit|round(2) }} DH</h2>
+                                            <p class="mb-0">{{ prev_period_label }}: {{ comparison_data.previous_period.daily_profit|round(2) }} DH</p>
+                                        </div>
+                                        <div class="text-right">
+                                            {% if comparison_data.variations.revenue >= 0 %}
+                                            <span class="text-success">
+                                                <i class="fas fa-arrow-up"></i> {{ comparison_data.variations.revenue|round(1) }}%
+                                            </span>
+                                            {% else %}
+                                            <span class="text-danger">
+                                                <i class="fas fa-arrow-down"></i> {{ comparison_data.variations.revenue|round(1)|abs }}%
+                                            </span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="progress mt-3" style="height: 10px;">
+                                        <div class="progress-bar bg-success"
+                                             role="progressbar"
+                                             style="width: {% if comparison_data.previous_period.daily_profit > 0 %}{{ (comparison_data.period.daily_profit/comparison_data.previous_period.daily_profit)*100|round(1) }}{% else %}100{% endif %}%"
+                                             aria-valuenow="{% if comparison_data.previous_period.daily_profit > 0 %}{{ (comparison_data.period.daily_profit/comparison_data.previous_period.daily_profit)*100|round(1) }}{% else %}100{% endif %}"
+                                             aria-valuemin="0"
+                                             aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Graphiques -->
+    <div class="row mb-4">
+        <div class="col-xl-6 col-lg-6">
+            <div class="card shadow">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Performance par type d'espace</h6>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container" style="position: relative; height:300px; width:100%">
+                        <canvas id="spacePerformanceChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-6 col-lg-6">
+            <div class="card shadow">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Répartition des réservations par type</h6>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container" style="position: relative; height:300px; width:100%">
+                        <canvas id="bookingTypeChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Graphique principal -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card shadow">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Réservations {{ title_suffix }}</h6>
+                </div>
+                <div class="card-body">
+                    <div class="chart-area">
+                        <canvas id="bookingsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bouton d'export -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card shadow">
+                <div class="card-body text-right">
+                    <a href="{{ url_for('admin_stats.export_excel', filter_type=filter_type, selected_date=selected_date if filter_type == 'day' else None, selected_month=selected_month if filter_type == 'month' else None, selected_year=selected_year if filter_type == 'year' else None, space_type=selected_space_type) }}" class="btn btn-success">
+                        <i class="fas fa-file-export"></i> Exporter les données
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tableaux -->
+    <div class="row">
+        <div class="col-xl-6 col-lg-6">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Statut des Réservations</h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" width="100%" cellspacing="0">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Statut</th>
+                                    <th>Nombre</th>
+                                    <th>Valeur</th>
+                                    <th>%</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for stat in booking_stats %}
+                                <tr>
+                                    <td>
+                                        <span class="badge bg-{{ stat.status_class }}">{{ stat.status_label }}</span>
+                                    </td>
+                                    <td>{{ stat.count }}</td>
+                                    <td>{{ stat.daily_profit | round(2) }} DH</td>
+                                    <td>{{ stat.percentage }}%</td>
+                                </tr>
+                                {% else %}
+                                <tr>
+                                    <td colspan="4" class="text-center">Aucune réservation trouvée</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                           
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-6 col-lg-6">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Statut des Messages</h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" width="100%" cellspacing="0">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Statut</th>
+                                    <th>Nombre</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for stat in message_stats %}
+                                <tr>
+                                    <td>
+                                        <span class="badge bg-{{ stat.status_class }}">{{ stat.status_label }}</span>
+                                    </td>
+                                    <td>{{ stat.count }}</td>
+                                </tr>
+                                {% else %}
+                                <tr>
+                                    <td colspan="2" class="text-center">Aucun message trouvé</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Réservations récentes -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Réservations ({{ recent_bookings|length }})</h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Référence</th>
+                                    <th>Client</th>
+                                    <th>Type</th>
+                                    <th>Type de réservation</th>  <!-- Ajoutez cette ligne -->
+                                    <th>Durée</th>  <!-- Ajoutez cette ligne -->
+                                    <th>Date</th>
+                                    <th>Montant</th>
+                                    <th>Statut</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for booking in recent_bookings %}
+                                <tr>
+                                    <td>{{ booking.reference }}</td>
+                                    <td>{{ booking.client_name }}</td>
+                                    <td>{{ booking.space_type or 'N/A' }}</td>
+                                    <td>{{ booking.booking_type or 'N/A' }}</td>  <!--  Ajoutez cette ligne -->
+                                    <td>{{ booking.duration }}</td>  <!--  Ajoutez cette ligne -->
+                                    <td>{{ booking.booking_date }}</td>
+                                    <td>{{ booking.amount | round(2) }} DH</td>
+                                    <td>
+                                        <span class="badge bg-{{ booking.status_class }}">{{ booking.status }}</span>
+                                    </td>
+                                    <td>
+                                        <a href="/dashboard/bookings/{{ booking.id }}" class="btn btn-sm btn-info">
+                                           <i class="fas fa-eye"></i> Détails
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% else %}
+                                <tr>
+                                    <td colspan="8" class="text-center text-muted">
+                                        Aucune réservation pour cette période
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Scripts pour les graphiques -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Gestion de l'affichage des filtres
+    function updateFilterVisibility() {
+        var filterType = document.getElementById('filterType').value;
+        document.getElementById('dayFilter').style.display = filterType === 'day' ? 'block' : 'none';
+        document.getElementById('monthFilter').style.display = filterType === 'month' ? 'block' : 'none';
+        document.getElementById('yearFilter').style.display = filterType === 'year' ? 'block' : 'none';
+    }
+    document.getElementById('filterType').addEventListener('change', updateFilterVisibility);
+    updateFilterVisibility();
+
+    // Graphique principal des réservations
+    var ctx = document.getElementById('bookingsChart').getContext('2d');
+    var bookingsChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: {{ dates | tojson }},
+            datasets: [{
+                label: 'Nombre de réservations',
+                data: {{ booking_counts | tojson }},
+                backgroundColor: 'rgba(78, 115, 223, 0.7)',
+                borderColor: 'rgba(78, 115, 223, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 1
+                    }
+                }
+            }
+        }
+    });
+
+    // Graphique de répartition par type de réservation
+    var ctxBookingType = document.getElementById('bookingTypeChart').getContext('2d');
+    var bookingTypeChart = new Chart(ctxBookingType, {
+        type: 'doughnut',
+        data: {
+            labels: {{ booking_type_names | tojson }},
+            datasets: [{
+                data: {{ booking_type_counts | tojson }},
+                backgroundColor: [
+                    'rgba(54, 162, 235, 0.7)',
+                    'rgba(255, 206, 86, 0.7)',
+                    'rgba(255, 99, 132, 0.7)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'right'
+                }
+            }
+        }
+    });
+
+    // Graphique de performance par type d'espace
+    var ctxSpacePerf = document.getElementById('spacePerformanceChart').getContext('2d');
+    var spacePerformanceChart = new Chart(ctxSpacePerf, {
+        type: 'bar',
+        data: {
+            labels: {{ space_type_names | tojson }},
+            datasets: [
+                {
+                    label: 'Revenu (DH)',
+                    data: {{ revenue_data | tojson }},
+                    backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                    yAxisID: 'y'
+                },
+                {
+                    label: 'Durée moyenne (jours)',
+                    data: {{ avg_duration_data | tojson }},
+                    backgroundColor: 'rgba(255, 99, 132, 0.7)',
+                    yAxisID: 'y1'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    type: 'linear',
+                    display: true,
+                    position: 'left',
+                    title: {
+                        display: true,
+                        text: 'Revenu (DH)'
+                    }
+                },
+                y1: {
+                    type: 'linear',
+                    display: true,
+                    position: 'right',
+                    title: {
+                        display: true,
+                        text: 'Durée moyenne (jours)'
+                    },
+                    grid: {
+                        drawOnChartArea: false
+                    }
+                }
+            }
+        }
+    });
+});
+</script>
+
+<style>
+    .border-left-primary { border-left: 0.25rem solid #4e73df !important; }
+    .border-left-success { border-left: 0.25rem solid #1cc88a !important; }
+    .border-left-info { border-left: 0.25rem solid #36b9cc !important; }
+    .border-left-warning { border-left: 0.25rem solid #f6c23e !important; }
+    .border-left-secondary { border-left: 0.25rem solid #858796 !important; }
+    .border-left-danger { border-left: 0.25rem solid #e74a3b !important; }
+    .border-left-dark { border-left: 0.25rem solid #5a5c69 !important; }
+    .chart-area {
+        position: relative;
+        height: 300px;
+        width: 100%;
+    }
+    .card-header {
+        background: linear-gradient(45deg, #f8f9fc, #e3e6f0);
+    }
+</style>
+{% endblock admin_stats %}

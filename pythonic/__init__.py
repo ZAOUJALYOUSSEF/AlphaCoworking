@@ -49,6 +49,13 @@ def create_app(config_calss=Config):
     from pythonic.adminbp.routes import adminbp
     from pythonic.contact.routes import contact
     from pythonic.reservation.routes import booking_bp
+    from pythonic.admin_view.routes import admin_stats as admin_stats_blueprint
+
+    from pythonic.reclamation.routes import reclamation_bp
+
+
+    from pythonic.galerie.routes import galerie_bp
+    app.register_blueprint(galerie_bp)
 
     app.register_blueprint(adminbp)
     app.register_blueprint(main)
@@ -57,6 +64,10 @@ def create_app(config_calss=Config):
     app.register_blueprint(courses_bp)
     app.register_blueprint(errors)
     app.register_blueprint(contact)
-    app.register_blueprint(booking_bp, url_prefix='/reservation')
+    app.register_blueprint(booking_bp)
+    app.register_blueprint(admin_stats_blueprint)
+    app.register_blueprint(reclamation_bp)
+
+
 
     return app

@@ -5,6 +5,7 @@ from itsdangerous import URLSafeTimedSerializer as Serializer
 from flask import current_app
 
 
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
@@ -82,14 +83,16 @@ class ContactMessage(db.Model):
 
 class Booking(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    space_number = db.Column(db.String(20))  # Nouveau champ
     booking_type = db.Column(db.String(20), nullable=False)  # hourly, daily, monthly
-    space_type = db.Column(db.String(20), nullable=False)    # Ajoutez cette ligne
+    space_type = db.Column(db.String(20), nullable=True)    # Ajoutez cette ligne
     start_datetime = db.Column(db.DateTime, nullable=False)
     end_datetime = db.Column(db.DateTime, nullable=False)
     duration = db.Column(db.Integer, nullable=False)  # en heures, jours ou mois selon le type
     full_name = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(120), nullable=False)
     phone = db.Column(db.String(20), nullable=False)
+    meeting_capacity = db.Column(db.String(10), nullable=True)
     company = db.Column(db.String(50))
     special_requests = db.Column(db.Text)
     payment_method = db.Column(db.String(30), nullable=False)
@@ -100,3 +103,22 @@ class Booking(db.Model):
     
     def __repr__(self):
         return f"Booking('{self.full_name}', '{self.booking_type}', '{self.start_datetime}', '{self.status}')"
+    
+
+
+
+
+
+
+class Reclamation(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    client_name = db.Column(db.String(100), nullable=True)
+    client_email = db.Column(db.String(100), nullable=True)
+    title = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.Text, nullable=False)
+    status = db.Column(db.String(20), default='Nouvelle')
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def __repr__(self):
+        return f"Reclamation('{self.title}', '{self.client_name}')"
+
