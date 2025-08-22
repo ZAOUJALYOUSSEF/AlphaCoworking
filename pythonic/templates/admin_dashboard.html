@@ -86,7 +86,11 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Messages non lus</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ unread_messages }}</div>
+                            {% for stat in message_stats %}
+                            {% if stat.status_label == "new" %}
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ stat.count }}</div>
+                            {% endif %}
+                            {% endfor %}
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-envelope fa-2x text-gray-300"></i>
@@ -276,7 +280,10 @@
         <div class="col-12">
             <div class="card shadow">
                 <div class="card-body text-right">
-                    <a href="{{ url_for('admin_stats.export_excel', filter_type=filter_type, selected_date=selected_date if filter_type == 'day' else None, selected_month=selected_month if filter_type == 'month' else None, selected_year=selected_year if filter_type == 'year' else None, space_type=selected_space_type) }}" class="btn btn-success">
+                <p class="text-muted mb-2 text-primary">
+                    Exportez <strong>les données de la période sélectionnée ci-dessus</strong> sous format Excel.
+                </p>                    
+                <a href="{{ url_for('admin_stats.export_excel', filter_type=filter_type, selected_date=selected_date if filter_type == 'day' else None, selected_month=selected_month if filter_type == 'month' else None, selected_year=selected_year if filter_type == 'year' else None, space_type=selected_space_type) }}" class="btn btn-success">
                         <i class="fas fa-file-export"></i> Exporter les données
                     </a>
                 </div>
@@ -430,6 +437,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     document.getElementById('filterType').addEventListener('change', updateFilterVisibility);
     updateFilterVisibility();
+
 
     // Graphique principal des réservations
     var ctx = document.getElementById('bookingsChart').getContext('2d');

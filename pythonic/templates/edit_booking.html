@@ -119,15 +119,19 @@
                             <option value="completed" {% if booking.status == 'completed' %}selected{% endif %}>Terminée</option>
                         </select>
                     </div>
+                    <div class="col-md-4">
+                        <label for="createdBy" class="form-label">Créé par *</label>
+                        <select class="form-select" id="createdBy" name="createdBy" required>
+                            <option value="Bouchra" {% if booking.created_by == 'Bouchra' %}selected{% endif %}>Bouchra</option>
+                            <option value="Noura" {% if booking.created_by == 'Noura' %}selected{% endif %}>Noura</option>
+                        </select>
+                    </div>
+
                     <div class="col-12">
                         <label for="specialRequests" class="form-label">Demandes Spéciales</label>
                         <textarea class="form-control" id="specialRequests" name="specialRequests" rows="2">{{ booking.special_requests }}</textarea>
                     </div>
-                    <div class="col-12">
-                        <label for="additionalEquipment" class="form-label">Équipements Supplémentaires</label>
-                        <input type="text" class="form-control" id="additionalEquipment" name="additionalEquipment"
-                               value="{{ booking.additional_equipment }}">
-                    </div>
+
                 </div>
                 <div class="d-flex justify-content-end mt-4">
                     <button type="submit" class="btn btn-primary">

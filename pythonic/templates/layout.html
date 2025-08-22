@@ -8,9 +8,7 @@
     <meta name="description" content="ALPHA Coworking - Espace de travail premium pour professionnels exigeants. Bureaux privatifs, salles de réunion et espaces collaboratifs haut de gamme.">
     <meta name="keywords" content="coworking, espace de travail, bureau partagé, Paris, professionnels, premium">
     <!-- Favicon -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>α</text></svg>">
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" href="/static/logo.png" type="image/png">    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
@@ -22,27 +20,169 @@
 
     <style>
 
+/* ===== Base Mobile Responsive ===== */
+@media (max-width: 767.98px) {
+    /* Navigation */
+    .navbar-brand {
+        margin-right: 0;
+    }
+    .qc-logo {
+        width: 60px;
+        height: 60px;
+        margin-right: 8px;
+    }
+    .brand-name {
+        font-size: 1.2rem;
+    }
+    .navbar-collapse {
+        background-color: var(--blanc);
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        margin-top: 10px;
+    }
+    .nav-link {
+        padding: 8px 0;
+        margin: 0;
+        font-size: 0.95rem;
+    }
+    .dropdown-menu {
+        position: static;
+        width: 100%;
+        box-shadow: none;
+        border: none;
+    }
+    .dropdown-item {
+        padding: 8px 15px;
+    }
+
+    /* Hero Section */
+    .hero-section {
+        padding-top: 2.5rem;
+        padding-bottom: 2rem;
+        text-align: center;
+    }
+    .hero-section .display-4 {
+        font-size: 2rem !important;
+    }
+    .hero-section .lead {
+        font-size: 1rem;
+    }
+    .hero-section .btn-lg {
+        padding: 0.6rem 1.5rem;
+        font-size: 0.95rem;
+        width: 100%;
+        margin-top: 1rem;
+    }
+
+    /* Cards et Grilles */
+    .card {
+        margin-bottom: 1.5rem;
+    }
+    .ratio-16x9 {
+        --bs-aspect-ratio: 60%; /* Réduit la hauteur des images */
+    }
+
+    /* Footer */
+    footer .row.g-5 {
+        text-align: center;
+    }
+    footer .col-lg-4, footer .col-md-4 {
+        margin-bottom: 2rem;
+    }
+    .footer-logo-container {
+        justify-content: center;
+    }
+    .footer-link {
+        font-size: 0.9rem;
+    }
+
+    /* Boutons */
+    .btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+
+    /* Formulaires */
+    .form-control {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    /* Accordion */
+    .accordion-button {
+        padding: 1rem 1.25rem;
+        font-size: 0.95rem;
+    }
+
+    /* Contact Section */
+    #contact .row.g-4 {
+        flex-direction: column;
+    }
+    #contact .col-lg-6 {
+        margin-bottom: 2rem;
+    }
+
+    /* Carousels */
+    #meetingRoomImageCarousel .carousel-control-prev,
+    #meetingRoomImageCarousel .carousel-control-next {
+        width: 30px;
+        height: 30px;
+    }
+
+    /* Steps */
+    #bookingSteps {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding-bottom: 1rem;
+    }
+    #bookingSteps .nav-link {
+        flex: 0 0 auto;
+        white-space: nowrap;
+    }
+    .next-step, .prev-step {
+        width: 100%;
+        margin-top: 0.5rem;
+    }
+
+    /* Général */
+    body {
+        font-size: 0.9rem;
+    }
+    .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    .py-5 {
+        padding-top: 2rem !important;
+        padding-bottom: 2rem !important;
+    }
+    .mb-5 {
+        margin-bottom: 1.5rem !important;
+    }
+    .display-4, .display-5 {
+        font-size: 1.8rem;
+    }
+    .lead {
+        font-size: 1rem;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
 
         /* Dans votre CSS (ou dans un bloc <style> dans layout.html) */
-@media (max-width: 767.98px) {
-  .hero-section {
-    padding-top: 3rem;
-    padding-bottom: 2rem;
-  }
-  .hero-section .display-4 {
-    font-size: 2.2rem !important;
-  }
-  .hero-section .lead {
-    font-size: 1.1rem;
-  }
-  .hero-section .btn-lg {
-    padding: 0.5rem 1.2rem;
-    font-size: 0.9rem;
-  }
-  .hero-section img {
-    margin-bottom: 1.5rem;
-  }
-}
+
 @media (max-width: 767.98px) {
   .feature-icon i {
     font-size: 1.8rem !important;
@@ -160,6 +300,7 @@
 }
 
 
+
         /* Ajoutez ces styles pour remplacer les couleurs bleues */
         .btn-primary:focus, .btn-outline-primary:focus {
             box-shadow: 0 0 0 0.25rem rgba(141, 110, 99, 0.5) !important; /* couleur marron-dore avec transparence */
@@ -170,6 +311,7 @@
             background-color: var(--marron-fonce) !important;
             border-color: var(--marron-fonce) !important;
             box-shadow: 0 0 0 0.25rem rgba(93, 64, 55, 0.5) !important;
+
         }
 
         /* Pour les liens */
@@ -185,13 +327,17 @@
         }
         
         :root {
-            --marron-fonce: #B8952A;
-            --marron-dore: #C8A845;
-            --marron-clair: #967A1F;
-            --beige: #333333;
-            --beige-clair: #F8F9FA;
-            --blanc: #FFFFFF;
-            --noir: #212121;
+            --primary-gradient: linear-gradient(135deg, #f9c50d 0%, #ff9500 100%);
+            --primary-shadow: rgba(249, 197, 13, 0.4);
+            --primary-light: rgba(249, 197, 13, 0.1);
+
+            --marron-fonce: #daa60a; /* Variante plus foncée de votre couleur principale */
+            --marron-dore: #f9c50d;  /* Couleur principale */
+            --marron-clair: #fad450; /* Variante plus claire */
+            --beige: #333333;        /* Couleur pour le texte */
+            --beige-clair: #F8F9FA;  /* Fond clair */
+            --blanc: #FFFFFF;         /* Blanc */
+            --noir: #212121;         /* Noir pour le texte sombre */
             --transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
         }
 
@@ -218,30 +364,38 @@
         }
 
         .qc-logo {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
+            width: 90px; /* Augmentez cette valeur selon la taille souhaitée */
+            height: 90px; /* Augmentez cette valeur selon la taille souhaitée */
             background: linear-gradient(135deg, var(--blanc) 0%, var(--beige) 100%);
-            border: 2px solid var(--marron-dore);
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            box-shadow: 0 4px 12px rgba(61, 39, 35, 0.08);
             transition: var(--transition);
-            margin-right: 15px;
-        }
-
-        .qc-logo:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 16px rgba(61, 39, 35, 0.12);
+            margin-right: 10px; /* Réduisez cette valeur pour rapprocher le logo du titre */
         }
 
         .qc-logo img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border-radius: 50%;
+            /* Supprimer la propriété border-radius pour éviter le cercle */
+        }
+
+        .brand-namee {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            font-size: 1.5rem;
+            color: white;
+            position: relative;
+            transition: var(--transition);
+        }
+        .brand-namee span {
+            font-weight: 400;
+            color: white;
+            letter-spacing: 1px;
         }
 
         .brand-name {
@@ -303,6 +457,40 @@
             font-weight: 600;
             color: var(--marron-dore);
         }
+
+        .footer-logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 100%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .footer-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .footer-logo-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+
+
+        .footer-brand-name {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--marron-dore); /* Utilisez la couleur définie dans votre CSS */
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+
 
         /* Boutons */
         .btn {
@@ -425,7 +613,6 @@
         }
 
         .footer-link::before {
-            content: '→';
             position: absolute;
             left: -15px;
             opacity: 0;
@@ -510,7 +697,7 @@
 
         /* Custom utilities */
         .text-primary {
-            color: var(--marron-dore) !important;
+            color: var(--marron-fonce) !important;
         }
 
         .bg-light {
@@ -522,13 +709,57 @@
         }
 
         .text-muted {
-            color: var(--marron-clair) !important;
+            color: var(--marron-fonce) !important;
         }
 
         .opacity-75 {
             opacity: 0.75;
         }
 
+
+.dropdown-menu {
+    background-color: var(--blanc) !important;
+    border: 1px solid rgba(218, 166, 10, 0.15) !important;
+    box-shadow: 0 5px 20px rgba(61, 39, 35, 0.1) !important;
+}
+
+.dropdown-item {
+    color: var(--marron-fonce) !important;
+    transition: var(--transition);
+}
+
+.dropdown-item:hover, 
+.dropdown-item:focus {
+    background-color: var(--marron-clair) !important;
+    color: var(--blanc) !important;
+}
+
+.dropdown-header {
+    color: var(--marron-dore) !important;
+    font-weight: 600;
+}
+
+/* Correction du focus sur les boutons dropdown */
+.btn-outline-primary:focus {
+    box-shadow: 0 0 0 0.25rem rgba(218, 166, 10, 0.25) !important;
+}
+
+/* Styles spécifiques pour le dropdown d'administration */
+#loginDropdown {
+    color: var(--marron-dore) !important;
+    border-color: var(--marron-dore) !important;
+}
+
+#loginDropdown:hover {
+    background-color: var(--marron-dore) !important;
+    color: var(--blanc) !important;
+}
+
+#loginDropdown.show {
+    background-color: var(--marron-dore) !important;
+    color: var(--blanc) !important;
+    border-color: var(--marron-dore) !important;
+}
 
 
 
@@ -539,15 +770,14 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light sticky-top">
         <div class="container">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand me-auto" href="{{url_for('main.home')}}">
                 <div class="qc-logo">
-                    <!-- Remplacement du SVG par une image de logo -->
                     <img src="/static/logo.jpg" alt="ALPHA Coworking Logo">
                 </div>
                 <span class="brand-name">ALPHA<span>coworking</span></span>
             </a>
-            
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+            <!-- Bouton du menu à droite du logo -->
+            <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             
@@ -557,14 +787,14 @@
                         <a class="nav-link active" href="{{url_for('main.home')}}">Accueil</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Nos espaces</a>
+                        <a class="nav-link" href="{{url_for('main.home')}}#gallery">Nos espaces</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Tarifs</a>
+                        <a class="nav-link" href="{{url_for('main.home')}}#spaces">Tarifs</a>
                     </li>
                   
                     <li class="nav-item">
-                        <a class="nav-link" href="#contact">Contact</a>
+                        <a class="nav-link" href="{{url_for('main.home')}}#contact">Contact</a>
                     </li>
                 </ul>
                 
@@ -580,8 +810,15 @@
                         </ul>
                     </div>
                     {% else %}
-                    <a href="{{ url_for('users.register') }}" class="btn btn-primary me-3">S'inscrire</a>
-                    <a href="{{ url_for('users.login') }}" class="btn btn-outline-primary">Connexion</a>
+                    <div class="dropdown">
+                        <button class="btn btn-outline-primary dropdown-toggle" type="button" id="loginDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            Espace Administration
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="loginDropdown">
+                            <li><h6 class="dropdown-header">Accès administration</h6></li>
+                            <li><a class="dropdown-item" href="{{ url_for('users.login') }}">Connexion</a></li>
+                        </ul>
+                    </div>
                     {% endif %}
                 </div>
             </div>
@@ -607,32 +844,43 @@
         <div class="container">
             <div class="row g-5">
                 <div class="col-lg-4 mb-5 mb-lg-0">
-                    <div class="qc-logo footer-logo mx-auto mx-lg-0">
-                        <!-- Logo du footer également modifié -->
-                        <img src="/static/logo.jpg" alt="ALPHA Coworking Logo">
+                    <div class="footer-logo-container">
+
                     </div>
+                    <span class="brand-namee">ALPHA<span>coworking</span></span>
+
+
                     <p class="mt-3 opacity-75">Espace de coworking premium pour professionnels exigeants. Conçu pour la productivité et l'inspiration.</p>
                     <div class="d-flex mt-4">
-                        <a href="#" class="social-icon"><i class="bi bi-facebook"></i></a>
-                        <a href="#" class="social-icon"><i class="bi bi-instagram"></i></a>
-                        <a href="#" class="social-icon"><i class="bi bi-linkedin"></i></a>
-                        <a href="#" class="social-icon"><i class="bi bi-twitter"></i></a>
+                        <a href="https://www.facebook.com/p/Alpha-coworking-100076172052076/" 
+                        class="social-icon" 
+                        target="_blank" 
+                        rel="noopener noreferrer">
+                        <i class="bi bi-facebook"></i>
+                        </a>
+                        
+                        <a href="https://www.instagram.com/alphacoworking.ma/?hl=ar" 
+                        class="social-icon" 
+                        target="_blank" 
+                        rel="noopener noreferrer">
+                        <i class="bi bi-instagram"></i>
+                        </a>
                     </div>
+
                 </div>
                 
                 <div class="col-md-4 col-lg-2 mb-4 mb-md-0">
                     <h5 class="footer-heading">Liens rapides</h5>
-                    <a href="#" class="footer-link">Accueil</a>
-                    <a href="#" class="footer-link">Nos espaces</a>
-                    <a href="#" class="footer-link">Tarifs</a>
-                    <a href="#" class="footer-link">Événements</a>
-                    <a href="#" class="footer-link">Contact</a>
+                    <a href="{{url_for('main.home')}}" class="footer-link">Accueil</a>
+                    <a href="#gallery" class="footer-link">Nos espaces</a>
+                    <a href="#spaces" class="footer-link">Tarifs</a>
+                    <a href="#contact" class="footer-link">Contact</a>
                 </div>
                 
                 <div class="col-md-4 col-lg-3 mb-4 mb-md-0">
                     <h5 class="footer-heading">Contact</h5>
-                    <p class="opacity-75"><i class="bi bi-geo-alt-fill me-2"></i> 123 Rue du Travail, 75000 Paris</p>
-                    <p class="opacity-75"><i class="bi bi-telephone-fill me-2"></i> +33 1 23 45 67 89</p>
+                    <p class="opacity-75"><i class="bi bi-geo-alt-fill me-2"></i> 39 Av. Sanhaja, Tanger 90060، Maroc</p>
+                    <p class="opacity-75"><i class="bi bi-telephone-fill me-2"></i> +212 5399-40885</p>
                     <p class="opacity-75"><i class="bi bi-envelope-fill me-2"></i> contact@alpha-coworking.fr</p>
                 </div>
                 
@@ -641,7 +889,6 @@
                     <p class="opacity-75"><i class="bi bi-clock me-2"></i> Lun-Ven: 8h - 20h</p>
                     <p class="opacity-75"><i class="bi bi-clock me-2"></i> Sam: 9h - 18h</p>
                     <p class="opacity-75"><i class="bi bi-clock me-2"></i> Dim: Fermé</p>
-                    <p class="mt-4"><span class="badge bg-primary">24/7</span> pour membres Premium</p>
                 </div>
             </div>
             
@@ -649,12 +896,9 @@
             
             <div class="row">
                 <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                    <p class="mb-0 opacity-75">&copy; 2023 ALPHA Coworking. Tous droits réservés.</p>
+                    <p class="mb-0 opacity-75">&copy; 2025 ALPHA Coworking. Tous droits réservés.</p>
                 </div>
-                <div class="col-md-6 text-center text-md-end">
-                    <a href="#" class="footer-link d-inline-block me-4">Mentions légales</a>
-                    <a href="#" class="footer-link d-inline-block">Politique de confidentialité</a>
-                </div>
+
             </div>
         </div>
     </footer>

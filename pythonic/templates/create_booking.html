@@ -105,13 +105,17 @@
                             <option value="completed">Terminée</option>
                         </select>
                     </div>
+                    <div class="col-md-4">
+                        <label for="createdBy" class="form-label">Créé par *</label>
+                        <select class="form-select" id="createdBy" name="createdBy" required>
+                            <option value="Bouchra">Bouchra</option>
+                            <option value="Noura">Noura</option>
+                        </select>
+                    </div>
+
                     <div class="col-12">
                         <label for="specialRequests" class="form-label">Demandes Spéciales</label>
                         <textarea class="form-control" id="specialRequests" name="specialRequests" rows="2"></textarea>
-                    </div>
-                    <div class="col-12">
-                        <label for="additionalEquipment" class="form-label">Équipements Supplémentaires</label>
-                        <input type="text" class="form-control" id="additionalEquipment" name="additionalEquipment" placeholder="Ex: ['projecteur', 'tableau']">
                     </div>
                 </div>
                 <div class="d-flex justify-content-end mt-4">

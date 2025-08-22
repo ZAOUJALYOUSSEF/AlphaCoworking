@@ -4,6 +4,8 @@ from flask_login import current_user
 from pythonic import admin, db, bcrypt
 from pythonic.models import User, Lesson, Course,Booking,ContactMessage,Reclamation
 from flask_admin import AdminIndexView
+from flask import Blueprint, request, send_file
+from flask_login import current_user, login_required
 
 adminbp = Blueprint("adminbp", __name__)
 
@@ -11,8 +13,7 @@ adminbp = Blueprint("adminbp", __name__)
 class UserModelView(ModelView):
     def on_model_change(self, form, model, is_created):
         model.password = bcrypt.generate_password_hash(form.password.data).decode(
-            "utf-8)"
-        )
+            "utf-8)")
 
     def is_accessible(self):
         return current_user.is_authenticated and current_user.id == 1
@@ -34,4 +35,14 @@ admin.add_view(MyModelView(Course, db.session))
 admin.add_view(MyModelView(Booking, db.session))
 admin.add_view(MyModelView(ContactMessage,db.session))
 admin.add_view(MyModelView(Reclamation,db.session))
+
+
+
+
+
+
+
+
+
+
 

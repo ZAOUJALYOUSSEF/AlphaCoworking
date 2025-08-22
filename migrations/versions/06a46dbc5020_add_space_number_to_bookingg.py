@@ -22,6 +22,9 @@ def upgrade():
         batch_op.add_column(sa.Column('meeting_capacity', sa.String(length=10), nullable=True))
 
     # ### end Alembic commands ###
+    with op.batch_alter_table('booking', schema=None) as batch_op:
+        batch_op.add_column(sa.Column('created_by', sa.String(length=10), nullable=True))
+    
 
 
 def downgrade():

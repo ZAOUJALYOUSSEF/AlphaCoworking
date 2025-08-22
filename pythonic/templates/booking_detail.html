@@ -90,17 +90,7 @@
                             </div>
                         </div>
                     </div>
-                    
-                    {% if booking.additional_equipment %}
-                    <div class="mb-3">
-                        <h6>Équipements supplémentaires:</h6>
-                        <ul>
-                            {% for equipment in booking.additional_equipment %}
-                            <li>{{ equipment }}</li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                    {% endif %}
+
                     
                     {% if booking.special_requests %}
                     <div class="mb-3">

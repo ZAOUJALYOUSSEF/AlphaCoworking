@@ -9,6 +9,10 @@ import calendar
 from openpyxl import Workbook
 from openpyxl.styles import Font, Alignment
 from io import BytesIO
+import pandas as pd
+from openpyxl.styles import Font, PatternFill, Border, Side, Alignment
+from flask import Blueprint, request, send_file
+
 
 @admin_stats.route("/dashboard/admin_stats")
 @login_required
@@ -338,33 +342,49 @@ def stats_dashboard():
             'avg_duration': stat['avg_duration'] or 0
         })
 
+
     # Graphique principal (réservations par heure/jour/mois)
     if filter_type == 'day':
         dates = [f"{hour:02d}:00" for hour in range(24)]
         booking_counts = [0] * 24
+
+        # Utiliser les mêmes filtres que pour les réservations récentes
         day_bookings = Booking.query.filter(
-            or_(
-                and_(
-                    cast(Booking.start_datetime, Date) == start_date,
-                    cast(Booking.end_datetime, Date) == start_date
-                ),
-                and_(
-                    cast(Booking.start_datetime, Date) <= start_date,
-                    cast(Booking.end_datetime, Date) >= start_date
-                )
-            ),
-            Booking.status == 'confirmed',
-            *space_type_filters
+            *filters,  # Utilise les filtres déjà définis (inclut la période et le type d'espace)
+            Booking.status == 'confirmed'
         ).all()
 
-        for hour in range(24):
-            count = 0
-            hour_start = datetime.combine(start_date, time(hour, 0))
-            hour_end = datetime.combine(start_date, time(hour, 59, 59))
-            for booking in day_bookings:
-                if (booking.start_datetime <= hour_end and booking.end_datetime >= hour_start):
-                    count += 1
-            booking_counts[hour] = count
+        print(f"Nombre de réservations trouvées pour le jour : {len(day_bookings)}")
+
+        for booking in day_bookings:
+            # Ignorer les réservations sans dates
+            if not booking.start_datetime or not booking.end_datetime:
+                continue
+
+            # Limiter la réservation à la journée sélectionnée
+            booking_start = max(booking.start_datetime, datetime.combine(start_date, datetime.min.time()))
+            booking_end = min(booking.end_datetime, datetime.combine(start_date, datetime.max.time()))
+
+            # Pour chaque heure de la journée
+            for hour in range(24):
+                hour_start = datetime.combine(start_date, time(hour, 0))
+                hour_end = datetime.combine(start_date, time(hour, 59, 59))
+
+                # Si la réservation chevauche cette heure
+                if booking_start <= hour_end and booking_end >= hour_start:
+                    booking_counts[hour] += 1
+
+        print("Booking counts après calcul :", booking_counts)
+
+
+
+
+
+
+ 
+
+
+
 
     elif filter_type == 'month':
         dates = []
@@ -609,216 +629,160 @@ def stats_dashboard():
 
     )
 
+
+
+
+
+
+
+
+
+
+def generate_styled_excel(data, filename="export.xlsx"):
+    df = pd.DataFrame(data)
+    buffer = BytesIO()
+    with pd.ExcelWriter(buffer, engine='openpyxl') as writer:
+        df.to_excel(writer, index=False, sheet_name='Données')
+        workbook = writer.book
+        worksheet = writer.sheets['Données']
+
+        # Styles
+        header_font = Font(bold=True, color="FFFFFF", size=12)
+        header_fill = PatternFill(start_color="4F81BD", end_color="4F81BD", fill_type="solid")
+        border = Border(left=Side(style='thin'), right=Side(style='thin'), top=Side(style='thin'), bottom=Side(style='thin'))
+        alignment = Alignment(horizontal='center', vertical='center')
+
+        # Appliquer les styles aux en-têtes
+        for cell in worksheet[1]:
+            cell.font = header_font
+            cell.fill = header_fill
+            cell.border = border
+            cell.alignment = alignment
+
+        # Appliquer les bordures et l'alignement à toutes les cellules
+        for row in worksheet.iter_rows(min_row=2, max_row=len(df)+1, min_col=1, max_col=len(df.columns)):
+            for cell in row:
+                cell.border = border
+                cell.alignment = alignment
+
+        # Ajuster la largeur des colonnes
+        for column in worksheet.columns:
+            max_length = 0
+            column_letter = column[0].column_letter
+            for cell in column:
+                try:
+                    if len(str(cell.value)) > max_length:
+                        max_length = len(str(cell.value))
+                except:
+                    pass
+            adjusted_width = (max_length + 2) * 1.2
+            worksheet.column_dimensions[column_letter].width = adjusted_width
+
+    buffer.seek(0)
+    return send_file(
+        buffer,
+        as_attachment=True,
+        download_name=filename,
+        mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    )
 @admin_stats.route("/dashboard/admin_stats/export_excel")
 @login_required
 def export_excel():
     # Récupérer les paramètres de filtre
-    filter_type = request.args.get('filter_type', 'day')
-    space_type_filter = request.args.get('space_type', 'all')
-    today = datetime.now().date()
+    filter_type = request.args.get('filter_type')
+    selected_date = request.args.get('selected_date')
+    selected_month = request.args.get('selected_month')
+    selected_year = request.args.get('selected_year')
+    space_type = request.args.get('space_type')
 
-    # Gestion des dates
-    if filter_type == 'day':
-        selected_date = request.args.get('selected_date', today.strftime('%Y-%m-%d'))
-        try:
-            filter_date = datetime.strptime(selected_date, '%Y-%m-%d').date()
-            start_date = filter_date
-            end_date = filter_date
-        except:
-            filter_date = today
-            start_date = today
-            end_date = today
-    elif filter_type == 'month':
-        selected_month = request.args.get('selected_month', today.strftime('%Y-%m'))
-        try:
-            year, month = map(int, selected_month.split('-'))
-            start_date = date(year, month, 1)
-            end_date = date(year, month, calendar.monthrange(year, month)[1])
-            title_suffix = f"de {start_date.strftime('%B %Y')}"
-        except:
-            start_date = date(today.year, today.month, 1)
-            end_date = date(today.year, today.month, calendar.monthrange(today.year, today.month)[1])
-            title_suffix = f"de {start_date.strftime('%B %Y')}"
+    # Initialiser la requête
+    query = Booking.query
 
+    # Définir les dates de début et de fin de la période filtrée
+    start_period = None
+    end_period = None
 
-
-    elif filter_type == 'year':
-        selected_year = request.args.get('selected_year', str(today.year))
-        try:
-            year = int(selected_year)
-            start_date = date(year, 1, 1)
-            end_date = date(year, 12, 31)
-        except:
-            start_date = date(today.year, 1, 1)
-            end_date = date(today.year, 12, 31)
-
-    # Construire le filtre pour le type d'espace
-    space_type_filters = []
-    if space_type_filter != 'all' and space_type_filter:
-        space_type_filters = [Booking.space_type == space_type_filter]
-
-    # Créer des filtres de date basés sur les dates d'utilisation
-    date_filters = [
-        Booking.start_datetime <= datetime.combine(end_date, datetime.max.time()),
-        Booking.end_datetime >= datetime.combine(start_date, datetime.min.time())
-    ]
-    filters = date_filters + space_type_filters
-
-    # Récupérer toutes les réservations pour la période
-    bookings = Booking.query.filter(*filters).order_by(Booking.date_created.desc()).all()
-
-    # Créer un nouveau workbook Excel
-    wb = Workbook()
-    ws = wb.active
-    ws.title = "Réservations"
-
-    # Ajouter les en-têtes
-    headers = [
-        "ID", "Référence", "Nom du client", "Email", "Téléphone",
-        "Type d'espace", "Type de réservation", "Date de début", "Heure de début",
-        "Date de fin", "Heure de fin", "Statut", "Prix total",
-        "Date de création", "Nombre de jours", "Remarques"
-    ]
-    ws.append(headers)
-
-    # Ajouter les données des réservations
-    for booking in bookings:
-        start_date_str = booking.start_datetime.strftime('%d/%m/%Y') if booking.start_datetime else ''
-        start_time_str = booking.start_datetime.strftime('%H:%M') if booking.start_datetime else ''
-        end_date_str = booking.end_datetime.strftime('%d/%m/%Y') if booking.end_datetime else ''
-        end_time_str = booking.end_datetime.strftime('%H:%M') if booking.end_datetime else ''
-
-        if booking.start_datetime and booking.end_datetime:
-            delta = booking.end_datetime - booking.start_datetime
-            duration_days = delta.days + (delta.seconds > 0)
+    if filter_type == 'day' and selected_date:
+        selected_date = datetime.strptime(selected_date, '%Y-%m-%d').date()
+        start_period = datetime.combine(selected_date, datetime.min.time())
+        end_period = datetime.combine(selected_date, datetime.max.time())
+        query = query.filter(
+            db.or_(
+                db.and_(
+                    Booking.start_datetime <= end_period,
+                    Booking.end_datetime >= start_period
+                ),
+                db.and_(
+                    Booking.start_datetime >= start_period,
+                    Booking.start_datetime <= end_period
+                )
+            )
+        )
+    elif filter_type == 'month' and selected_month:
+        year, month = map(int, selected_month.split('-'))
+        if month == 12:
+            end_year = year + 1
+            end_month = 1
         else:
-            duration_days = 0
+            end_year = year
+            end_month = month + 1
+        start_period = datetime(year, month, 1)
+        end_period = datetime(end_year, end_month, 1) - timedelta(days=1)
+        query = query.filter(
+            db.or_(
+                db.and_(
+                    Booking.start_datetime <= end_period,
+                    Booking.end_datetime >= start_period
+                ),
+                db.and_(
+                    Booking.start_datetime >= start_period,
+                    Booking.start_datetime <= end_period
+                )
+            )
+        )
+    elif filter_type == 'year' and selected_year:
+        start_period = datetime(int(selected_year), 1, 1)
+        end_period = datetime(int(selected_year), 12, 31, 23, 59, 59)
+        query = query.filter(
+            db.or_(
+                db.and_(
+                    Booking.start_datetime <= end_period,
+                    Booking.end_datetime >= start_period
+                ),
+                db.and_(
+                    Booking.start_datetime >= start_period,
+                    Booking.start_datetime <= end_period
+                )
+            )
+        )
 
-        row = [
-            booking.id,
-            f"RES{booking.id:06d}",
-            booking.full_name,
-            booking.email,
-            booking.phone,
-            booking.space_type,
-            booking.booking_type,
-            start_date_str,
-            start_time_str,
-            end_date_str,
-            end_time_str,
-            booking.status,
-            booking.total_price,
-            booking.date_created.strftime('%d/%m/%Y %H:%M') if booking.date_created else '',
-            duration_days,
-            booking.special_requests or ''
-        ]
-        ws.append(row)
+    if space_type and space_type != 'all':
+        query = query.filter(Booking.space_type == space_type)
 
-    # Ajouter une feuille avec les statistiques
-    stats_sheet = wb.create_sheet(title="Statistiques")
-    stats_headers = ["Statistique", "Valeur", "Description"]
-    stats_sheet.append(stats_headers)
+    # Récupérer les réservations
+    bookings = query.order_by(Booking.start_datetime).all()
 
-    total_bookings = len(bookings)
-    total_revenue = sum([b.total_price for b in bookings if b.total_price]) if bookings else 0
-
-    stats_data = [
-        ["Nombre total de réservations", total_bookings, "Nombre total de réservations dans la période"],
-        ["Revenu total", total_revenue, "Somme de tous les montants des réservations"],
-        ["Période", f"Du {start_date.strftime('%d/%m/%Y')} au {end_date.strftime('%d/%m/%Y')}", "Période couverte par ces données"]
-    ]
-    for row in stats_data:
-        stats_sheet.append(row)
-
-    # Ajouter une feuille avec les statistiques par type d'espace
-    space_type_sheet = wb.create_sheet(title="Par type d'espace")
-    space_headers = ["Type d'espace", "Nombre", "Revenu total", "Durée moyenne (jours)"]
-    space_type_sheet.append(space_headers)
-
-    space_stats = {}
+    # Préparer les données pour l'export
+    data = []
     for booking in bookings:
-        space_type = booking.space_type or "Non spécifié"
-        if space_type not in space_stats:
-            space_stats[space_type] = {
-                'count': 0,
-                'revenue': 0,
-                'total_days': 0
-            }
-        space_stats[space_type]['count'] += 1
-        space_stats[space_type]['revenue'] += booking.total_price or 0
-        if booking.start_datetime and booking.end_datetime:
-            delta = booking.end_datetime - booking.start_datetime
-            duration_days = delta.days + (delta.seconds > 0)
-            space_stats[space_type]['total_days'] += duration_days
+        data.append({
+            "ID": booking.id,
+            "Référence": f"RES{booking.id:06d}",
+            "Numéro d'espace": booking.space_number or "N/A",
+            "Type de réservation": booking.booking_type,
+            "Type d'espace": booking.space_type or "N/A",
+            "Date de début": booking.start_datetime.strftime('%d/%m/%Y %H:%M') if booking.start_datetime else '',
+            "Date de fin": booking.end_datetime.strftime('%d/%m/%Y %H:%M') if booking.end_datetime else '',
+            "Durée": f"{booking.duration} {'heure(s)' if booking.booking_type == 'hourly' else 'jour(s)' if booking.booking_type == 'daily' else 'mois'}",
+            "Client": booking.full_name,
+            "Email": booking.email,
+            "Téléphone": booking.phone,
+            "Entreprise": booking.company or "N/A",
+            "Demandes spéciales": booking.special_requests or "Aucune",
+            "Méthode de paiement": booking.payment_method,
+            "Montant total": f"{booking.total_price} DH",
+            "Statut": booking.status,
+            "Créé par": booking.created_by,
+        })
 
-    for space_type, stats in space_stats.items():
-        avg_duration = stats['total_days'] / stats['count'] if stats['count'] > 0 else 0
-        row = [
-            space_type,
-            stats['count'],
-            stats['revenue'],
-            avg_duration
-        ]
-        space_type_sheet.append(row)
-
-    total_count = sum([stats['count'] for stats in space_stats.values()])
-    total_revenue = sum([stats['revenue'] for stats in space_stats.values()])
-    total_days = sum([stats['total_days'] for stats in space_stats.values()])
-    avg_duration_all = total_days / total_count if total_count > 0 else 0
-    space_type_sheet.append(["Total", total_count, total_revenue, avg_duration_all])
-
-    # Appliquer des styles de base
-    header_font = Font(bold=True)
-    for cell in ws[1]:
-        cell.font = header_font
-    for cell in stats_sheet[1]:
-        cell.font = header_font
-    for cell in space_type_sheet[1]:
-        cell.font = header_font
-
-    # Ajuster la largeur des colonnes
-    for column in ws.columns:
-        max_length = 0
-        column_letter = column[0].column_letter
-        for cell in column:
-            try:
-                if len(str(cell.value)) > max_length:
-                    max_length = len(str(cell.value))
-            except:
-                pass
-        adjusted_width = (max_length + 2) * 1.2
-        ws.column_dimensions[column_letter].width = adjusted_width
-
-    for column in stats_sheet.columns:
-        max_length = 0
-        column_letter = column[0].column_letter
-        for cell in column:
-            try:
-                if len(str(cell.value)) > max_length:
-                    max_length = len(str(cell.value))
-            except:
-                pass
-        adjusted_width = (max_length + 2) * 1.2
-        stats_sheet.column_dimensions[column_letter].width = adjusted_width
-
-    for column in space_type_sheet.columns:
-        max_length = 0
-        column_letter = column[0].column_letter
-        for cell in column:
-            try:
-                if len(str(cell.value)) > max_length:
-                    max_length = len(str(cell.value))
-            except:
-                pass
-        adjusted_width = (max_length + 2) * 1.2
-        space_type_sheet.column_dimensions[column_letter].width = adjusted_width
-
-    # Créer une réponse Flask pour télécharger le fichier
-    virtual_workbook = BytesIO()
-    wb.save(virtual_workbook)
-    virtual_workbook.seek(0)
-
-    response = make_response(virtual_workbook.getvalue())
-    response.headers['Content-Disposition'] = f"attachment; filename=reservations_{start_date.strftime('%Y%m%d')}_to_{end_date.strftime('%Y%m%d')}.xlsx"
-    response.headers['Content-Type'] = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    return response
+    return generate_styled_excel(data, filename="statistiques_export.xlsx")

@@ -3,30 +3,585 @@
 
 
 
-<!-- Hero Section (inchangé) -->
-<section class="hero-section bg-light" aria-labelledby="hero-heading" data-aos="fade-up">
-  <div class="container py-5">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="hero-section bg-light" aria-labelledby="hero-heading" style="position: relative; overflow: hidden; padding: 6rem 0; background: linear-gradient(135deg, #F8F9FA 0%, #e6e6e6 100%) !important;">
+  <div style="position: absolute; top: -50%; right: -10%; width: 600px; height: 600px; background: rgba(255, 158, 27, 0.08); border-radius: 50%; z-index: 0;"></div>
+  <div style="position: absolute; bottom: -30%; left: -10%; width: 500px; height: 500px; background: rgba(255, 158, 27, 0.05); border-radius: 50%; z-index: 0;"></div>
+  
+  <div class="container py-5" style="position: relative; z-index: 2;">
     <div class="row align-items-center">
       <!-- Texte -->
       <div class="col-lg-6 order-lg-1 order-2" data-aos="fade-right" data-aos-delay="200">
-        <h1 id="hero-heading" class="display-4 fw-bold mb-4">
-          Votre espace de travail <span class="text-warning">sur-mesure</span>
+        <h1 id="hero-heading" class="display-4 fw-bold mb-4" style="font-weight: 800; line-height: 1.2; color: #1A1A1A;">
+          Votre espace de travail <span style="color: #FF9E1B !important; position: relative; display: inline-block;">sur-mesure</span>
         </h1>
-        <p class="lead mb-4" data-aos="fade-right" data-aos-delay="400">
-          Découvrez nos espaces de coworking modernes et flexibles.
+        <p class="lead mb-4" data-aos="fade-right" data-aos-delay="400" style="font-size: 1.25rem; font-weight: 500; color: #4a4a4a;">
+          Découvrez nos espaces de coworking modernes et flexibles, conçus pour stimuler la productivité et favoriser la collaboration.
         </p>
-        <div class="d-flex gap-3" data-aos="fade-right" data-aos-delay="600">
-          <a href="#booking" class="btn btn-warning btn-lg px-4">Réserver Maintenant</a>
-          <a href="#spaces" class="btn btn-outline-warning btn-lg px-4">Découvrir nos Espaces</a>
+        <div class="d-flex gap-3 flex-wrap" data-aos="fade-right" data-aos-delay="600">
+          <a href="#booking" class="btn btn-lg px-4 py-3 btn-primary-hero" >Réserver Maintenant</a>
+          <a href="#spaces" class="btn btn-lg px-4 py-3 btn-secondary-hero" >Découvrir nos Espaces</a>
+        </div>
+        
+        <!-- Stats -->
+        <div class="row mt-5 pt-3" data-aos="fade-up" data-aos-delay="800">
+          <div class="col-4">
+            <h4 class="fw-bold mb-0" style="color: #FF9E1B;">70+</h4>
+            <p class="text-muted mb-0">Espaces</p>
+          </div>
+          <div class="col-4">
+            <h4 class="fw-bold mb-0" style="color: #FF9E1B;">500+</h4>
+            <p class="text-muted mb-0">Réservations/mois</p>
+          </div>
+          <div class="col-4">
+            <h4 class="fw-bold mb-0" style="color: #FF9E1B;">100%</h4>
+            <p class="text-muted mb-0">Espaces Flexibles</p>
+          </div>
         </div>
       </div>
+      
       <!-- Image -->
-      <div class="col-lg-6 order-lg-2 order-1 mb-4 mb-lg-0" data-aos="fade-left" data-aos-delay="200">
-        <img src="{{url_for('static', filename='thumb.jpg')}}" class="img-fluid rounded shadow-lg" alt="Espace de coworking" loading="lazy">
+      
+      <!-- Remplacez votre div image actuel par celui-ci -->
+      <div class="col-lg-6 order-lg-2 order-1 mb-4 mb-lg-0" data-aos="fade-left" data-aos-delay="200" style="position: relative; perspective: 1000px;">
+        <div class="image-slider-container" style="position: relative; overflow: hidden; border-radius: 16px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);">
+          <img src="/static/thumb.jpg" class="img-fluid hero-image active" alt="Espace de coworking moderne" loading="lazy">
+          <img src="/static/post6.jpg" class="img-fluid hero-image" alt="Salle de réunion équipée" loading="lazy">
+          <img src="/static/post2.jpg" class="img-fluid hero-image" alt="Espace détente et networking" loading="lazy">
+          <img src="/static/post10.jpg" class="img-fluid hero-image" alt="Bureau privé moderne" loading="lazy">
+          
+          <!-- Indicateurs de navigation -->
+          <div class="slider-indicators">
+            <span class="indicator active" data-slide="0"></span>
+            <span class="indicator" data-slide="1"></span>
+            <span class="indicator" data-slide="2"></span>
+            <span class="indicator" data-slide="3"></span>
+          </div>
+          
+          <!-- Overlay avec effet de transition -->
+          <div class="slide-overlay"></div>
+        </div>
       </div>
     </div>
   </div>
 </section>
+
+
+
+
+<style>
+/* Styles pour le slider d'images */
+.image-slider-container {
+  position: relative;
+  width: 100%;
+  height: 380px;
+  overflow: hidden;
+  border-radius: 16px !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15) !important;
+  transform: rotateY(-5deg) rotateX(5deg);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.image-slider-container:hover {
+  transform: rotateY(0) rotateX(0) !important;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2) !important;
+}
+
+.hero-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transform: scale(1.1) translateX(100px);
+  transition: all 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+  filter: blur(3px);
+}
+
+.hero-image.active {
+  opacity: 1;
+  transform: scale(1) translateX(0);
+  filter: blur(0);
+}
+
+.hero-image.prev {
+  opacity: 0;
+  transform: scale(0.95) translateX(-100px);
+  filter: blur(3px);
+}
+
+/* Indicateurs élégants */
+.slider-indicators {
+  position: absolute;
+  bottom: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 12px;
+  z-index: 10;
+}
+
+.indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.indicator.active {
+  background: #FF9E1B;
+  transform: scale(1.2);
+  box-shadow: 0 0 20px rgba(255, 158, 27, 0.6);
+  border-color: rgba(255, 158, 27, 0.8);
+}
+
+.indicator:hover:not(.active) {
+  background: rgba(255, 255, 255, 0.7);
+  transform: scale(1.1);
+}
+
+/* Overlay pour les transitions fluides */
+.slide-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, transparent 0%, rgba(255, 158, 27, 0.1) 50%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.image-slider-container:hover .slide-overlay {
+  opacity: 1;
+}
+
+/* Effet de brillance subtil */
+.hero-image::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+  transform: rotate(45deg) translateX(-100%);
+  transition: transform 2s cubic-bezier(0.19, 1, 0.22, 1);
+  pointer-events: none;
+}
+
+.hero-image.active::after {
+  transform: rotate(45deg) translateX(100%);
+}
+
+@media (max-width: 992px) {
+  .image-slider-container {
+    transform: none !important;
+    margin-top: 2rem;
+    height: 350px;
+  }
+  
+  .slider-indicators {
+    bottom: 15px;
+  }
+  
+  .indicator {
+    width: 10px;
+    height: 10px;
+  }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const images = document.querySelectorAll('.hero-image');
+  const indicators = document.querySelectorAll('.indicator');
+  let currentSlide = 0;
+  let slideInterval;
+
+  // Fonction pour changer de slide avec animation élégante
+  function changeSlide(newSlide, direction = 'next') {
+    if (newSlide === currentSlide) return;
+
+    const currentImage = images[currentSlide];
+    const newImage = images[newSlide];
+    const currentIndicator = indicators[currentSlide];
+    const newIndicator = indicators[newSlide];
+
+    // Animation de sortie de l'image actuelle
+    currentImage.classList.remove('active');
+    currentImage.classList.add('prev');
+    currentIndicator.classList.remove('active');
+
+    // Petite pause pour l'effet de transition
+    setTimeout(() => {
+      // Reset de l'ancienne image
+      currentImage.classList.remove('prev');
+      
+      // Animation d'entrée de la nouvelle image
+      newImage.classList.add('active');
+      newIndicator.classList.add('active');
+      
+      currentSlide = newSlide;
+    }, 200);
+  }
+
+  // Auto-play avec progression fluide
+  function startSlideShow() {
+    slideInterval = setInterval(() => {
+      const nextSlide = (currentSlide + 1) % images.length;
+      changeSlide(nextSlide);
+    }, 4000); // Change toutes les 4 secondes
+  }
+
+  // Pause au survol
+  function pauseSlideShow() {
+    clearInterval(slideInterval);
+  }
+
+  // Gestion des clics sur les indicateurs
+  indicators.forEach((indicator, index) => {
+    indicator.addEventListener('click', () => {
+      pauseSlideShow();
+      changeSlide(index);
+      // Reprendre après 6 secondes
+      setTimeout(startSlideShow, 6000);
+    });
+  });
+
+  // Contrôles tactiles pour mobile
+  let startX = 0;
+  const container = document.querySelector('.image-slider-container');
+  
+  container.addEventListener('touchstart', (e) => {
+    startX = e.touches[0].clientX;
+    pauseSlideShow();
+  });
+
+  container.addEventListener('touchend', (e) => {
+    const endX = e.changedTouches[0].clientX;
+    const diff = startX - endX;
+
+    if (Math.abs(diff) > 50) { // Minimum swipe distance
+      if (diff > 0) {
+        // Swipe gauche - image suivante
+        const nextSlide = (currentSlide + 1) % images.length;
+        changeSlide(nextSlide);
+      } else {
+        // Swipe droite - image précédente
+        const prevSlide = (currentSlide - 1 + images.length) % images.length;
+        changeSlide(prevSlide);
+      }
+    }
+    
+    setTimeout(startSlideShow, 6000);
+  });
+
+  // Pause/reprise au survol
+  container.addEventListener('mouseenter', pauseSlideShow);
+  container.addEventListener('mouseleave', startSlideShow);
+
+  // Démarrer le slideshow
+  startSlideShow();
+});
+</script>
+
+<style>
+
+
+  @keyframes float {
+    0% {
+      transform: translateY(0) rotate(0deg);
+    }
+    50% {
+      transform: translateY(-15px) rotate(5deg);
+    }
+    100% {
+      transform: translateY(0) rotate(0deg);
+    }
+  }
+          
+  
+
+  
+  @media (max-width: 992px) {
+    .hero-section {
+      padding: 4rem 0 !important;
+      text-align: center;
+    }
+    
+    .hero-section h1 {
+      font-size: 2.5rem !important;
+    }
+    
+    .hero-section .floating-element {
+      display: none;
+    }
+    
+    .hero-section img {
+      transform: none !important;
+      margin-top: 2rem;
+    }
+  }
+        .btn-secondary-hero {
+            background: transparent;
+            border: 2px solid var(--marron-dore);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary-hero:hover {
+            background: var(--primary-light);
+            border-color: var(--marron-dore);
+            transform: translateY(-2px);
+            color: var(--marron-dore);
+            text-decoration: none;
+            box-shadow: 0 10px 30px var(--primary-shadow);
+        }
+.btn-primary-hero {
+            background: var(--primary-gradient);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: white;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+  .btn-primary-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+.btn-primary-hero:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 40px var(--primary-shadow);
+            color: #0c0c0c;
+            text-decoration: none;
+        }
+
+.btn-primary-hero:hover::before {
+            left: 100%;
+        }
+
+
+
+
+
+</style>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  // Initialisation des animations au défilement
+  document.addEventListener('DOMContentLoaded', function() {
+    AOS.init({
+      duration: 800,
+      easing: 'ease-out-quad',
+      once: true,
+      offset: 100
+    });
+    
+
+  });
+
+document.addEventListener('DOMContentLoaded', function() {
+  const images = document.querySelectorAll('.hero-image');
+  const indicators = document.querySelectorAll('.indicator');
+  let currentSlide = 0;
+  let slideInterval;
+
+  // Fonction pour changer de slide avec animation élégante
+  function changeSlide(newSlide, direction = 'next') {
+    if (newSlide === currentSlide) return;
+
+    const currentImage = images[currentSlide];
+    const newImage = images[newSlide];
+    const currentIndicator = indicators[currentSlide];
+    const newIndicator = indicators[newSlide];
+
+    // Animation de sortie de l'image actuelle
+    currentImage.classList.remove('active');
+    currentImage.classList.add('prev');
+    currentIndicator.classList.remove('active');
+
+    // Petite pause pour l'effet de transition
+    setTimeout(() => {
+      // Reset de l'ancienne image
+      currentImage.classList.remove('prev');
+      
+      // Animation d'entrée de la nouvelle image
+      newImage.classList.add('active');
+      newIndicator.classList.add('active');
+      
+      currentSlide = newSlide;
+    }, 200);
+  }
+
+  // Auto-play avec progression fluide
+  function startSlideShow() {
+    slideInterval = setInterval(() => {
+      const nextSlide = (currentSlide + 1) % images.length;
+      changeSlide(nextSlide);
+    }, 4000); // Change toutes les 4 secondes
+  }
+
+  // Pause au survol
+  function pauseSlideShow() {
+    clearInterval(slideInterval);
+  }
+
+  // Gestion des clics sur les indicateurs
+  indicators.forEach((indicator, index) => {
+    indicator.addEventListener('click', () => {
+      pauseSlideShow();
+      changeSlide(index);
+      // Reprendre après 6 secondes
+      setTimeout(startSlideShow, 6000);
+    });
+  });
+
+  // Contrôles tactiles pour mobile
+  let startX = 0;
+  const container = document.querySelector('.image-slider-container');
+  
+  container.addEventListener('touchstart', (e) => {
+    startX = e.touches[0].clientX;
+    pauseSlideShow();
+  });
+
+  container.addEventListener('touchend', (e) => {
+    const endX = e.changedTouches[0].clientX;
+    const diff = startX - endX;
+
+    if (Math.abs(diff) > 50) { // Minimum swipe distance
+      if (diff > 0) {
+        // Swipe gauche - image suivante
+        const nextSlide = (currentSlide + 1) % images.length;
+        changeSlide(nextSlide);
+      } else {
+        // Swipe droite - image précédente
+        const prevSlide = (currentSlide - 1 + images.length) % images.length;
+        changeSlide(prevSlide);
+      }
+    }
+    
+    setTimeout(startSlideShow, 6000);
+  });
+
+  // Pause/reprise au survol
+  container.addEventListener('mouseenter', pauseSlideShow);
+  container.addEventListener('mouseleave', startSlideShow);
+
+  // Démarrer le slideshow
+  startSlideShow();
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -549,6 +1104,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!-- Workspace Section (modifié) -->
 
 <section id="spaces" class="py-5 bg-light" aria-labelledby="spaces-heading" data-aos="fade-up">
@@ -861,12 +1434,12 @@ document.addEventListener('DOMContentLoaded', function() {
           <ul class="nav nav-pills nav-justified mb-5" id="bookingSteps" role="tablist">
             <li class="nav-item" role="presentation">
               <button class="nav-link active" id="step1-tab" data-bs-toggle="pill" data-bs-target="#step1" type="button" role="tab">
-                <span class="step-number">1</span> Type
+                <span class="step-number">1</span> Espace
               </button>
             </li>
             <li class="nav-item" role="presentation">
               <button class="nav-link" id="step2-tab" data-bs-toggle="pill" data-bs-target="#step2" type="button" role="tab" disabled>
-                <span class="step-number">2</span> Espace
+                <span class="step-number">2</span> Type
               </button>
             </li>
             <li class="nav-item" role="presentation">
@@ -888,8 +1461,89 @@ document.addEventListener('DOMContentLoaded', function() {
           
           <form id="premiumBookingForm" method="POST" action="{{ url_for('reservation.booking_form') }}" novalidate>
             <div class="tab-content" id="bookingStepsContent">
-              <!-- Étape 1: Type de Réservation -->
+              <!-- Étape 2: Sélection de l'Espace -->
               <div class="tab-pane fade show active" id="step1" role="tabpanel" aria-labelledby="step1-tab">
+                <h3 class="h4 mb-4 border-bottom pb-2">Sélection de l'Espace</h3>
+                <div class="row g-4">
+                  <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm hover-effect">
+                      <div class="card-body">
+                        <h4 class="h5">Bureau Privé</h4>
+                        <ul class="list-unstyled text-muted small mb-3">
+                          <li class="mb-1"><i class="bi bi-person-fill me-2"></i> 1 personne</li>
+                          <li class="mb-1"><i class="bi bi-wifi me-2"></i> Wi-Fi haut débit</li>
+                          <li><i class="bi bi-lock-fill me-2"></i> Espace privé</li>
+                        </ul>
+                        <div class="form-check">
+                          <input class="form-check-input" type="radio" name="spaceType" id="privateOffice" value="private" data-price-hourly="30" data-price-daily="" data-price-monthly="3000">
+                          <label class="form-check-label" for="privateOffice">
+                            Sélectionner
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm hover-effect">
+                      <div class="card-body">
+                        <h4 class="h5">Open Space</h4>
+                        <ul class="list-unstyled text-muted small mb-3">
+                          <li class="mb-1"><i class="bi bi-people-fill me-2"></i> Espace partagé</li>
+                          <li class="mb-1"><i class="bi bi-cup-hot-fill me-2"></i> Café gratuit</li>
+                          <li><i class="bi bi-clock-fill me-2"></i> Accès 24/7</li>
+                        </ul>
+                        <div class="form-check">
+                          <input class="form-check-input" type="radio" name="spaceType" id="openSpace" value="open" data-price-hourly="" data-price-daily="30" data-price-monthly="700">
+                          <label class="form-check-label" for="openSpace">
+                            Sélectionner
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm hover-effect">
+                      <div class="card-body">
+                        <h4 class="h5">Salle de Réunion</h4>
+                        <ul class="list-unstyled text-muted small mb-3">
+                          <li class="mb-1"><i class="bi bi-person-video3 me-2"></i> 8-23 personnes</li>
+                          <li class="mb-1"><i class="bi bi-tv-fill me-2"></i> Équipement pro</li>
+                          <li><i class="bi bi-collection-play-fill me-2"></i> Vidéoconférence</li>
+                        </ul>
+                        <div class="form-check">
+                          <input class="form-check-input" type="radio" name="spaceType" id="meetingRoom" value="meeting" data-price-hourly="50" data-price-daily="" data-price-monthly="5000">
+                          <label class="form-check-label" for="meetingRoom">
+                            Sélectionner
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Options supplémentaires pour la salle de réunion -->
+                <div class="mt-4" id="meetingRoomOptions" style="display: none;">
+                  <h5 class="h6 mb-3">Options de la Salle de Réunion</h5>
+                  <div class="row g-3">
+                    <div class="col-md-6">
+                      <label for="meetingCapacity" class="form-label">Capacité</label>
+                      <select class="form-select" id="meetingCapacity">
+                        <option value="8" data-price-hourly="50" data-price-daily="" data-price-monthly="5000">8 personnes</option>
+                        <option value="15" data-price-hourly="100" data-price-daily="" data-price-monthly="6500">15 personnes</option>
+                        <option value="23" data-price-hourly="150" data-price-daily="" data-price-monthly="8000">23 personnes</option>
+                      </select>
+                    </div>
+                    
+                  </div>
+                </div>
+                
+                <div class="d-flex justify-content-between mt-5">
+                  <button type="button" class="btn btn-secondary" disabled>Précédent</button>
+                  <button type="button" class="btn btn-primary next-step" data-next="#step2">Suivant</button>
+                </div>
+              </div>
+              <!-- Étape 1: Type de Réservation -->
+              <div class="tab-pane fade" id="step2" role="tabpanel" aria-labelledby="step2-tab">
                 <h3 class="h4 mb-4 border-bottom pb-2">Type de Réservation</h3>
                 <div class="row g-4">
                   <div class="col-md-4">
@@ -899,7 +1553,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         <h4 class="h5">À l'heure</h4>
                         <p class="text-muted small">Flexibilité maximale</p>
                         <div class="form-check d-flex justify-content-center">
-                          <input class="form-check-input" type="radio" name="bookingType" id="hourlyBooking" value="hourly" checked>
+                          <input class="form-check-input" type="radio" name="bookingType" id="hourlyBooking" value="hourly">
                           <label class="form-check-label ms-2" for="hourlyBooking">
                             Choix par heure
                           </label>
@@ -941,99 +1595,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
                 
                 <div class="d-flex justify-content-between mt-5">
-                  <button type="button" class="btn btn-secondary" disabled>Précédent</button>
-                  <button type="button" class="btn btn-primary next-step" data-next="#step2">Suivant</button>
-                </div>
-              </div>
-              
-              <!-- Étape 2: Sélection de l'Espace -->
-              <div class="tab-pane fade" id="step2" role="tabpanel" aria-labelledby="step2-tab">
-                <h3 class="h4 mb-4 border-bottom pb-2">Sélection de l'Espace</h3>
-                <div class="row g-4">
-                  <div class="col-md-4">
-                    <div class="card h-100 border-0 shadow-sm hover-effect">
-                      <div class="card-body">
-                        <h4 class="h5">Bureau Privé</h4>
-                        <ul class="list-unstyled text-muted small mb-3">
-                          <li class="mb-1"><i class="bi bi-person-fill me-2"></i> 1 personne</li>
-                          <li class="mb-1"><i class="bi bi-wifi me-2"></i> Wi-Fi haut débit</li>
-                          <li><i class="bi bi-lock-fill me-2"></i> Espace privé</li>
-                        </ul>
-                        <div class="form-check">
-                          <input class="form-check-input" type="radio" name="spaceType" id="privateOffice" value="private" checked data-price-hourly="50" data-price-daily="300" data-price-monthly="2000">
-                          <label class="form-check-label" for="privateOffice">
-                            Sélectionner
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="card h-100 border-0 shadow-sm hover-effect">
-                      <div class="card-body">
-                        <h4 class="h5">Open Space</h4>
-                        <ul class="list-unstyled text-muted small mb-3">
-                          <li class="mb-1"><i class="bi bi-people-fill me-2"></i> Espace partagé</li>
-                          <li class="mb-1"><i class="bi bi-cup-hot-fill me-2"></i> Café gratuit</li>
-                          <li><i class="bi bi-clock-fill me-2"></i> Accès 24/7</li>
-                        </ul>
-                        <div class="form-check">
-                          <input class="form-check-input" type="radio" name="spaceType" id="openSpace" value="open" data-price-hourly="30" data-price-daily="200" data-price-monthly="1500">
-                          <label class="form-check-label" for="openSpace">
-                            Sélectionner
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="card h-100 border-0 shadow-sm hover-effect">
-                      <div class="card-body">
-                        <h4 class="h5">Salle de Réunion</h4>
-                        <ul class="list-unstyled text-muted small mb-3">
-                          <li class="mb-1"><i class="bi bi-person-video3 me-2"></i> 8-23 personnes</li>
-                          <li class="mb-1"><i class="bi bi-tv-fill me-2"></i> Équipement pro</li>
-                          <li><i class="bi bi-collection-play-fill me-2"></i> Vidéoconférence</li>
-                        </ul>
-                        <div class="form-check">
-                          <input class="form-check-input" type="radio" name="spaceType" id="meetingRoom" value="meeting" data-price-hourly="50" data-price-daily="400" data-price-monthly="3000">
-                          <label class="form-check-label" for="meetingRoom">
-                            Sélectionner
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-                <!-- Options supplémentaires pour la salle de réunion -->
-                <div class="mt-4" id="meetingRoomOptions" style="display: none;">
-                  <h5 class="h6 mb-3">Options de la Salle de Réunion</h5>
-                  <div class="row g-3">
-                    <div class="col-md-6">
-                      <label for="meetingCapacity" class="form-label">Capacité</label>
-                      <select class="form-select" id="meetingCapacity">
-                        <option value="8" data-price-hourly="50" data-price-daily="400" data-price-monthly="3000">8 personnes (50dh/h)</option>
-                        <option value="15" data-price-hourly="100" data-price-daily="600" data-price-monthly="4500">15 personnes (100dh/h)</option>
-                        <option value="23" data-price-hourly="150" data-price-daily="800" data-price-monthly="6000">23 personnes (150dh/h)</option>
-                      </select>
-                    </div>
-                    <div class="col-md-6">
-                      <label for="equipmentNeeds" class="form-label">Équipement supplémentaire</label>
-                      <select class="form-select" id="equipmentNeeds" name="equipmentNeeds" multiple>
-                        <option value="projector" data-price="50">Vidéoprojecteur (+50dh)</option>
-                        <option value="whiteboard" data-price="100">Tableau blanc interactif (+100dh)</option>
-                        <option value="catering" data-price="200">Service de restauration (+200dh)</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-                
-                <div class="d-flex justify-content-between mt-5">
                   <button type="button" class="btn btn-secondary prev-step" data-prev="#step1">Précédent</button>
                   <button type="button" class="btn btn-primary next-step" data-next="#step3">Suivant</button>
                 </div>
               </div>
+              
+
               
               <!-- Étape 3: Dates et Horaires -->
               <div class="tab-pane fade" id="step3" role="tabpanel" aria-labelledby="step3-tab">
@@ -1175,30 +1742,24 @@ document.addEventListener('DOMContentLoaded', function() {
               
               <!-- Étape 5: Paiement et Conditions -->
               <div class="tab-pane fade" id="step5" role="tabpanel" aria-labelledby="step5-tab">
-                <h3 class="h4 mb-4 border-bottom pb-2">Paiement et Conditions</h3>
+                <h3 class="h4 mb-4 border-bottom pb-2">Paiement</h3>
                 <div class="mb-3">
                   <label for="paymentMethod" class="form-label">Méthode de paiement <span class="text-danger">*</span></label>
                   <select class="form-select" id="paymentMethod" name="paymentMethod" required>
                     <option value="" selected disabled>Sélectionner</option>
-                    <option value="credit">Carte de crédit</option>
                     <option value="transfer">Virement bancaire</option>
                     <option value="cash">Espèces (sur place)</option>
                   </select>
                 </div>
-                
-                <div class="form-check mb-3">
-                  <input class="form-check-input" type="checkbox" id="termsCheck" name="termsCheck" required>
-                  <label class="form-check-label" for="termsCheck">
-                    J'accepte les <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">conditions générales</a> <span class="text-danger">*</span>
-                  </label>
+                <div id="bankDetails" style="display: none;">
+                  <div class="alert alert-info mt-3">
+                    <p>Pour effectuer un virement bancaire, veuillez utiliser le RIB suivant :</p>
+                    <p class="fw-bold">Intitulé du compte : Mr ABDALAS MOHAMED</p>
+                    <p class="fw-bold">RIB: 230640464467021101180071</p>
+                  </div>
                 </div>
                 
-                <div class="form-check mb-3">
-                  <input class="form-check-input" type="checkbox" id="newsletterCheck" name="newsletterCheck">
-                  <label class="form-check-label" for="newsletterCheck">
-                    Je souhaite recevoir les offres promotionnelles par email
-                  </label>
-                </div>
+
                 
                 <div class="d-flex justify-content-between mt-5">
                   <button type="button" class="btn btn-secondary prev-step" data-prev="#step4">Précédent</button>
@@ -1234,6 +1795,10 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 
 <style>
+  .error-border {
+    border-color: red;
+  }
+
   .step-number {
     display: inline-block;
     width: 30px;
@@ -1246,7 +1811,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   .nav-pills .nav-link.active .step-number {
-    background-color: #0d6efd;
+    background-color: #daa60a;
     color: white;
   }
   
@@ -1266,13 +1831,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
 /* Étape active = marron */
 .nav-pills .nav-link.active {
-  background-color: #8B4513 !important; /* marron */
+  background-color: #f9c50d !important; /* marron */
   color: #fff !important;
 }
 
 /* Cercle avec numéro = marron quand actif */
 .nav-pills .nav-link.active .step-number {
-  background-color: #5c3310 !important; /* marron plus foncé */
+  background-color: #daa60a !important; /* marron plus foncé */
   color: #fff !important;
 }
 
@@ -1286,7 +1851,31 @@ document.addEventListener('DOMContentLoaded', function() {
 </style>
 
 <script>
+document.getElementById('paymentMethod').addEventListener('change', function() {
+  const bankDetails = document.getElementById('bankDetails');
+  if (this.value === 'transfer') {
+    bankDetails.style.display = 'block';
+  } else {
+    bankDetails.style.display = 'none';
+  }
+});
+
 document.addEventListener('DOMContentLoaded', function() {
+  const spaceCards = document.querySelectorAll('.card.h-100.border-0.shadow-sm.hover-effect');
+  spaceCards.forEach(card => {
+    card.addEventListener('click', function() {
+      // Trouver l'option radio à l'intérieur de la carte cliquée
+      const radioButton = card.querySelector('.form-check-input');
+      if (radioButton) {
+        radioButton.checked = true;
+        // Mettre à jour l'affichage et recalculer le prix
+        updateSpaceName();
+        calculatePrice();
+      }
+    });
+  });
+
+
   // Gestion des étapes
   const nextButtons = document.querySelectorAll('.next-step');
   const prevButtons = document.querySelectorAll('.prev-step');
@@ -1346,48 +1935,102 @@ document.addEventListener('DOMContentLoaded', function() {
       updateTabStatus();
     });
   });
+  // Fonction pour valider la structure de l'email
+  function isValidEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  }
+
+
 
   // Validation de l'étape courante
   function validateCurrentStep(stepId) {
     let isValid = true;
-    
-    if (stepId === 'step1') {
+    // Enlever la classe d'erreur de tous les champs avant de valider
+    const allInputs = document.querySelectorAll('input, select, textarea');
+    allInputs.forEach(input => input.classList.remove('error-border'));
+
+    if (stepId === 'step2') {
       if (!document.querySelector('input[name="bookingType"]:checked')) {
-        alert('Veuillez sélectionner un type de réservation');
+        document.querySelectorAll('input[name="bookingType"]').forEach(input => input.classList.add('error-border'));
         isValid = false;
       }
-    } else if (stepId === 'step2') {
+    } else if (stepId === 'step1') {
       if (!document.querySelector('input[name="spaceType"]:checked')) {
-        alert('Veuillez sélectionner un type d\'espace');
+        document.querySelectorAll('input[name="spaceType"]').forEach(input => input.classList.add('error-border'));
         isValid = false;
       }
     } else if (stepId === 'step3') {
-      const bookingType = document.querySelector('input[name="bookingType"]:checked').value;
-      
+      const bookingType = document.querySelector('input[name="bookingType"]:checked')?.value;
+
       if (bookingType === 'hourly') {
-        if (!document.getElementById('hourlyDate').value || 
-            !document.getElementById('startTime').value || 
-            !document.getElementById('endTime').value) {
-          alert('Veuillez remplir tous les champs de date et heure');
-          isValid = false;
-        }
+        const fields = ['hourlyDate', 'startTime', 'endTime'];
+        fields.forEach(fieldId => {
+          const field = document.getElementById(fieldId);
+          if (!field.value) {
+            field.classList.add('error-border');
+            isValid = false;
+          }
+                // Validation du format de la date pour la réservation à l'heure
+
+        });
+
       } else if (bookingType === 'daily') {
-        if (!document.getElementById('dailyStartDate').value || 
-            !document.getElementById('dailyEndDate').value) {
-          alert('Veuillez remplir les dates de début et fin');
-          isValid = false;
-        }
+        const fields = ['dailyStartDate', 'dailyEndDate'];
+        fields.forEach(fieldId => {
+          const field = document.getElementById(fieldId);
+          if (!field.value) {
+            field.classList.add('error-border');
+            isValid = false;
+          }
+        });
+
+
+
       } else if (bookingType === 'monthly') {
-        if (!document.getElementById('monthlyStartDate').value || 
-            !document.getElementById('monthlyDuration').value) {
-          alert('Veuillez remplir la date de début et la durée');
+        const fields = ['monthlyStartDate', 'monthlyDuration'];
+        fields.forEach(fieldId => {
+          const field = document.getElementById(fieldId);
+          if (!field.value) {
+            field.classList.add('error-border');
+            isValid = false;
+          }
+        });
+
+
+      }
+    } else if (stepId === 'step4') {
+      const fields = ['fullName', 'email', 'phone'];
+      fields.forEach(fieldId => {
+        const field = document.getElementById(fieldId);
+        if (!field.value) {
+          field.classList.add('error-border');
           isValid = false;
         }
+      });
+
+      const emailField = document.getElementById('email');
+      if (!isValidEmail(emailField.value)) {
+        emailField.classList.add('error-border');
+        isValid = false;
+      }
+    } else if (stepId === 'step5') {
+      const paymentMethod = document.getElementById('paymentMethod');
+      if (!paymentMethod.value) {
+        paymentMethod.classList.add('error-border');
+        isValid = false;
+      }
+      const termsCheck = document.getElementById('termsCheck');
+      if (!termsCheck.checked) {
+        termsCheck.classList.add('error-border');
+        isValid = false;
       }
     }
-    
+
     return isValid;
   }
+
+
 
   // Gestion du type de réservation
   const bookingTypeRadios = document.querySelectorAll('input[name="bookingType"]');
@@ -1422,18 +2065,39 @@ document.addEventListener('DOMContentLoaded', function() {
   const spaceTypeRadios = document.querySelectorAll('input[name="spaceType"]');
   const meetingRoomOptions = document.getElementById('meetingRoomOptions');
   
+  // Dans la fonction qui gère le changement de type de réservation
   spaceTypeRadios.forEach(radio => {
-    radio.addEventListener('change', function() {
-      if (this.value === 'meeting') {
-        meetingRoomOptions.style.display = 'block';
-      } else {
-        meetingRoomOptions.style.display = 'none';
-      }
-      
-      updateSpaceName();
-      calculatePrice();
-    });
+      radio.addEventListener('change', function() {
+          if (this.value === 'meeting') {
+              meetingRoomOptions.style.display = 'block';
+          } else {
+              meetingRoomOptions.style.display = 'none';
+          }
+
+          // Désactiver les options non disponibles
+          if (this.dataset.priceDaily === "") {
+              document.getElementById('dailyBooking').disabled = true;
+          } else {
+              document.getElementById('dailyBooking').disabled = false;
+          }
+
+          if (this.dataset.priceHourly === "") {
+              document.getElementById('hourlyBooking').disabled = true;
+          } else {
+              document.getElementById('hourlyBooking').disabled = false;
+          }
+
+          if (this.dataset.priceMonthly === "") {
+              document.getElementById('monthlyBooking').disabled = true;
+          } else {
+              document.getElementById('monthlyBooking').disabled = false;
+          }
+
+          updateSpaceName();
+          calculatePrice();
+      });
   });
+
   
   // Mise à jour du nom de l'espace dans le récapitulatif
   function updateSpaceName() {
@@ -1562,21 +2226,14 @@ document.addEventListener('DOMContentLoaded', function() {
           }
         }
       }
+
+
       
       // Ajout du prix des équipements supplémentaires
-      const equipmentOptions = document.getElementById('equipmentNeeds');
       let optionsText = [];
       let optionsPrice = 0;
       
-      if (equipmentOptions) {
-        for (let i = 0; i < equipmentOptions.options.length; i++) {
-          if (equipmentOptions.options[i].selected) {
-            const optionPrice = parseFloat(equipmentOptions.options[i].dataset.price) || 0;
-            optionsPrice += optionPrice;
-            optionsText.push(equipmentOptions.options[i].text.split(' ')[0]);
-          }
-        }
-      }
+
       
       if (optionsText.length > 0) {
         document.getElementById('priceOptions').textContent = optionsText.join(', ');
@@ -1614,7 +2271,6 @@ document.addEventListener('DOMContentLoaded', function() {
           !validateCurrentStep('step2') || 
           !validateCurrentStep('step3')) {
         e.preventDefault();
-        alert('Veuillez remplir tous les champs obligatoires');
         return;
       }
       
@@ -1623,16 +2279,17 @@ document.addEventListener('DOMContentLoaded', function() {
           !document.getElementById('email').value || 
           !document.getElementById('phone').value) {
         e.preventDefault();
-        alert('Veuillez remplir tous les champs d\'informations personnelles');
+        return;
+      }
+
+      const paymentMethod = document.getElementById('paymentMethod');
+      if (!paymentMethod.value) {
+        e.preventDefault();
+        paymentMethod.classList.add('error-border');
         return;
       }
       
-      // Validation des conditions générales
-      if (!document.getElementById('termsCheck').checked) {
-        e.preventDefault();
-        alert('Veuillez accepter les conditions générales');
-        return;
-      }
+
     });
   }
   
@@ -1648,7 +2305,6 @@ document.addEventListener('DOMContentLoaded', function() {
     updateSpaceName();
     calculatePrice();
   });
-  document.getElementById('equipmentNeeds')?.addEventListener('change', calculatePrice);
   
   // Initialisation
   updateTabStatus();
@@ -1656,6 +2312,533 @@ document.addEventListener('DOMContentLoaded', function() {
   calculatePrice();
 });
 </script>
+
+
+
+
+
+
+
+
+
+<!-- Galerie Carousel Section -->
+<section class="gallery-section py-5" aria-labelledby="gallery-heading" id="gallery">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 id="gallery-heading" class="fw-bold">Notre Galerie</h2>
+      <p class="lead">Découvrez nos espaces à travers des images</p>
+    </div>
+
+    <div id="galleryCarousel" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <!-- Carousel Item 1 -->
+        <div class="carousel-item active">
+          <div class="row justify-content-center">
+            <div class="col-12 col-md-10 col-lg-8">
+              <div class="gallery-card mx-auto">
+                <img src="{{ url_for('static', filename='post1.jpg') }}" class="d-block w-100 rounded" alt="Bureau Privé" loading="lazy">
+                <div class="gallery-caption">
+                  <h3>Bureau Privé</h3>
+                  <p>Un espace tranquille pour une productivité maximale</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Carousel Item 2 -->
+        <div class="carousel-item">
+          <div class="row justify-content-center">
+            <div class="col-12 col-md-10 col-lg-8">
+              <div class="gallery-card mx-auto">
+                <img src="{{ url_for('static', filename='post2.jpg') }}" class="d-block w-100 rounded" alt="Open Space" loading="lazy">
+                <div class="gallery-caption">
+                  <h3>Open Space</h3>
+                  <p>Collaborez dans un espace ouvert et dynamique</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Carousel Item 3 -->
+        <div class="carousel-item">
+          <div class="row justify-content-center">
+            <div class="col-12 col-md-10 col-lg-8">
+              <div class="gallery-card mx-auto">
+                <img src="{{ url_for('static', filename='post3.jpg') }}" class="d-block w-100 rounded" alt="Salle de Réunion" loading="lazy">
+                <div class="gallery-caption">
+                  <h3>Salle de Réunion</h3>
+                  <p>Préparez vos présentations dans un cadre professionnel</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Carousel Item 4 -->
+        <div class="carousel-item">
+          <div class="row justify-content-center">
+            <div class="col-12 col-md-10 col-lg-8">
+              <div class="gallery-card mx-auto">
+                <img src="{{ url_for('static', filename='post4.jpg') }}" class="d-block w-100 rounded" alt="Espace Détente" loading="lazy">
+                <div class="gallery-caption">
+                  <h3>Espace Détente</h3>
+                  <p>Prendre une pause dans un espace confortable</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="carousel-control-prev" type="button" data-bs-target="#galleryCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#galleryCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+
+    <!-- Bouton Voir Plus -->
+    <div class="text-center mt-4">
+      <a href="{{ url_for('galerie.galerie') }}" class="btn btn-primary btn-lg px-4 py-2 wow-button">Voir Plus</a>
+    </div>
+  </div>
+</section>
+
+<style>
+/* Variables CSS pour une maintenance facile */
+:root {
+  --primary-color: #6c757d;
+  --primary-dark: #5a6268;
+  --text-dark: #333;
+  --text-light: #fff;
+  --shadow-light: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-medium: 0 10px 20px rgba(0, 0, 0, 0.2);
+  --shadow-heavy: 0 15px 30px rgba(0, 0, 0, 0.3);
+  --transition-normal: all 0.3s ease;
+  --transition-slow: all 0.5s ease;
+  --border-radius: 10px;
+}
+
+/* General styles for the gallery section */
+.gallery-section {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  background-color: #f8f9fa;
+}
+
+.gallery-card {
+  position: relative;
+  overflow: hidden;
+  max-width: 800px;
+  margin: 0 auto;
+  box-shadow: var(--shadow-medium);
+  border-radius: var(--border-radius);
+  transition: var(--transition-slow);
+  transform-origin: center center;
+}
+
+.gallery-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: var(--shadow-heavy);
+}
+
+.gallery-card img {
+  height: 450px;
+  object-fit: cover;
+  width: 100%;
+  transition: transform 1.5s ease;
+}
+
+.gallery-card img:hover {
+  transform: scale(1.05);
+}
+
+.gallery-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+  color: var(--text-light);
+  padding: 20px;
+  text-align: center;
+}
+
+.gallery-caption h3 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  transition: var(--transition-slow);
+}
+
+.gallery-caption p {
+  font-size: 1rem;
+  margin-bottom: 0;
+  transition: var(--transition-slow);
+}
+
+/* Controls styling */
+.carousel-control-prev,
+.carousel-control-next {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.5);
+  top: 50%;
+  transform: translateY(-50%);
+  transition: var(--transition-normal);
+  opacity: 0.8;
+}
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+  transform: translateY(-50%) scale(1.2);
+  opacity: 1;
+}
+
+.carousel-control-prev {
+  left: 15px;
+}
+
+.carousel-control-next {
+  right: 15px;
+}
+
+/* Button styling */
+.wow-button {
+  background-color: var(--primary-color);
+  border: none;
+  color: var(--text-light);
+  font-size: 1rem;
+  padding: 12px 30px;
+  border-radius: 50px;
+  box-shadow: var(--shadow-light);
+  transition: var(--transition-slow);
+  position: relative;
+  overflow: hidden;
+}
+
+.wow-button:hover {
+  background-color: var(--primary-dark);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.wow-button:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.5);
+  opacity: 0;
+  border-radius: 100%;
+  transform: scale(1, 1) translate(-50%, -50%);
+  transform-origin: 50% 50%;
+}
+
+.wow-button:hover:after {
+  animation: ripple 1s ease-out;
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0, 0);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(20, 20);
+    opacity: 0;
+  }
+}
+
+/* Touch improvements for mobile */
+.gallery-card {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  touch-action: manipulation;
+}
+
+/* Responsive styles */
+@media (max-width: 1200px) {
+  .gallery-card img {
+    height: 400px;
+  }
+}
+
+@media (max-width: 992px) {
+  .gallery-card img {
+    height: 350px;
+  }
+  
+  .gallery-caption h3 {
+    font-size: 1.75rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .gallery-section {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+  
+  .gallery-card img {
+    height: 300px;
+  }
+
+  .gallery-caption {
+    padding: 15px;
+  }
+  
+  .gallery-caption h3 {
+    font-size: 1.5rem;
+  }
+  
+  .gallery-caption p {
+    font-size: 0.95rem;
+  }
+
+  .carousel-control-prev,
+  .carousel-control-next {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media (max-width: 576px) {
+  .gallery-card {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+  }
+  
+  .gallery-card:hover {
+    transform: translateY(-5px) scale(1.01);
+  }
+  
+  .gallery-card img {
+    height: 250px;
+  }
+
+  .gallery-caption {
+    padding: 10px;
+  }
+  
+  .gallery-caption h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .gallery-caption p {
+    font-size: 0.85rem;
+  }
+
+  .carousel-control-prev,
+  .carousel-control-next {
+    width: 35px;
+    height: 35px;
+  }
+  
+  .carousel-control-prev {
+    left: 10px;
+  }
+  
+  .carousel-control-next {
+    right: 10px;
+  }
+  
+  .wow-button {
+    padding: 10px 25px;
+    font-size: 0.95rem;
+  }
+}
+
+/* Prévention du zoom sur iOS */
+@media screen and (max-width: 768px) {
+  .gallery-section {
+    touch-action: manipulation;
+  }
+}
+
+/* Améliorations d'accessibilité */
+@media (prefers-reduced-motion: reduce) {
+  .gallery-card,
+  .gallery-card img,
+  .gallery-caption h3,
+  .gallery-caption p,
+  .carousel-control-prev,
+  .carousel-control-next,
+  .wow-button {
+    transition: none;
+  }
+  
+  .gallery-card:hover {
+    transform: none;
+  }
+  
+  .gallery-card img:hover {
+    transform: none;
+  }
+}
+
+/* Mode sombre */
+@media (prefers-color-scheme: dark) {
+  .gallery-section {
+    background-color: #2a2a2a;
+  }
+  
+  .gallery-card {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+  }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Initialiser le carousel
+  var galleryCarousel = new bootstrap.Carousel(document.getElementById('galleryCarousel'), {
+    interval: 5000, // Défilement automatique toutes les 5 secondes
+    pause: 'hover',
+    touch: true, // Activation du support tactile
+    wrap: true // Boucler les éléments
+  });
+
+  // Ajouter des animations personnalisées
+  const galleryCarouselElement = document.getElementById('galleryCarousel');
+  const carouselItems = galleryCarouselElement.querySelectorAll('.carousel-item');
+
+  carouselItems.forEach(item => {
+    item.addEventListener('transitionend', function(e) {
+      if (e.propertyName === 'transform') {
+        const galleryCard = item.querySelector('.gallery-card');
+        // Ajouter une animation supplémentaire lors de l'affichage de chaque élément
+        galleryCard.style.transition = 'none';
+        setTimeout(() => {
+          galleryCard.style.transition = 'all 0.5s ease';
+        }, 10);
+      }
+    });
+  });
+
+  // Animation pour les contrôles du carousel
+  const carouselControls = document.querySelectorAll('.carousel-control-prev, .carousel-control-next');
+  carouselControls.forEach(control => {
+    control.addEventListener('mouseenter', function() {
+      this.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+      this.style.transform = 'translateY(-50%) scale(1.1)';
+    });
+
+    control.addEventListener('mouseleave', function() {
+      this.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+      this.style.transform = 'translateY(-50%) scale(1)';
+    });
+    
+    // Ajouter un événement tactile pour mobile
+    control.addEventListener('touchstart', function() {
+      this.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+    });
+    
+    control.addEventListener('touchend', function() {
+      this.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+    });
+  });
+
+  // Animation pour le bouton "Voir Plus"
+  const wowButton = document.querySelector('.wow-button');
+  if (wowButton) {
+    wowButton.addEventListener('mouseenter', function() {
+      this.style.transform = 'translateY(-3px)';
+      this.style.boxShadow = '0 8px 15px rgba(0, 0, 0, 0.2)';
+    });
+
+    wowButton.addEventListener('mouseleave', function() {
+      this.style.transform = '';
+      this.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+    });
+    
+    // Ajouter un événement tactile pour mobile
+    wowButton.addEventListener('touchstart', function() {
+      this.style.transform = 'translateY(-1px)';
+      this.style.boxShadow = '0 6px 10px rgba(0, 0, 0, 0.15)';
+    });
+    
+    wowButton.addEventListener('touchend', function() {
+      this.style.transform = '';
+      this.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+    });
+  }
+
+  // Gestion du swipe sur mobile
+  let touchStartX = 0;
+  let touchEndX = 0;
+  
+  galleryCarouselElement.addEventListener('touchstart', function(e) {
+    touchStartX = e.changedTouches[0].screenX;
+  }, false);
+
+  galleryCarouselElement.addEventListener('touchend', function(e) {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+  }, false);
+  
+  function handleSwipe() {
+    const swipeThreshold = 50; // Seuil minimal pour considérer un swipe
+    
+    if (touchEndX < touchStartX - swipeThreshold) {
+      // Swipe gauche -> slide suivant
+      galleryCarousel.next();
+    }
+    
+    if (touchEndX > touchStartX + swipeThreshold) {
+      // Swipe droit -> slide précédent
+      galleryCarousel.prev();
+    }
+  }
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <!-- Contact Section -->
 <section id="contact" class="py-5 bg-white" aria-labelledby="contact-heading" data-aos="fade-up">
@@ -1973,9 +3156,11 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
         
         <div class="text-center mt-4">
-          <p>Vous ne trouvez pas la réponse à votre question ?</p>
+          <p>Quelque chose ne vous semble pas clair ?</p>
           <a href="#contact" class="btn btn-outline-primary">Contactez-nous</a>
+          <a href="{{ url_for('reclamation_bp.reclamation') }}" class="btn btn-outline-danger">Faire une réclamation</a>
         </div>
+
       </div>
     </div>
   </div>

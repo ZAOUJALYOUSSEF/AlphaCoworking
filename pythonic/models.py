@@ -99,7 +99,10 @@ class Booking(db.Model):
     total_price = db.Column(db.Float, nullable=False)
     status = db.Column(db.String(20), nullable=False, default='pending')  # pending, confirmed, cancelled, completed
     date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    additional_equipment = db.Column(db.JSON)  # Stocke les équipements supplémentaires
+    #additional_equipment = db.Column(db.JSON)  # Stocke les équipements supplémentaires
+    created_by = db.Column(db.String(50), nullable=False,default="En ligne")  # ou "Bouchra" selon votre logique
+
+
     
     def __repr__(self):
         return f"Booking('{self.full_name}', '{self.booking_type}', '{self.start_datetime}', '{self.status}')"

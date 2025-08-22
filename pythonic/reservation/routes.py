@@ -162,12 +162,6 @@ def booking_form():
                     flash("Format de date ou durée invalide", 'danger')
                     return redirect(url_for('reservation.booking_form'))
 
-            # Gestion des équipements supplémentaires
-            if booking_data['space_type'] == 'meeting':
-                print("\nTraitement équipements salle de réunion")
-                equipment = request.form.getlist('equipmentNeeds')
-                print("Équipements sélectionnés:", equipment)
-                booking_data['additional_equipment'] = json.dumps(equipment) if equipment else None
 
             # Debug final des données avant enregistrement
             print("\nDonnées complètes avant enregistrement:")
@@ -235,10 +229,11 @@ def admin_bookings():
     status_filter = request.args.get('status', None)
     search_query = request.args.get('search', None)
     date_filter = request.args.get('date', None)  # Nouveau filtre de date
+    today_date = datetime.today().strftime('%Y-%m-%d')
 
 
     
-    query = Booking.query.order_by(Booking.start_datetime.desc())
+    query = Booking.query.order_by(Booking.id.desc())
     
     if status_filter:
         query = query.filter_by(status=status_filter)
@@ -277,6 +272,7 @@ def admin_bookings():
                         status_filter=status_filter,
                         search_query=search_query,
                         date_filter=date_filter,
+                        today_date=today_date,
                         active_tab='bookings')
 
 @booking_bp.route('/dashboard/bookings/<int:booking_id>')
@@ -338,6 +334,23 @@ def send_booking_confirmation(booking):
     # Format des dates
     start_date = booking.start_datetime.strftime("%d/%m/%Y %H:%M") if booking.start_datetime else "N/A"
     end_date = booking.end_datetime.strftime("%d/%m/%Y %H:%M") if booking.end_datetime else "N/A"
+
+    bank_details = ""
+    if booking.payment_method.lower() == "transfer":
+        bank_details = """
+        <div class="section">
+            <div class="section-title">
+                <span>💰 Détails Bancaires</span>
+            </div>
+            <div class="info-value">
+                Pour effectuer un virement bancaire, veuillez utiliser le RIB suivant :<br>
+                <strong>Intitulé du compte : Mr ABDALAS MOHAMED</strong>
+                <strong>RIB: 230640464467021101180071</strong>
+
+
+            </div>
+        </div>
+        """
     
     msg.html = f"""
     <!DOCTYPE html>
@@ -555,6 +568,8 @@ def send_booking_confirmation(booking):
                         <div class="info-value">{booking.payment_method.upper()}</div>
                     </div>
                 </div>
+                {bank_details}
+
                 
                 {f'''
                 <div class="section">
@@ -884,6 +899,8 @@ def save_booking():
             'total_price': float(request.form.get('totalPrice')),
             'status': request.form.get('status', 'pending'),
             'date_created': datetime.utcnow(),
+            'created_by': request.form.get('createdBy')
+
         }
 
         if booking_data['space_number']:
@@ -909,13 +926,6 @@ def save_booking():
                 months -= 1
             booking_data['duration'] = max(1, months)
 
-        # Gestion des équipements supplémentaires
-        equipment = request.form.get('additionalEquipment')
-        if equipment:
-            try:
-                booking_data['additional_equipment'] = json.loads(equipment.replace("'", '"'))
-            except:
-                booking_data['additional_equipment'] = equipment
 
         # Création et sauvegarde
         new_booking = Booking(**booking_data)
@@ -968,6 +978,8 @@ def update_booking(booking_id):
         booking.total_price = float(request.form.get('totalPrice'))
         booking.status = request.form.get('status')
         booking.meeting_capacity = request.form.get('meetingCapacity')  # Nouveau champ
+        booking.created_by = request.form.get('createdBy')
+
 
 
 
@@ -997,13 +1009,6 @@ def update_booking(booking_id):
                 months -= 1
             booking.duration = max(1, months)
 
-        # Équipements supplémentaires
-        equipment = request.form.get('additionalEquipment')
-        if equipment:
-            try:
-                booking.additional_equipment = json.loads(equipment.replace("'", '"'))
-            except:
-                booking.additional_equipment = equipment
 
         db.session.commit()
         flash("Réservation mise à jour avec succès !", "success")
@@ -1185,4 +1190,9 @@ def check_space_availability_api():
                                               int(booking_id) if booking_id else None)
         return jsonify({'available': available})
     except Exception as e:
-        return jsonify({'error': str(e)}), 400
+        return jsonify(({'error': str(e)}), 400)
+
+
+
+
+
