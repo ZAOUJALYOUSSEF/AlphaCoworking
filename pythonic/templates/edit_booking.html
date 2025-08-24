@@ -78,12 +78,12 @@
                     <div class="col-md-4">
                         <label for="email" class="form-label">Email *</label>
                         <input type="email" class="form-control" id="email" name="email"
-                               value="{{ booking.email }}" required>
+                               value="{{ booking.email }}" >
                     </div>
                     <div class="col-md-4">
                         <label for="phone" class="form-label">Téléphone *</label>
                         <input type="text" class="form-control" id="phone" name="phone"
-                               value="{{ booking.phone }}" required>
+                               value="{{ booking.phone }}" >
                     </div>
                     <div class="col-md-4">
                         <label for="company" class="form-label">Entreprise</label>
@@ -94,7 +94,6 @@
                         <label for="paymentMethod" class="form-label">Méthode de Paiement *</label>
                         <select class="form-select" id="paymentMethod" name="paymentMethod" required>
                             <option value="cash" {% if booking.payment_method == 'cash' %}selected{% endif %}>Espèces</option>
-                            <option value="card" {% if booking.payment_method == 'card' %}selected{% endif %}>Carte Bancaire</option>
                             <option value="transfer" {% if booking.payment_method == 'transfer' %}selected{% endif %}>Virement</option>
                         </select>
                     </div>
@@ -424,8 +423,8 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 
 .btn-primary:hover {
-    background-color: #2980b9;
-    border-color: #2980b9;
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
 }
 
 .btn-outline-secondary {

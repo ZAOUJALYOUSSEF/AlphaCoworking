@@ -39,9 +39,9 @@
                     </div>
 
                     <div class="col-md-6">
-                        <label for="spaceNumber" class="form-label">Numéro/Nom d'espace *</label>
+                        <label for="spaceNumber" class="form-label">Numéro/Nom d'espace </label>
                         <input type="text" class="form-control" id="spaceNumber" name="spaceNumber"
-                            placeholder="" required>
+                            placeholder="" >
                     </div>
 
                     <div class="col-md-6">
@@ -66,12 +66,12 @@
                         <input type="text" class="form-control" id="fullName" name="fullName" required>
                     </div>
                     <div class="col-md-4">
-                        <label for="email" class="form-label">Email *</label>
-                        <input type="email" class="form-control" id="email" name="email" required>
+                        <label for="email" class="form-label">Email </label>
+                        <input type="email" class="form-control" id="email" name="email" >
                     </div>
                     <div class="col-md-4">
-                        <label for="phone" class="form-label">Téléphone *</label>
-                        <input type="text" class="form-control" id="phone" name="phone" required>
+                        <label for="phone" class="form-label">Téléphone </label>
+                        <input type="text" class="form-control" id="phone" name="phone" >
                     </div>
                     <div class="col-md-4">
                         <label for="company" class="form-label">Entreprise</label>
@@ -82,7 +82,6 @@
                         <select class="form-select" id="paymentMethod" name="paymentMethod" required>
                             <option value="" selected disabled>Choisir...</option>
                             <option value="cash">Espèces</option>
-                            <option value="card">Carte Bancaire</option>
                             <option value="transfer">Virement</option>
                         </select>
                     </div>
@@ -102,7 +101,6 @@
                             <option value="pending" selected>En attente</option>
                             <option value="confirmed">Confirmée</option>
                             <option value="cancelled">Annulée</option>
-                            <option value="completed">Terminée</option>
                         </select>
                     </div>
                     <div class="col-md-4">
@@ -385,8 +383,8 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 
 .btn-primary:hover {
-    background-color: #2980b9;
-    border-color: #2980b9;
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
 }
 
 .btn-outline-secondary {

@@ -125,3 +125,6 @@ class Reclamation(db.Model):
     def __repr__(self):
         return f"Reclamation('{self.title}', '{self.client_name}')"
 
+
+
+

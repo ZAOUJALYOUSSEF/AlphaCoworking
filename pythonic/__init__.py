@@ -43,8 +43,6 @@ def create_app(config_calss=Config):
 
     from pythonic.main.routes import main
     from pythonic.users.routes import users
-    from pythonic.lessons.routes import lessons
-    from pythonic.courses.routes import courses_bp
     from pythonic.errors.handlers import errors
     from pythonic.adminbp.routes import adminbp
     from pythonic.contact.routes import contact
@@ -60,8 +58,6 @@ def create_app(config_calss=Config):
     app.register_blueprint(adminbp)
     app.register_blueprint(main)
     app.register_blueprint(users)
-    app.register_blueprint(lessons)
-    app.register_blueprint(courses_bp)
     app.register_blueprint(errors)
     app.register_blueprint(contact)
     app.register_blueprint(booking_bp)
