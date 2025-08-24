@@ -1,6 +1,61 @@
 {% extends "dashboard.html" %}
 {% block reclamations %}
-<div class="container my-4">
+<style>
+    .reclamation-container {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin-top: 20px;
+    }
+    .table-responsive {
+        overflow-x: auto;
+    }
+    .table {
+        background-color: white;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .table thead tr th {
+        background-color: #343a40;
+        color: white;
+        border: none;
+    }
+    .table tbody tr td {
+        vertical-align: middle;
+    }
+    .badge {
+        padding: 8px 12px;
+        border-radius: 12px;
+        font-weight: 500;
+    }
+    .badge.bg-danger {
+        background-color: #dc3545;
+    }
+    .badge.bg-success {
+        background-color: #28a745;
+    }
+    .badge.bg-secondary {
+        background-color: #6c757d;
+    }
+    .btn-outline-primary {
+        border-color: #f9c50d;
+        color: #daa60a;
+        transition: all 0.2s;
+    }
+    .btn-outline-primary:hover {
+        background-color: #daa60a;
+        color: white;
+    }
+    .alert-info {
+        background-color: #d1ecf1;
+        border-color: #bee5eb;
+        color: #0c5460;
+    }
+</style>
+<div class="container my-4 reclamation-container">
     <h3 class="mb-4">Gestion des Réclamations</h3>
     {% if reclamations %}
     <div class="table-responsive">
@@ -27,7 +82,7 @@
                         {% if reclamation.status == 'Nouvelle' %}
                             <span class="badge bg-danger">{{ reclamation.status }}</span>
                         {% elif reclamation.status == 'Résolue' %}
-                            <span class="badge bg-success">{{ reclamation.status }}</span>  <!-- Vert pour "Résolue" -->
+                            <span class="badge bg-success">{{ reclamation.status }}</span>
                         {% else %}
                             <span class="badge bg-secondary">{{ reclamation.status }}</span>
                         {% endif %}

@@ -8,7 +8,7 @@ from flask import (
     request,
 )
 from pythonic.users.forms import (
-    RegistrationForm,
+    
     LoginForm,
     UpdateProfileForm,
     RequestResetForm,
@@ -25,7 +25,6 @@ from pythonic.helpers import save_picture
 from pythonic.users.helpers import send_reset_email
 
 users = Blueprint("users", __name__)
-
 
 
 
@@ -56,7 +55,7 @@ def logout():
 @users.route("/dashboard", methods=["GET"])
 @login_required
 def dashboard():
-    return render_template("dashboard.html", title="Dashboard", active_tab="profile")
+    return render_template("dashboard.html", title="Dashboard", active_tab=None)
 
 
 @users.route("/dashboard/profile", methods=["GET", "POST"])

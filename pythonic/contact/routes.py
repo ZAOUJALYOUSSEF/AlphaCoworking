@@ -41,7 +41,6 @@ def contact_form():
 
             send_contact_email(full_name, email, subject, message)
 
-            flash('Votre message a été envoyé avec succès!', 'success')
             return redirect(url_for('contact.confirmation', message_id=message_id))
         
         except Exception as e:
@@ -60,7 +59,7 @@ def contact_form():
 def admin_messages():
     page = request.args.get('page', 1, type=int)
     message_id = request.args.get('message_id', None, type=int)
-    per_page = 5
+    per_page = 10
     
     # Si un message_id est spécifié, afficher ce message seul
     if message_id:
@@ -118,8 +117,8 @@ def confirmation(message_id):
 def send_contact_email(full_name, email, subject, message_content):
     msg = Message(
         subject=f"Nouveau message de contact - {subject}",
-        sender=("Votre Société", "zaouj2005@yandex.com"),
-        recipients=["zaoujalyoussef3@gmail.com"]
+        sender=("ALPHAWORKING", "alphaworking2@gmail.com"),
+        recipients=["alphacoworking2@gmail.com"]
     )
     
     msg.body = f"""
@@ -157,7 +156,7 @@ def send_contact_email(full_name, email, subject, message_content):
     <body>
         <div class="container">
             <div class="header">
-                <h2>Nouveau message de contact</h2>
+                <h2>Nouveau message d’un client</h2>
             </div>
             <div class="content">
                 <p>Bonjour,</p>
@@ -169,7 +168,7 @@ def send_contact_email(full_name, email, subject, message_content):
                 <p><span class="info-label">Sujet :</span> {subject}</p>
                 
                 <h4>Message :</h4>
-                <div style="background-color: #f8f9fa; padding: 15px; border-left: 4px solid #007bff; margin: 10px 0;">
+                <div style="background-color: #f8f9fa; padding: 15px; border-left: 4px solid #f9c50d; margin: 10px 0;">
                     {message_content}
                 </div>
             </div>

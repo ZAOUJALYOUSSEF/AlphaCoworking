@@ -1,14 +1,13 @@
 
 
 class Config:
-    MAIL_SERVER = "smtp.yandex.com"
-    MAIL_PORT = 465
-    MAIL_USE_SSL = True   # Yandex requires SSL
-    MAIL_USE_TLS = False
-    MAIL_USERNAME = "zaouj2005@yandex.com"
-    MAIL_PASSWORD = "nmspthtyhtgywyjd"
+    MAIL_SERVER = "smtp.googlemail.com"
+    MAIL_PORT = 587
+    MAIL_USE_TLS = True
+    MAIL_USERNAME = "alphacoworking2@gmail.com"
+    MAIL_PASSWORD = "upjektpmyaqalflg"
 
-    MAIL_RECIPIENT = "zaoujalyoussef3@gmail.com"
+    MAIL_RECIPIENT = "alphacoworking2@gmail.com"
 
 
     SECRET_KEY = "5f4d8e3b2a1c9f7e6d5c4b3a2d1e0f9e8d7c6b5a4f3e2d1c0b9a8f7e6d5c4b"

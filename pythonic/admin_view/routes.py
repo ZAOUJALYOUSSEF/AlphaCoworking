@@ -330,17 +330,27 @@ def stats_dashboard():
     revenue_data = []
     avg_duration_data = []
     space_type_performance_data = []
-
     for stat in space_type_performance:
-        space_type_names.append(stat['space_type'] or 'Non spécifié')
+        space_type = stat['space_type']
+        if space_type == 'open':
+            display_name = 'Open space'
+        elif space_type == 'meeting':
+            display_name = 'Salle de réunion'
+        elif space_type == 'private':
+            display_name = 'Bureau privé'
+        else:
+            display_name = space_type or 'Non spécifié'
+
+        space_type_names.append(display_name)
         revenue_data.append(float(stat['daily_profit']) if stat['daily_profit'] else 0)
         avg_duration_data.append(float(stat['avg_duration']) if stat['avg_duration'] else 0)
         space_type_performance_data.append({
-            'space_type': stat['space_type'] or 'Non spécifié',
+            'space_type': display_name,
             'count': stat['count'],
             'daily_profit': stat['daily_profit'] or 0,
             'avg_duration': stat['avg_duration'] or 0
         })
+
 
 
     # Graphique principal (réservations par heure/jour/mois)
@@ -571,9 +581,21 @@ def stats_dashboard():
     "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"
 ] # Changé de 'counts' à 'profits'
 
+
     for stat in booking_type_stats_data:
-        booking_type_names.append(stat['booking_type'] or 'Non spécifié')
-        booking_type_counts.append(stat['count'])  # Utilisez 'count' au lieu de 'daily_profit'
+        booking_type = stat['booking_type']
+        if booking_type == 'monthly':
+            display_name = 'Par Mois'
+        elif booking_type == 'daily':
+            display_name = 'Par Jour'
+        elif booking_type == 'hourly':
+            display_name = 'Par Heure'
+        else:
+            display_name = booking_type or 'Non spécifié'
+
+        booking_type_names.append(display_name)
+        booking_type_counts.append(stat['count'])
+
 
     return render_template(
         'admin_dashboard.html',
@@ -765,12 +787,32 @@ def export_excel():
     # Préparer les données pour l'export
     data = []
     for booking in bookings:
+        booking_type = booking.booking_type
+        # Changer l'affichage des types de réservation
+        if booking_type == 'monthly':
+            display_booking_type = 'Par Mois'
+        elif booking_type == 'daily':
+            display_booking_type = 'Par Jour'
+        elif booking_type == 'hourly':
+            display_booking_type = 'Par Heure'
+        else:
+            display_booking_type = booking_type or 'Non spécifié'
+        space_type = booking.space_type
+        # Changer l'affichage des types d'espace
+        if space_type == 'open':
+            display_space_type = 'open space'
+        elif space_type == 'meeting':
+            display_space_type = 'salle de réunion'
+        elif space_type == 'private':
+            display_space_type = 'bureau privé'
+        else:
+            display_space_type = space_type or 'Non spécifié'
         data.append({
             "ID": booking.id,
             "Référence": f"RES{booking.id:06d}",
             "Numéro d'espace": booking.space_number or "N/A",
-            "Type de réservation": booking.booking_type,
-            "Type d'espace": booking.space_type or "N/A",
+            "Type de réservation": display_booking_type,
+            "Type d'espace": display_space_type,
             "Date de début": booking.start_datetime.strftime('%d/%m/%Y %H:%M') if booking.start_datetime else '',
             "Date de fin": booking.end_datetime.strftime('%d/%m/%Y %H:%M') if booking.end_datetime else '',
             "Durée": f"{booking.duration} {'heure(s)' if booking.booking_type == 'hourly' else 'jour(s)' if booking.booking_type == 'daily' else 'mois'}",

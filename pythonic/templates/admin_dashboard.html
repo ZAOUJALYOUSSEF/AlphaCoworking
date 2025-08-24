@@ -394,8 +394,28 @@
                                 <tr>
                                     <td>{{ booking.reference }}</td>
                                     <td>{{ booking.client_name }}</td>
-                                    <td>{{ booking.space_type or 'N/A' }}</td>
-                                    <td>{{ booking.booking_type or 'N/A' }}</td>  <!--  Ajoutez cette ligne -->
+                                    <td>
+                                    {% if booking.space_type == 'open' %}
+                                        Open-space
+                                    {% elif booking.space_type == 'meeting' %}
+                                        Salle de réunion
+                                    {% elif booking.space_type == 'private' %}
+                                        Bureau privé
+                                    {% else %}
+                                        N/A
+                                    {% endif %}
+                                    </td>
+                                    <td>
+                                    {% if booking.booking_type == 'hourly' %}
+                                        Par heure
+                                    {% elif booking.booking_type == 'monthly' %}
+                                        Par mois
+                                    {% elif booking.booking_type == 'daily' %}
+                                        Par jour
+                                    {% else %}
+                                        N/A
+                                    {% endif %}
+                                    </td>
                                     <td>{{ booking.duration }}</td>  <!--  Ajoutez cette ligne -->
                                     <td>{{ booking.booking_date }}</td>
                                     <td>{{ booking.amount | round(2) }} DH</td>
@@ -562,4 +582,112 @@ document.addEventListener('DOMContentLoaded', function() {
         background: linear-gradient(45deg, #f8f9fc, #e3e6f0);
     }
 </style>
+<style>
+
+
+    .btn-sm {
+        color: #ffffffff;
+        background-color: #f9c50d;
+        border-color: #343a40;
+
+    }
+    .btn-sm:hover{
+        color: #ffffffff;
+        background-color: #947505ff;
+        border-color: #343a40;
+
+    }
+
+
+
+    /* Existing CSS styles */
+    .border-left-primary { border-left: 0.25rem solid #4e73df !important; }
+    .border-left-success { border-left: 0.25rem solid #1cc88a !important; }
+    .border-left-info { border-left: 0.25rem solid #36b9cc !important; }
+    .border-left-warning { border-left: 0.25rem solid #f6c23e !important; }
+    .border-left-secondary { border-left: 0.25rem solid #858796 !important; }
+    .border-left-danger { border-left: 0.25rem solid #e74a3b !important; }
+    .border-left-dark { border-left: 0.25rem solid #5a5c69 !important; }
+    .chart-area {
+        position: relative;
+        height: 300px;
+        width: 100%;
+    }
+    .card-header {
+        background: linear-gradient(45deg, #f8f9fc, #e3e6f0);
+    }
+
+    /* Responsive CSS styles for mobile devices */
+    @media (max-width: 767px) {
+        .card {
+            margin-bottom: 10px;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        /* Adjust the font size and padding for smaller screens */
+        body {
+            font-size: 14px;
+        }
+
+        .card-header h5, .card-title {
+            font-size: 1rem;
+        }
+
+        /* Ensure buttons are appropriately sized */
+        .btn {
+            padding: 8px 12px;
+            font-size: 14px;
+        }
+
+        /* Adjust the chart container height */
+        .chart-container {
+            height: 250px !important;
+        }
+
+        /* Stack cards vertically on small screens */
+        .card-deck .card {
+            margin-bottom: 15px;
+        }
+    }
+
+    /* Responsive CSS styles for tablets */
+    @media (min-width: 768px) and (max-width: 1024px) {
+        .card {
+            margin-bottom: 15px;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        /* Adjust the font size and padding for tablets */
+        body {
+            font-size: 16px;
+        }
+
+        .card-header h5, .card-title {
+            font-size: 1.1rem;
+        }
+
+        /* Ensure buttons are appropriately sized */
+        .btn {
+            padding: 10px 15px;
+            font-size: 16px;
+        }
+
+        /* Adjust the chart container height */
+        .chart-container {
+            height: 280px !important;
+        }
+
+        /* Stack cards vertically on tablets if needed */
+        .card-deck .card {
+            margin-bottom: 15px;
+        }
+    }
+</style>
+
 {% endblock admin_stats %}

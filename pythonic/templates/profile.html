@@ -12,7 +12,7 @@
                 <h5 class="card-title mb-0 text-dark fw-bold fs-4">
                     <i class="fas fa-user-circle me-2 text-primary"></i>Informations Personnelles
                 </h5>
-                <p class="text-muted mt-2 small">Gérez vos informations personnelles et votre visibilité</p>
+                <p class="text-muted mt-2 small">Gérez vos informations personnelles</p>
             </div>
             <div class="card-body pt-0">
                 <div class="row align-items-center mb-5">
@@ -75,21 +75,20 @@
                             {{ profile_form.username(class='form-control form-control-lg rounded-end')}}
                             {% endif %}
                         </div>
-                        <div class="form-text">Votre identifiant public visible par les autres utilisateurs.</div>
                     </div>
                     <div class="col-md-6 mb-3">
                         {{ profile_form.email.label(class='form-label fw-semibold text-dark')}}
                         <div class="input-group input-group-lg">
                             <span class="input-group-text bg-light border-end-0 rounded-start"><i class="fas fa-envelope text-muted"></i></span>
                             {% if profile_form.email.errors%}
-                            {{ profile_form.email(class='form-control form-control-lg is-invalid rounded-end')}}
+                            {{ profile_form.email(class='form-control form-control-lg is-invalid rounded-end',readonly=True)}}
                             <div class="invalid-feedback">
                                 {% for error in profile_form.email.errors %}
                                 <span>{{error}}</span>
                                 {% endfor %}
                             </div>
                             {% else %}
-                            {{ profile_form.email(class='form-control form-control-lg rounded-end')}}
+                            {{ profile_form.email(class='form-control form-control-lg rounded-end',readonly=True)}}
                             {% endif %}
                         </div>
                         <div class="form-text">Nous ne partagerons jamais votre email.</div>

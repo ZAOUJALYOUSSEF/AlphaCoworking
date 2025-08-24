@@ -195,7 +195,6 @@ def booking_form():
 
 
 
-            flash('Votre réservation a été enregistrée avec succès!', 'success')
             return redirect(url_for('reservation.confirmation', booking_id=new_booking.id))
 
         except ValueError as e:
@@ -326,8 +325,8 @@ def update_status(booking_id):
 def send_booking_confirmation(booking):
     """Envoyer une confirmation de réservation au client avec un design moderne"""
     msg = Message(
-        subject=f"✅ Confirmation de réservation - Réf: #{booking.id}",
-        sender="zaouj2005@yandex.com",
+        subject=f"✅ Confirmation de réservation",
+        sender=("ALPHAWORKING", "alphaworking2@gmail.com"),
         recipients=[booking.email]
     )
     
@@ -343,8 +342,8 @@ def send_booking_confirmation(booking):
                 <span>💰 Détails Bancaires</span>
             </div>
             <div class="info-value">
-                Pour effectuer un virement bancaire, veuillez utiliser le RIB suivant :<br>
-                <strong>Intitulé du compte : Mr ABDALAS MOHAMED</strong>
+                Pour effectuer un virement bancaire, veuillez utiliser ces informations :<br>
+                <strong>Intitulé du compte : Mr ABDALAS MOHAMED</strong><br>
                 <strong>RIB: 230640464467021101180071</strong>
 
 
@@ -477,7 +476,7 @@ def send_booking_confirmation(booking):
     <body>
         <div class="container">
             <div class="header">
-                <div class="logo">🏢 VotreEspace</div>
+                <div class="logo">ALPHACoworking</div>
                 <h1>Confirmation de Réservation</h1>
             </div>
             
@@ -491,23 +490,14 @@ def send_booking_confirmation(booking):
                     </div>
                     <div class="info-grid">
                         <div class="info-item">
-                            <div class="info-label">Référence</div>
-                            <div class="info-value">#{booking.id}</div>
-                        </div>
-                        <div class="info-item">
                             <div class="info-label">Type</div>
-                            <div class="info-value">{booking.booking_type.capitalize()}</div>
+                            <div class="info-value">{'Par heure' if booking.booking_type.lower() == 'hourly' else 'Par mois' if booking.booking_type.lower() == 'monthly' else 'Par jour'}</div>
                         </div>
                         <div class="info-item">
                             <div class="info-label">Espace</div>
-                            <div class="info-value">{booking.space_type.capitalize()}</div>
+                            <div class="info-value">{'Bureau privé' if booking.space_type.lower() == 'private' else 'Open-space' if booking.space_type.lower() == 'open' else 'Salle de réunion'}</div>
                         </div>
-                        <div class="info-item">
-                            <div class="info-label">Statut</div>
-                            <div class="info-value">
-                                <span class="status-badge">⏳ En attente</span>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
                 
@@ -532,7 +522,7 @@ def send_booking_confirmation(booking):
                 </div>
                 
                 <div class="total-price">
-                    💶 Total: {booking.total_price} €
+                    💶 Total: {booking.total_price} DH
                 </div>
                 
                 <div class="section">
@@ -565,7 +555,7 @@ def send_booking_confirmation(booking):
                     </div>
                     <div class="info-item">
                         <div class="info-label">Méthode de paiement</div>
-                        <div class="info-value">{booking.payment_method.upper()}</div>
+                        <div class="info-value">{'Virement bancaire' if booking.payment_method.lower() == 'transfer' else 'Espèces'}</div>
                     </div>
                 </div>
                 {bank_details}
@@ -584,14 +574,14 @@ def send_booking_confirmation(booking):
                 
                 <div class="contact-info">
                     <h3>📞 Besoin d'aide ?</h3>
-                    <p>Email: <strong>contact@votresite.com</strong></p>
-                    <p>Téléphone: <strong>+33 1 23 45 67 89</strong></p>
-                    <p>Horaires: Lundi-Vendredi, 9h-18h</p>
+                    <p>Email: <strong>alphacoworking2@gmail.com</strong></p>
+                    <p>Téléphone: <strong>+212 6660-42749 / +212 5399-40885</strong></p>
+                    <p>Horaires: Lundi-Dimache, 8h30-20h30</p>
                 </div>
             </div>
             
             <div class="footer">
-                <p>© 2024 VotreEspace. Tous droits réservés.</p>
+                <p>© 2025 Alphacoworking. Tous droits réservés.</p>
                 <p>Cet email a été envoyé automatiquement, merci de ne pas y répondre.</p>
             </div>
         </div>
@@ -658,9 +648,9 @@ Cet email a été envoyé automatiquement, merci de ne pas y répondre.
 def send_booking_notification(booking):
     """Envoyer une notification au propriétaire avec un design moderne"""
     msg = Message(
-        subject=f"🚨 NOUVELLE RÉSERVATION - #{booking.id} - {booking.booking_type.upper()}",
-        sender="zaouj2005@yandex.com",
-        recipients=["zaoujalyoussef1@gmail.com"]
+        subject=f"🚨 NOUVELLE RÉSERVATION - #{booking.id}",
+        sender=("ALPHAWORKING", "alphaworking2@gmail.com"),
+        recipients=["alphacoworking2@gmail.com"]
     )
     
     # Format des dates
@@ -785,11 +775,11 @@ def send_booking_notification(booking):
                     <div class="info-grid">
                         <div class="info-item">
                             <div class="info-label">Type</div>
-                            <div class="info-value">{booking.booking_type.upper()}</div>
+                            <div class="info-value">{'Par heure' if booking.booking_type.lower() == 'hourly' else 'Par mois' if booking.booking_type.lower() == 'monthly' else 'Par jour'}</div>
                         </div>
                         <div class="info-item">
                             <div class="info-label">Espace</div>
-                            <div class="info-value">{booking.space_type.upper()}</div>
+                            <div class="info-value">{'Bureau privé' if booking.space_type.lower() == 'private' else 'Open-space' if booking.space_type.lower() == 'open' else 'Salle de réunion'}</div>
                         </div>
                         <div class="info-item">
                             <div class="info-label">Statut</div>
@@ -799,7 +789,7 @@ def send_booking_notification(booking):
                 </div>
                 
                 <div class="total-price">
-                    💰 MONTANT: {booking.total_price} €
+                    💰 MONTANT: {booking.total_price} DH
                 </div>
                 
                 <div class="section">
@@ -837,7 +827,7 @@ def send_booking_notification(booking):
                         </div>
                         <div class="info-item">
                             <div class="info-label">Durée</div>
-                            <div class="info-value">{booking.duration} {'h' if booking.booking_type == 'hourly' else 'j' if booking.booking_type == 'daily' else 'm'}</div>
+                            <div class="info-value">{booking.duration} {'h' if booking.booking_type == 'hourly' else 'jr(s)' if booking.booking_type == 'daily' else 'mois'}</div>
                         </div>
                     </div>
                 </div>
@@ -846,7 +836,7 @@ def send_booking_notification(booking):
                     <div class="section-title">💳 PAIEMENT</div>
                     <div class="info-item">
                         <div class="info-label">Méthode</div>
-                        <div class="info-value">{booking.payment_method.upper()}</div>
+                        <div class="info-value">{'Virement bancaire' if booking.payment_method.lower() == 'transfer' else 'Espèces'}</div>
                     </div>
                 </div>
             </div>
@@ -1046,103 +1036,6 @@ def delete_booking(booking_id):
 
 
 
-def generate_invoice_pdf(booking):
-    buffer = BytesIO()
-    doc = SimpleDocTemplate(buffer, pagesize=letter, rightMargin=30, leftMargin=30, topMargin=30, bottomMargin=18)
-    styles = getSampleStyleSheet()
-
-    # Ajoutez des styles personnalisés avec des noms uniques
-    styles.add(ParagraphStyle(name='MyTitle', fontSize=18, leading=22, alignment=1, textColor=colors.HexColor('#0066cc')))
-    styles.add(ParagraphStyle(name='MyHeader', fontSize=12, textColor=colors.HexColor('#666666')))
-    styles.add(ParagraphStyle(name='MyFooter', fontSize=8, alignment=1, textColor=colors.HexColor('#999999')))
-
-    story = []
-
-    # Logo
-    try:
-        logo_path = "static/logo.jpg"
-        logo = Image(logo_path, width=2*inch, height=0.5*inch)
-        story.append(logo)
-    except:
-        pass
-
-    # Titre
-    story.append(Paragraph("VotreEspace", styles['MyTitle']))
-    story.append(Paragraph("Coworking & Espaces Professionnels", styles['MyHeader']))
-    story.append(Spacer(1, 0.2*inch))
-
-    # Informations de la facture
-    invoice_info = [
-        [Paragraph("<b>Facture #INV-{}</b>".format(booking.id), styles['Normal']), Paragraph("<b>Date:</b> {}".format(datetime.now().strftime("%d/%m/%Y")), styles['Normal'])],
-        [Paragraph("<b>Client:</b> {}".format(booking.full_name), styles['Normal']), Paragraph("<b>Email:</b> {}".format(booking.email), styles['Normal'])],
-        [Paragraph("<b>Téléphone:</b> {}".format(booking.phone), styles['Normal']), Paragraph("<b>Entreprise:</b> {}".format(booking.company or "Non spécifié"), styles['Normal'])],
-    ]
-
-    invoice_table = Table(invoice_info, colWidths=[3*inch, 3*inch])
-    invoice_table.setStyle(TableStyle([
-        ('VALIGN', (0, 0), (-1, -1), 'TOP'),
-        ('LEFTPADDING', (0, 0), (-1, -1), 0),
-        ('RIGHTPADDING', (0, 0), (-1, -1), 0),
-    ]))
-    story.append(invoice_table)
-    story.append(Spacer(1, 0.2*inch))
-
-    # Détails de la réservation
-    booking_details = [
-        ["Type", booking.booking_type.capitalize()],
-        ["Espace", booking.space_type.capitalize()],
-        ["Date de début", booking.start_datetime.strftime("%d/%m/%Y %H:%M")],
-        ["Date de fin", booking.end_datetime.strftime("%d/%m/%Y %H:%M")],
-        ["Durée", "{} {}".format(booking.duration, "heure(s)" if booking.booking_type == 'hourly' else "jour(s)" if booking.booking_type == 'daily' else "mois")],
-        ["Statut", booking.status.capitalize()],
-        ["Prix total", "{} DH".format(booking.total_price)],
-    ]
-
-    details_table = Table(booking_details, colWidths=[2*inch, 4*inch])
-    details_table.setStyle(TableStyle([
-        ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#f0f8ff')),
-        ('TEXTCOLOR', (0, 0), (-1, 0), colors.HexColor('#0066cc')),
-        ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
-        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
-        ('BOTTOMPADDING', (0, 0), (-1, 0), 8),
-        ('BACKGROUND', (0, 1), (-1, -1), colors.HexColor('#f9f9f9')),
-        ('GRID', (0, 0), (-1, -1), 1, colors.HexColor('#dddddd')),
-    ]))
-    story.append(Paragraph("<b>Détails de la réservation</b>", styles['Normal']))
-    story.append(details_table)
-    story.append(Spacer(1, 0.3*inch))
-
-    # Pied de page
-    footer = Paragraph(
-        "Merci pour votre confiance !<br/>"
-        "Pour toute question, contactez-nous à contact@votresite.com ou au +33 1 23 45 67 89<br/>"
-        "© 2024 VotreEspace. Tous droits réservés.",
-        styles['MyFooter']
-    )
-    story.append(footer)
-
-    # Générer le PDF
-    doc.build(story)
-    buffer.seek(0)
-
-    return send_file(
-        buffer,
-        as_attachment=True,
-        download_name="Facture_Reservation_{}.pdf".format(booking.id),
-        mimetype='application/pdf'
-    )
-
-@booking_bp.route('/dashboard/bookings/<int:booking_id>/invoice', methods=['GET'])
-@login_required
-def generate_invoice(booking_id):
-    booking = Booking.query.get_or_404(booking_id)
-    return generate_invoice_pdf(booking)
-
-
-
-
-
-
 
 
 
@@ -1192,6 +1085,250 @@ def check_space_availability_api():
     except Exception as e:
         return jsonify(({'error': str(e)}), 400)
 
+
+from io import BytesIO
+from reportlab.lib.pagesizes import letter, A4
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, Image
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.lib.units import inch, mm
+from reportlab.lib import colors
+from datetime import datetime
+from flask import send_file
+from reportlab.pdfgen import canvas
+from reportlab.lib.utils import ImageReader
+import os
+
+
+
+
+def generate_invoice_pdf(booking):
+    buffer = BytesIO()
+    doc = SimpleDocTemplate(buffer, pagesize=A4,
+                           rightMargin=20*mm,
+                           leftMargin=20*mm,
+                           topMargin=20*mm,
+                           bottomMargin=15*mm)
+
+    styles = getSampleStyleSheet()
+
+    # Styles personnalisés
+    styles.add(ParagraphStyle(
+        name='InvoiceTitle',
+        fontSize=16,
+        leading=20,
+        alignment=1,  # Centré
+        textColor=colors.HexColor('#2c3e50'),
+        fontName='Helvetica-Bold'
+    ))
+
+    styles.add(ParagraphStyle(
+        name='InvoiceSubtitle',
+        fontSize=10,
+        leading=14,
+        alignment=1,  # Centré
+        textColor=colors.HexColor('#7f8c8d')
+    ))
+
+    styles.add(ParagraphStyle(
+        name='InvoiceHeader',
+        fontSize=10,
+        textColor=colors.HexColor('#34495e'),
+        fontName='Helvetica-Bold'
+    ))
+
+    styles.add(ParagraphStyle(
+        name='InvoiceNormalBold',
+        fontSize=9,
+        textColor=colors.black,
+        fontName='Helvetica-Bold'
+    ))
+
+    styles.add(ParagraphStyle(
+        name='InvoiceNormal',
+        fontSize=9,
+        textColor=colors.black,
+        leading=12
+    ))
+
+    # Mettre à jour le style du footer pour centrer le texte
+    styles.add(ParagraphStyle(
+        name='InvoiceFooter',
+        fontSize=8,
+        alignment=1,  # Centré
+        textColor=colors.HexColor('#95a5a6'),
+        leading=10
+    ))
+
+    styles.add(ParagraphStyle(
+        name='InvoiceSectionTitle',
+        fontSize=11,
+        textColor=colors.HexColor('#2c3e50'),
+        fontName='Helvetica-Bold',
+        spaceAfter=6
+    ))
+
+    # Style pour le montant total plus grand
+    styles.add(ParagraphStyle(
+        name='InvoiceTotal',
+        fontSize=12,
+        textColor=colors.black,
+        fontName='Helvetica-Bold',
+        leading=14
+    ))
+
+    story = []
+
+    # En-tête avec les nouvelles informations de l'entreprise
+    try:
+        logo_path = "/static/logo.jpg"
+        if os.path.exists(logo_path):
+            logo = Image(logo_path, width=1.8*inch, height=0.8*inch)
+            logo.hAlign = 'LEFT'
+            story.append(logo)
+        else:
+            company_header = Paragraph("<b>ALPHA-Coworking</b>", styles['InvoiceTitle'])
+            story.append(company_header)
+            company_sub = Paragraph("Espace de coworking premium pour professionnels exigeants. Conçu pour la productivité et l'inspiration.", styles['InvoiceSubtitle'])
+            story.append(company_sub)
+    except Exception as e:
+        print(f"Erreur de logo: {e}")
+        company_header = Paragraph("<b>ALPHAcoworking</b>", styles['InvoiceTitle'])
+        story.append(company_header)
+        company_sub = Paragraph("Espace de coworking premium pour professionnels exigeants. Conçu pour la productivité et l'inspiration.", styles['InvoiceSubtitle'])
+        story.append(company_sub)
+
+    story.append(Spacer(1, 0.3*inch))
+
+    # Ligne de séparation
+    story.append(Spacer(1, 2))
+    separator = Table([[""]], colWidths=[7.2*inch], rowHeights=[1])
+    separator.setStyle(TableStyle([
+        ('LINEABOVE', (0, 0), (-1, -1), 1, colors.HexColor('#bdc3c7')),
+    ]))
+    story.append(separator)
+    story.append(Spacer(1, 0.2*inch))
+
+    # Titre de la facture
+    title_table = Table([
+        [Paragraph("FACTURE", styles['InvoiceTitle'])]
+    ], colWidths=[7.2*inch])
+    title_table.setStyle(TableStyle([
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 10),
+    ]))
+    story.append(title_table)
+
+    # Informations de la facture et du client
+    invoice_data = [
+        [
+            # Colonne informations facture
+            Table([
+                [Paragraph("<b>N° Facture:</b>", styles['InvoiceNormalBold']), Paragraph(f"INV-{booking.id:05d}", styles['InvoiceNormal'])],
+                [Paragraph("<b>Date d'émission:</b>", styles['InvoiceNormalBold']), Paragraph(datetime.now().strftime("%d/%m/%Y"), styles['InvoiceNormal'])],
+                [Paragraph("<b>Date de prestation:</b>", styles['InvoiceNormalBold']), Paragraph(booking.start_datetime.strftime("%d/%m/%Y"), styles['InvoiceNormal'])],
+            ], colWidths=[1.8*inch, 2*inch], hAlign='LEFT'),
+
+            # Colonne informations client
+            Table([
+                [Paragraph("<b>CLIENT</b>", styles['InvoiceHeader'])],
+                [Paragraph(booking.full_name, styles['InvoiceNormal'])],
+                [Paragraph(booking.email, styles['InvoiceNormal'])],
+                [Paragraph(booking.phone, styles['InvoiceNormal'])],
+                [Paragraph(booking.company or "Non spécifié", styles['InvoiceNormal'])],
+            ], colWidths=[2.5*inch], hAlign='LEFT')
+        ]
+    ]
+
+    invoice_table = Table(invoice_data, colWidths=[3.8*inch, 3.4*inch])
+    invoice_table.setStyle(TableStyle([
+        ('VALIGN', (0, 0), (-1, -1), 'TOP'),
+        ('LEFTPADDING', (0, 0), (-1, -1), 0),
+        ('RIGHTPADDING', (0, 0), (-1, -1), 0),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 15),
+    ]))
+    story.append(invoice_table)
+
+    # Détails de la prestation
+    story.append(Paragraph("DÉTAIL DE LA PRESTATION", styles['InvoiceSectionTitle']))
+
+    # Calculer le prix unitaire en fonction de la durée
+    unit_price = booking.total_price
+    if booking.duration > 1:
+        unit_price = booking.total_price / booking.duration
+
+    booking_details = [
+        ["Description", "Quantité", "Prix unitaire", "Total"],
+        [
+            f"Réservation d'espace {booking.space_type.capitalize()} ({booking.booking_type})",
+            f"{booking.duration} {'heure(s)' if booking.booking_type == 'hourly' else 'jour(s)' if booking.booking_type == 'daily' else 'mois'}",
+            f"{unit_price:.2f} DH",
+            f"{booking.total_price:.2f} DH"
+        ]
+    ]
+
+    details_table = Table(booking_details, colWidths=[3.2*inch, 1.5*inch, 1.5*inch, 1.5*inch], repeatRows=1)
+    details_table.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#2c3e50')),
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
+        ('ALIGN', (0, 0), (-1, 0), 'CENTER'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('FONTSIZE', (0, 0), (-1, 0), 9),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 8),
+        ('BACKGROUND', (0, 1), (-1, -1), colors.HexColor('#f8f9fa')),
+        ('GRID', (0, 0), (-1, -1), 0.5, colors.HexColor('#e9ecef')),
+        ('ALIGN', (1, 1), (-1, -1), 'CENTER'),
+        ('ALIGN', (2, 1), (3, 1), 'RIGHT'),
+        ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+        ('LEFTPADDING', (0, 0), (-1, -1), 6),
+        ('RIGHTPADDING', (0, 0), (-1, -1), 6),
+        ('TOPPADDING', (0, 0), (-1, -1), 6),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 6),
+    ]))
+    story.append(details_table)
+    story.append(Spacer(1, 0.1*inch))
+
+    # Total sans TVA et sans SOUS-TOTAL
+    total_data = [
+        ["", Paragraph("<b>MONTANT TOTAL</b>", styles['InvoiceTotal']), Paragraph(f"<b>{booking.total_price:.2f} DH</b>", styles['InvoiceTotal'])]
+    ]
+
+    total_table = Table(total_data, colWidths=[3.2*inch, 1.5*inch, 1.5*inch])
+    total_table.setStyle(TableStyle([
+        ('ALIGN', (1, 0), (-1, -1), 'RIGHT'),
+        ('LINEABOVE', (2, 0), (2, 0), 1, colors.black),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 4),
+        ('RIGHTPADDING', (2, 0), (2, -1), 20),
+    ]))
+    story.append(total_table)
+    story.append(Spacer(1, 0.3*inch))
+
+    # Pied de page professionnel avec les nouvelles informations et centré
+    footer_text = (
+        "ALPHAcoworking - Espace de coworking premium pour professionnels exigeants.<br/>"
+        "Adresse: 39 Av. Sanhaja, Tanger 90060, Maroc<br/>"
+        "Tél: +212 6660-42749, +212 5399-40885 - Email: alphacoworking2@gmail.com<br/>"
+        "Horaires: Lun-Dim: 8h30 - 20h30<br/>"
+        "© 2025 ALPHAcoworking - Tous droits réservés"
+    )
+    footer = Paragraph(footer_text, styles['InvoiceFooter'])
+    story.append(footer)
+
+    # Générer le PDF
+    doc.build(story)
+    buffer.seek(0)
+    return send_file(
+        buffer,
+        as_attachment=True,
+        download_name=f"Facture_INV-{booking.id:05d}.pdf",
+        mimetype='application/pdf'
+    )
+
+
+@booking_bp.route('/dashboard/bookings/<int:booking_id>/invoice', methods=['GET'])
+@login_required
+def generate_invoice(booking_id):
+    booking = Booking.query.get_or_404(booking_id)
+    return generate_invoice_pdf(booking)
 
 
 

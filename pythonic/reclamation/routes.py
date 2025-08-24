@@ -25,7 +25,7 @@ def reclamation():
 @reclamation_bp.route('/dashboard/reclamations')
 @login_required
 def dashboard_reclamations():
-    if current_user.email != 'zaoujalyoussef1@gmail.com':
+    if current_user.email != 'abdalas@alpha.coworking':
         abort(403)  # Accès interdit
     reclamations = Reclamation.query.order_by(Reclamation.created_at.desc()).all()
     return render_template('dashboard_reclamations.html', reclamations=reclamations)
@@ -35,7 +35,7 @@ def dashboard_reclamations():
 @reclamation_bp.route('/dashboard/reclamations/<int:reclamation_id>')
 @login_required
 def reclamation_detail(reclamation_id):
-    if current_user.email != 'zaoujalyoussef1@gmail.com':
+    if current_user.email != 'abdalas@alpha.coworking':
         abort(403)
 
     # Récupère la réclamation
@@ -53,7 +53,7 @@ def reclamation_detail(reclamation_id):
 @reclamation_bp.route('/dashboard/reclamations/<int:reclamation_id>/update_status', methods=['POST'])
 @login_required
 def update_status(reclamation_id):
-    if current_user.email != 'zaoujalyoussef1@gmail.com':
+    if current_user.email != 'abdalas@alpha.coworking':
         abort(403)
 
     reclamation = Reclamation.query.get_or_404(reclamation_id)

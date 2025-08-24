@@ -763,6 +763,227 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ /* Navigation Styles */
+        .navbar {
+            background-color: var(--blanc) !important;
+            box-shadow: 0 2px 30px rgba(61, 39, 35, 0.05);
+            padding: 12px 0;
+            transition: var(--transition);
+        }
+
+        .navbar.scrolled {
+            padding: 8px 0;
+            box-shadow: 0 4px 20px rgba(61, 39, 35, 0.1);
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            transition: var(--transition);
+        }
+
+        .qc-logo {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--blanc) 0%, var(--beige) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            transition: var(--transition);
+            margin-right: 10px;
+        }
+
+        .qc-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .brand-name {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            font-size: 1.5rem;
+            color: var(--marron-fonce);
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .brand-name span {
+            font-weight: 400;
+            color: var(--marron-clair);
+            letter-spacing: 1px;
+        }
+
+        .nav-link {
+            color: var(--marron-fonce);
+            font-weight: 500;
+            margin: 0 12px;
+            position: relative;
+            letter-spacing: 0.5px;
+            transition: var(--transition);
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--marron-dore);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover::before,
+        .nav-link.active::before {
+            width: 100%;
+        }
+
+        .nav-link.active {
+            font-weight: 600;
+            color: var(--marron-dore);
+        }
+
+        /* Dropdown Styles */
+        .dropdown-menu {
+            background-color: var(--blanc) !important;
+            border: 1px solid rgba(218, 166, 10, 0.15) !important;
+            box-shadow: 0 5px 20px rgba(61, 39, 35, 0.1) !important;
+            border-radius: 0;
+            padding: 10px 0;
+        }
+
+        .dropdown-item {
+            color: var(--marron-fonce) !important;
+            padding: 8px 20px;
+            transition: var(--transition);
+        }
+
+        .dropdown-item:hover, 
+        .dropdown-item:focus {
+            background-color: var(--marron-clair) !important;
+            color: var(--blanc) !important;
+        }
+
+        .dropdown-header {
+            color: var(--marron-dore) !important;
+            font-weight: 600;
+        }
+
+
+
+        /* Mobile Responsive Styles */
+        @media (max-width: 991.98px) {
+            .navbar-collapse {
+                background-color: var(--blanc);
+                padding: 15px;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                margin-top: 10px;
+                text-align: center;
+            }
+            
+            .nav-link {
+                padding: 12px 0;
+                margin: 0;
+                font-size: 1rem;
+                display: block;
+                border-bottom: 1px solid rgba(218, 166, 10, 0.1);
+            }
+            
+            .nav-link:last-child {
+                border-bottom: none;
+            }
+            
+            .dropdown-menu {
+                position: static;
+                width: 100%;
+                box-shadow: none;
+                border: none;
+                margin-top: 0;
+                text-align: center;
+            }
+            
+            .dropdown-item {
+                padding: 10px 15px;
+            }
+            
+            .navbar-toggler {
+                border: none;
+                padding: 0.25rem 0.5rem;
+                font-size: 1.25rem;
+            }
+            
+            .navbar-toggler:focus {
+                box-shadow: none;
+            }
+            
+            .qc-logo {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .brand-name {
+                font-size: 1.2rem;
+            }
+            
+            .d-flex.ms-lg-4.mt-3.mt-lg-0 {
+                margin-top: 15px !important;
+                justify-content: center;
+            }
+            
+            .btn {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+        }
+
+        @media (max-width: 575.98px) {
+            .navbar-brand {
+                margin-right: 0;
+            }
+            
+            .qc-logo {
+                width: 45px;
+                height: 45px;
+                margin-right: 8px;
+            }
+            
+            .brand-name {
+                font-size: 1.1rem;
+            }
+            
+            .container {
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+        }
+
+
+
+
+
+
+
+
     </style>
 </head>
 
@@ -780,6 +1001,8 @@
             <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
+   
             
             <div class="collapse navbar-collapse" id="navbarContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
@@ -812,7 +1035,7 @@
                     {% else %}
                     <div class="dropdown">
                         <button class="btn btn-outline-primary dropdown-toggle" type="button" id="loginDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                            Espace Administration
+                            Espace Admin
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="loginDropdown">
                             <li><h6 class="dropdown-header">Accès administration</h6></li>
@@ -880,15 +1103,14 @@
                 <div class="col-md-4 col-lg-3 mb-4 mb-md-0">
                     <h5 class="footer-heading">Contact</h5>
                     <p class="opacity-75"><i class="bi bi-geo-alt-fill me-2"></i> 39 Av. Sanhaja, Tanger 90060، Maroc</p>
-                    <p class="opacity-75"><i class="bi bi-telephone-fill me-2"></i> +212 5399-40885</p>
-                    <p class="opacity-75"><i class="bi bi-envelope-fill me-2"></i> contact@alpha-coworking.fr</p>
+                    <p class="opacity-75"><i class="bi bi-telephone-fill me-2"></i> +212 6660-42749</p>
+                    <p class="opacity-75"><i class="bi bi-telephone me-2"></i> +212 5399-40885 </p>
+                    <p class="opacity-75"><i class="bi bi-envelope-fill me-2"></i> alphacoworking2@gmail.com</p>
                 </div>
                 
                 <div class="col-md-4 col-lg-3">
                     <h5 class="footer-heading">Horaires</h5>
-                    <p class="opacity-75"><i class="bi bi-clock me-2"></i> Lun-Ven: 8h - 20h</p>
-                    <p class="opacity-75"><i class="bi bi-clock me-2"></i> Sam: 9h - 18h</p>
-                    <p class="opacity-75"><i class="bi bi-clock me-2"></i> Dim: Fermé</p>
+                    <p class="opacity-75"><i class="bi bi-clock me-2"></i> Lun-Dim: 8h30 - 20h30</p>
                 </div>
             </div>
             

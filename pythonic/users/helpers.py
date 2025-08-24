@@ -6,8 +6,8 @@ from flask import url_for
 def send_reset_email(user):
     token = user.get_reset_token()
     msg = Message(
-        "Pythonic App Password Reset Request",
-        sender="zaouj2005@yandex.com",
+        "ALPHA-Coworking Password Reset Request",
+        sender="alphacoworking2@gmail.com",
         recipients=[user.email],
         body=f"""To reset your password, visit the following link:
         {url_for('users.reset_password', token=token, _external=True)}

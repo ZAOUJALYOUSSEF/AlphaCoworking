@@ -313,4 +313,196 @@ document.addEventListener('DOMContentLoaded', function() {
 
 </script>
 
+
+<style>
+
+
+    /* Importation de polices Google si nécessaire */
+
+/* Variables CSS pour la cohérence des couleurs et des polices */
+:root {
+    --primary-color: #f9c50d;
+    --secondary-color: #2ecc71;
+    --accent-color: #e74c3c;
+    --text-color: #333;
+    --light-gray: #f8f9fa;
+    --border-color: #dee2e6;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --border-radius: 0.25rem;
+    --font-family: 'Roboto', sans-serif;
+}
+
+
+
+/* Style de la carte principale */
+.card {
+    background-color: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+/* Style du formulaire */
+.form-label {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.form-control, .form-select {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--text-color);
+    background-color: white;
+    background-clip: padding-box;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+}
+
+/* Style des boutons */
+.btn {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: background-color 0.15s ease-in-out;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #2980b9;
+    border-color: #2980b9;
+}
+
+.btn-outline-secondary {
+    background-color: transparent;
+    border-color: var(--border-color);
+    color: var(--text-color);
+}
+
+.btn-outline-secondary:hover {
+    background-color: var(--border-color);
+    color: var(--text-color);
+}
+
+/* Style des icônes */
+.bi {
+    margin-right: 0.5rem;
+}
+
+/* Style des éléments de grille */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -0.5rem;
+    margin-left: -0.5rem;
+}
+
+.col-md-6, .col-md-4, .col-12 {
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+}
+
+.col-md-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+}
+
+.col-md-4 {
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%;
+}
+
+.col-12 {
+    flex: 0 0 100%;
+    max-width: 100%;
+}
+
+/* Style des champs de date et heure */
+input[type="datetime-local"] {
+    padding: 0.5rem 0.75rem;
+}
+
+/* Style de la section des demandes spéciales */
+#specialRequests {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* Style du conteneur principal */
+.container-fluid {
+    padding-right: 1rem;
+    padding-left: 1rem;
+    margin-right: auto;
+    margin-left: auto;
+    width: 100%;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.justify-content-between {
+    justify-content: space-between;
+}
+
+.align-items-center {
+    align-items: center;
+}
+
+.mb-4 {
+    margin-bottom: 1.5rem;
+}
+
+.mt-4 {
+    margin-top: 1.5rem;
+}
+
+.ms-2 {
+    margin-left: 0.5rem;
+}
+
+.me-2 {
+    margin-right: 0.5rem;
+}
+
+.me-1 {
+    margin-right: 0.25rem;
+}
+
+/* Style des petits textes */
+.text-muted {
+    color: #6c757d !important;
+}
+
+/* Style des éléments cachés */
+.d-none {
+    display: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .col-md-6, .col-md-4 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+
+</style>
+
 {% endblock %}

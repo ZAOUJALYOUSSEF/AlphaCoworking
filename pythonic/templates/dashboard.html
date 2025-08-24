@@ -37,7 +37,7 @@
                         aria-selected="true">Statistiques Admin</button>
             </a>
 
-            {% if current_user.email == 'zaoujalyoussef1@gmail.com' %}
+            {% if current_user.email == 'abdalas@alpha.coworking' %}
             <a class="link" href="{{ url_for('reclamation_bp.dashboard_reclamations') }}">
                 <button class="{{'nav-link active' if active_tab=='reclamations' else 'nav-link'}}" id="nav-reclamations-tab" type="button">Réclamations</button>
             </a>
@@ -61,4 +61,42 @@
         {% block reclamations %} {% endblock reclamations %}
     </div>
 </div>
+
+<style>
+a.link {
+  text-decoration: none !important;
+}
+
+/* Rend les tabs scrollables horizontalement sur mobile */
+.nav-tabs {
+  overflow-x: auto;
+  overflow-y: hidden;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.nav-tabs .nav-link {
+  white-space: nowrap;
+  padding: 0.5rem 1rem;
+}
+
+/* Masque les boutons désactivés en mobile si tu veux */
+@media (max-width: 768px) {
+  .nav-tabs {
+    font-size: 0.9rem;
+  }
+
+  .nav-tabs .nav-link {
+    padding: 0.4rem 0.75rem;
+  }
+
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+</style>
+
 {% endblock content %}

@@ -4,548 +4,733 @@
 
 
 
+  <style>
+    :root {
+      --primary: #f9c50d;
+      --primary-dark: #f9c50d;
+      --primary-light: rgba(255, 158, 27, 0.1);
+      --text-dark: #1A1A1A;
+      --text-light: #f8f9fa;
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+      --transition: cubic-bezier(0.165, 0.84, 0.44, 1);
+      --bg-gradient: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      --particle-color: rgba(255, 158, 27, 0.6);
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<section class="hero-section bg-light" aria-labelledby="hero-heading" style="position: relative; overflow: hidden; padding: 6rem 0; background: linear-gradient(135deg, #F8F9FA 0%, #e6e6e6 100%) !important;">
-  <div style="position: absolute; top: -50%; right: -10%; width: 600px; height: 600px; background: rgba(255, 158, 27, 0.08); border-radius: 50%; z-index: 0;"></div>
-  <div style="position: absolute; bottom: -30%; left: -10%; width: 500px; height: 500px; background: rgba(255, 158, 27, 0.05); border-radius: 50%; z-index: 0;"></div>
-  
-  <div class="container py-5" style="position: relative; z-index: 2;">
-    <div class="row align-items-center">
-      <!-- Texte -->
-      <div class="col-lg-6 order-lg-1 order-2" data-aos="fade-right" data-aos-delay="200">
-        <h1 id="hero-heading" class="display-4 fw-bold mb-4" style="font-weight: 800; line-height: 1.2; color: #1A1A1A;">
-          Votre espace de travail <span style="color: #FF9E1B !important; position: relative; display: inline-block;">sur-mesure</span>
-        </h1>
-        <p class="lead mb-4" data-aos="fade-right" data-aos-delay="400" style="font-size: 1.25rem; font-weight: 500; color: #4a4a4a;">
-          Découvrez nos espaces de coworking modernes et flexibles, conçus pour stimuler la productivité et favoriser la collaboration.
-        </p>
-        <div class="d-flex gap-3 flex-wrap" data-aos="fade-right" data-aos-delay="600">
-          <a href="#booking" class="btn btn-lg px-4 py-3 btn-primary-hero" >Réserver Maintenant</a>
-          <a href="#spaces" class="btn btn-lg px-4 py-3 btn-secondary-hero" >Découvrir nos Espaces</a>
-        </div>
-        
-        <!-- Stats -->
-        <div class="row mt-5 pt-3" data-aos="fade-up" data-aos-delay="800">
-          <div class="col-4">
-            <h4 class="fw-bold mb-0" style="color: #FF9E1B;">70+</h4>
-            <p class="text-muted mb-0">Espaces</p>
-          </div>
-          <div class="col-4">
-            <h4 class="fw-bold mb-0" style="color: #FF9E1B;">500+</h4>
-            <p class="text-muted mb-0">Réservations/mois</p>
-          </div>
-          <div class="col-4">
-            <h4 class="fw-bold mb-0" style="color: #FF9E1B;">100%</h4>
-            <p class="text-muted mb-0">Espaces Flexibles</p>
-          </div>
-        </div>
+    .hero-section-pro {
+      position: relative;
+      overflow: hidden;
+      padding: 8rem 0;
+      min-height: 50vh;
+      display: flex;
+      align-items: center;
+      background: var(--bg-gradient);
+      isolation: isolate;
+    }
+    /* Éléments flottants animés en arrière-plan */
+    .floating-element {
+      position: absolute;
+      border-radius: 50%;
+      z-index: 0;
+      animation: float 20s ease-in-out infinite;
+      opacity: 0.06;
+    }
+    .floating-element-1 {
+      top: 10%;
+      left: 5%;
+      width: 300px;
+      height: 300px;
+      background: linear-gradient(135deg, rgba(255, 158, 27, 0.1), rgba(255, 158, 27, 0));
+    }
+    .floating-element-2 {
+      top: 60%;
+      right: 8%;
+      width: 400px;
+      height: 400px;
+      background: linear-gradient(135deg, rgba(255, 158, 27, 0.08), rgba(255, 158, 27, 0));
+    }
+    .floating-element-3 {
+      bottom: 10%;
+      left: 10%;
+      width: 200px;
+      height: 200px;
+      background: linear-gradient(135deg, rgba(255, 158, 27, 0.05), rgba(255, 158, 27, 0));
+    }
+    .floating-element-4 {
+      bottom: 60%;
+      right: 15%;
+      width: 500px;
+      height: 500px;
+      background: linear-gradient(135deg, rgba(255, 158, 27, 0.03), rgba(255, 158, 27, 0));
+    }
+    .floating-element-5 {
+      top: 20%;
+      right: 25%;
+      width: 600px;
+      height: 600px;
+      background: linear-gradient(135deg, rgba(255, 158, 27, 0.02), rgba(255, 158, 27, 0));
+      border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+    }
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0) rotate(0deg);
+      }
+      50% {
+        transform: translateY(-30px) rotate(3deg);
+      }
+    }
+    /* Particules d'arrière-plan */
+    .particles-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      overflow:hidden;
+    }
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: var(--particle-color);
+  border-radius: 50%;
+  opacity: 0; /* Initialement invisible */
+  animation: particleFloat 12s infinite linear; /* Animation plus rapide et linéaire */
+  bottom: auto; /* Retirer la position bottom */
+  top: 100%; /* Commencer en bas de l'écran */
+}
+@keyframes particleFloat {
+  0% {
+    transform: translateY(0) scale(0.5); /* Commence juste en dessous de l'écran */
+    opacity: 0.7; /* Opacité immédiate */
+  }
+  90% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(-100vh) scale(1); /* Monter jusqu'en haut de la section */
+    opacity: 0;
+  }
+}
+    .container-pro {
+      position: relative;
+      z-index: 2;
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 3rem;
+    }
+    .row-pro {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .col-text-pro {
+      flex: 1;
+      min-width: 300px;
+      padding: 2rem;
+    }
+    .title-pro {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 800;
+      line-height: 1.1;
+      color: var(--text-dark);
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+    .highlight-pro {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      position: relative;
+      display: inline-block;
+    }
+    .highlight-pro::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 60%;
+      height: 4px;
+      background: var(--primary);
+      border-radius: 2px;
+    }
+    .subtitle-pro {
+      font-size: clamp(1.1rem, 2vw, 1.3rem);
+      color: #4a4a4a;
+      margin-bottom: 2rem;
+      font-weight: 500;
+      line-height: 1.5;
+    }
+    .cta-group-pro {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+    .btn-primary-pro {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      padding: 1.2rem 2.5rem;
+      border: none;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      text-decoration: none;
+      transition: all 0.3s var(--transition);
+      box-shadow: 0 10px 30px rgba(255, 158, 27, 0.3);
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+    .btn-primary-pro::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: 0.6s;
+    }
+    .btn-primary-pro:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(255, 158, 27, 0.4);
+    }
+    .btn-primary-pro:hover::before {
+      left: 100%;
+    }
+    .btn-secondary-pro {
+      background: transparent;
+      color: var(--primary);
+      padding: 1.2rem 2.5rem;
+      border: 2px solid var(--primary);
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      text-decoration: none;
+      transition: all 0.3s var(--transition);
+      backdrop-filter: blur(10px);
+      text-align: center;
+    }
+    .btn-secondary-pro:hover {
+      background: var(--primary-light);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(255, 158, 27, 0.2);
+    }
+    .stats-pro {
+      display: flex;
+      gap: 2rem;
+      margin-top: 2rem;
+      justify-content: flex-start;
+    }
+    .stat-item-pro {
+      text-align: center;
+    }
+    .stat-number-pro {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.3rem;
+    }
+    .stat-symbol {
+      font-weight: 800;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.5s var(--transition);
+    }
+    .count-up {
+      font-weight: 800;
+      color: var(--primary);
+    }
+    .stat-label-pro {
+      color: #6c757d;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+    .slider-container-pro {
+      flex: 1;
+      min-width: 300px;
+      position: relative;
+      height: 430px !important; /* Forcer une hauteur spécifique */
+      width: 590px !important;  /* Forcer une largeur spécifique */
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      perspective: 1000px;
+      transform-style: preserve-3d;
+      transform: rotateY(-5deg) rotateX(5deg);
+      transition: transform 0.8s var(--transition);
+    }
+    .slider-container-pro:hover {
+      transform: rotateY(0) rotateX(0);
+    }
+    .slider-pro {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      border-radius: 20px;
+    }
+    .slide-pro {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 1s var(--transition), transform 1.2s var(--transition);
+      transform: scale(1.1);
+      border-radius: 20px;
+    }
+    .slide-pro.active-pro {
+      opacity: 1;
+      transform: scale(1);
+      z-index: 2;
+    }
+    .slider-nav-pro {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+      z-index: 3;
+      transform: translateY(-50%);
+      padding: 0 1.5rem;
+      width: 100%;
+    }
+    .nav-btn-pro {
+      background: rgba(255, 255, 255, 0.6);
+      border: none;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      cursor: pointer;
+      color: var(--primary);
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    .nav-btn-pro:hover {
+      background: rgba(255, 255, 255, 0.9);
+      transform: scale(1.1);
+    }
+    .slider-pagination-pro {
+      position: absolute;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 0.5rem;
+      z-index: 3;
+    }
+    .pagination-dot-pro {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.5);
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .pagination-dot-pro.active-pro {
+      background: var(--primary);
+      transform: scale(1.2);
+    }
+    /* Ajout des styles pour l'arrière-plan */
+    .hero-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .gradient-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.6;
+      animation: float 20s infinite ease-in-out;
+    }
+    .orb-1 {
+      width: 500px;
+      height: 500px;
+      background: linear-gradient(135deg, rgba(255, 158, 27, 0.1), rgba(255, 158, 27, 0));
+      top: -20%;
+      right: -10%;
+      animation-delay: 0s;
+    }
+    .orb-2 {
+      width: 300px;
+      height: 300px;
+      background: linear-gradient(135deg, rgba(255, 158, 27, 0.08), rgba(255, 158, 27, 0));
+      bottom: -15%;
+      left: -5%;
+      animation-delay: -7s;
+    }
+    .orb-3 {
+      width: 200px;
+      height: 200px;
+      background: linear-gradient(135deg, rgba(255, 158, 27, 0.05), rgba(255, 158, 27, 0));
+      top: 50%;
+      left: 10%;
+      animation-delay: -14s;
+    }
+    .floating-shapes {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+    .shape {
+      position: absolute;
+      opacity: 0.1;
+      animation: rotate 30s infinite linear;
+    }
+    .shape-1 {
+      width: 60px;
+      height: 60px;
+      background: var(--primary);
+      top: 20%;
+      right: 20%;
+      clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+      animation-delay: 0s;
+    }
+    .shape-2 {
+      width: 40px;
+      height: 40px;
+      background: var(--primary-light);
+      top: 60%;
+      right: 10%;
+      border-radius: 50%;
+      animation-delay: -10s;
+    }
+    .shape-3 {
+      width: 80px;
+      height: 80px;
+      background: var(--primary-dark);
+      bottom: 30%;
+      left: 15%;
+      clip-path: polygon(20% 0%, 0% 20%, 30% 50%, 0% 80%, 20% 100%, 50% 70%, 80% 100%, 100% 80%, 70% 50%, 100% 20%, 80% 0%, 50% 30%);
+      animation-delay: -5s;
+    }
+    .shape-4 {
+      width: 30px;
+      height: 30px;
+      background: var(--primary);
+      top: 40%;
+      left: 5%;
+      animation-delay: -15s;
+    }
+    @keyframes rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    /* Responsive */
+    @media (max-width: 992px) {
+      .container-pro {
+        flex-direction: column;
+        text-align: center;
+        gap: 3rem;
+      }
+      .slider-container-pro {
+        height: 350px;
+        transform: none !important;
+      }
+      .slider-pro {
+        transform: none !important;
+      }
+      .cta-group-pro {
+        justify-content: center;
+      }
+      .stats-pro {
+        justify-content: center;
+      }
+      .stat-item-pro {
+        margin: 0 0.5rem;
+      }
+    }
+    @media (max-width: 768px) {
+      .hero-section-pro {
+        padding: 5rem 0;
+      }
+      .title-pro {
+        font-size: 2.2rem;
+      }
+      .subtitle-pro {
+        font-size: 1rem;
+      }
+      .slider-container-pro {
+        height: 280px;
+      }
+      .cta-group-pro {
+        flex-direction: column;
+        align-items: center;
+      }
+      .btn-primary-pro, .btn-secondary-pro {
+        width: 100%;
+        padding: 1rem;
+        font-size: 1rem;
+      }
+      .stats-pro {
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+    }
+    @media (max-width: 576px) {
+      .hero-section-pro {
+        padding: 3rem 0;
+      }
+      .slider-container-pro {
+        height: 220px;
+      }
+      .btn-primary-pro, .btn-secondary-pro {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.9rem;
+      }
+    }
+    @media (min-width: 1400px) {
+      .hero-section-pro {
+        padding: 10rem 0;
+      }
+      .slider-container-pro {
+        height: 500px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <section class="hero-section-pro">
+    <!-- Éléments flottants animés -->
+    <div class="hero-bg">
+      <div class="gradient-orb orb-1"></div>
+      <div class="gradient-orb orb-2"></div>
+      <div class="gradient-orb orb-3"></div>
+      <div class="floating-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+        <div class="shape shape-4"></div>
       </div>
-      
-      <!-- Image -->
-      
-      <!-- Remplacez votre div image actuel par celui-ci -->
-      <div class="col-lg-6 order-lg-2 order-1 mb-4 mb-lg-0" data-aos="fade-left" data-aos-delay="200" style="position: relative; perspective: 1000px;">
-        <div class="image-slider-container" style="position: relative; overflow: hidden; border-radius: 16px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);">
-          <img src="/static/thumb.jpg" class="img-fluid hero-image active" alt="Espace de coworking moderne" loading="lazy">
-          <img src="/static/post6.jpg" class="img-fluid hero-image" alt="Salle de réunion équipée" loading="lazy">
-          <img src="/static/post2.jpg" class="img-fluid hero-image" alt="Espace détente et networking" loading="lazy">
-          <img src="/static/post10.jpg" class="img-fluid hero-image" alt="Bureau privé moderne" loading="lazy">
-          
-          <!-- Indicateurs de navigation -->
-          <div class="slider-indicators">
-            <span class="indicator active" data-slide="0"></span>
-            <span class="indicator" data-slide="1"></span>
-            <span class="indicator" data-slide="2"></span>
-            <span class="indicator" data-slide="3"></span>
+    </div>
+    <div class="floating-element floating-element-1"></div>
+    <div class="floating-element floating-element-2"></div>
+    <div class="floating-element floating-element-3"></div>
+    <div class="floating-element floating-element-4"></div>
+    <div class="floating-element floating-element-5"></div>
+    <!-- Particules d'arrière-plan -->
+    <div class="particles-container" id="particles"></div>
+    <div class="container-pro">
+      <div class="row-pro">
+        <!-- Contenu texte -->
+        <div class="col-text-pro">
+          <h1 id="hero-heading-pro" class="title-pro">
+            L’excellence du <span class="highlight-pro">travail flexible</span>
+          </h1>
+          <p class="subtitle-pro">
+            Des espaces conçus pour votre réussite, où chaque détail compte.
+          </p>
+          <div class="cta-group-pro">
+            <a href="#booking" class="btn-primary-pro">Réserver en 1 clic</a>
+            <a href="#spaces" class="btn-secondary-pro">Explorer nos univers</a>
           </div>
-          
-          <!-- Overlay avec effet de transition -->
-          <div class="slide-overlay"></div>
+          <!-- Stats -->
+          <div class="stats-pro">
+            <div class="stat-item-pro">
+              <h3 class="stat-number-pro" data-count="70">+<span class="stat-symbol">0</span><span class="count-up">70</span></h3>
+              <p class="stat-label-pro">Espaces uniques</p>
+            </div>
+            <div class="stat-item-pro">
+              <h3 class="stat-number-pro" data-count="500">+<span class="stat-symbol">0</span><span class="count-up">500</span></h3>
+              <p class="stat-label-pro">Réservations/mois</p>
+            </div>
+            <div class="stat-item-pro">
+              <h3 class="stat-number-pro" data-count="100">%<span class="stat-symbol"></span><span class="count-up">100</span></h3>
+              <p class="stat-label-pro">Flexibilité totale</p>
+            </div>
+          </div>
+        </div>
+        <!-- Slider -->
+        <div class="slider-container-pro">
+          <div class="slider-pro">
+            <div class="slide-pro active-pro" style="background-image: url('/static/thumb.jpg');"></div>
+            <div class="slide-pro" style="background-image: url('/static/post1.jpg');"></div>
+            <div class="slide-pro" style="background-image: url('/static/post2.jpg');"></div>
+            <div class="slide-pro" style="background-image: url('/static/post5.jpg');"></div>
+            <div class="slide-pro" style="background-image: url('/static/post7.jpg');"></div>
+            <div class="slide-pro" style="background-image: url('/static/post8.jpg');"></div>
+            <div class="slide-pro" style="background-image: url('/static/post28.jpg');"></div>
+            <div class="slide-pro" style="background-image: url('/static/post26.jpg');"></div>
+
+          </div>
+          <div class="slider-nav-pro">
+            <button class="nav-btn-pro prev-pro" aria-label="Slide précédent"></button>
+            <button class="nav-btn-pro next-pro" aria-label="Slide suivant"></button>
+          </div>
+          <div class="slider-pagination-pro"></div>
         </div>
       </div>
     </div>
-  </div>
-</section>
-
-
-
-
-<style>
-/* Styles pour le slider d'images */
-.image-slider-container {
-  position: relative;
-  width: 100%;
-  height: 380px;
-  overflow: hidden;
-  border-radius: 16px !important;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15) !important;
-  transform: rotateY(-5deg) rotateX(5deg);
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.image-slider-container:hover {
-  transform: rotateY(0) rotateX(0) !important;
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2) !important;
-}
-
-.hero-image {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0;
-  transform: scale(1.1) translateX(100px);
-  transition: all 1.2s cubic-bezier(0.23, 1, 0.32, 1);
-  filter: blur(3px);
-}
-
-.hero-image.active {
-  opacity: 1;
-  transform: scale(1) translateX(0);
-  filter: blur(0);
-}
-
-.hero-image.prev {
-  opacity: 0;
-  transform: scale(0.95) translateX(-100px);
-  filter: blur(3px);
-}
-
-/* Indicateurs élégants */
-.slider-indicators {
-  position: absolute;
-  bottom: 25px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 12px;
-  z-index: 10;
-}
-
-.indicator {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.4);
-  cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  backdrop-filter: blur(10px);
-  border: 2px solid rgba(255, 255, 255, 0.2);
-}
-
-.indicator.active {
-  background: #FF9E1B;
-  transform: scale(1.2);
-  box-shadow: 0 0 20px rgba(255, 158, 27, 0.6);
-  border-color: rgba(255, 158, 27, 0.8);
-}
-
-.indicator:hover:not(.active) {
-  background: rgba(255, 255, 255, 0.7);
-  transform: scale(1.1);
-}
-
-/* Overlay pour les transitions fluides */
-.slide-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(45deg, transparent 0%, rgba(255, 158, 27, 0.1) 50%, transparent 100%);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-  z-index: 5;
-}
-
-.image-slider-container:hover .slide-overlay {
-  opacity: 1;
-}
-
-/* Effet de brillance subtil */
-.hero-image::after {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
-  transform: rotate(45deg) translateX(-100%);
-  transition: transform 2s cubic-bezier(0.19, 1, 0.22, 1);
-  pointer-events: none;
-}
-
-.hero-image.active::after {
-  transform: rotate(45deg) translateX(100%);
-}
-
-@media (max-width: 992px) {
-  .image-slider-container {
-    transform: none !important;
-    margin-top: 2rem;
-    height: 350px;
-  }
-  
-  .slider-indicators {
-    bottom: 15px;
-  }
-  
-  .indicator {
-    width: 10px;
-    height: 10px;
-  }
-}
-</style>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const images = document.querySelectorAll('.hero-image');
-  const indicators = document.querySelectorAll('.indicator');
-  let currentSlide = 0;
-  let slideInterval;
-
-  // Fonction pour changer de slide avec animation élégante
-  function changeSlide(newSlide, direction = 'next') {
-    if (newSlide === currentSlide) return;
-
-    const currentImage = images[currentSlide];
-    const newImage = images[newSlide];
-    const currentIndicator = indicators[currentSlide];
-    const newIndicator = indicators[newSlide];
-
-    // Animation de sortie de l'image actuelle
-    currentImage.classList.remove('active');
-    currentImage.classList.add('prev');
-    currentIndicator.classList.remove('active');
-
-    // Petite pause pour l'effet de transition
-    setTimeout(() => {
-      // Reset de l'ancienne image
-      currentImage.classList.remove('prev');
-      
-      // Animation d'entrée de la nouvelle image
-      newImage.classList.add('active');
-      newIndicator.classList.add('active');
-      
-      currentSlide = newSlide;
-    }, 200);
-  }
-
-  // Auto-play avec progression fluide
-  function startSlideShow() {
-    slideInterval = setInterval(() => {
-      const nextSlide = (currentSlide + 1) % images.length;
-      changeSlide(nextSlide);
-    }, 4000); // Change toutes les 4 secondes
-  }
-
-  // Pause au survol
-  function pauseSlideShow() {
-    clearInterval(slideInterval);
-  }
-
-  // Gestion des clics sur les indicateurs
-  indicators.forEach((indicator, index) => {
-    indicator.addEventListener('click', () => {
-      pauseSlideShow();
-      changeSlide(index);
-      // Reprendre après 6 secondes
-      setTimeout(startSlideShow, 6000);
-    });
-  });
-
-  // Contrôles tactiles pour mobile
-  let startX = 0;
-  const container = document.querySelector('.image-slider-container');
-  
-  container.addEventListener('touchstart', (e) => {
-    startX = e.touches[0].clientX;
-    pauseSlideShow();
-  });
-
-  container.addEventListener('touchend', (e) => {
-    const endX = e.changedTouches[0].clientX;
-    const diff = startX - endX;
-
-    if (Math.abs(diff) > 50) { // Minimum swipe distance
-      if (diff > 0) {
-        // Swipe gauche - image suivante
-        const nextSlide = (currentSlide + 1) % images.length;
-        changeSlide(nextSlide);
-      } else {
-        // Swipe droite - image précédente
-        const prevSlide = (currentSlide - 1 + images.length) % images.length;
-        changeSlide(prevSlide);
+  </section>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const statNumbers = document.querySelectorAll('.stat-number-pro');
+      statNumbers.forEach(number => {
+        const target = +number.getAttribute('data-count');
+        const countUpSpan = number.querySelector('.count-up');
+        let count = 0;
+        const increment = target / 50;
+        const timer = setInterval(() => {
+          count += increment;
+          if (count >= target) {
+            clearInterval(timer);
+            count = target;
+          }
+          countUpSpan.textContent = `${Math.floor(count)}`;
+        }, 20);
+      });
+      // Particules d'arrière-plan
+      createParticles();
+      // Slider
+      const slides = document.querySelectorAll('.slide-pro');
+      const prevBtn = document.querySelector('.prev-pro');
+      const nextBtn = document.querySelector('.next-pro');
+      const pagination = document.querySelector('.slider-pagination-pro');
+      let currentSlide = 0;
+      let slideInterval;
+      // Création des dots de pagination
+      slides.forEach((_, i) => {
+        const dot = document.createElement('div');
+        dot.classList.add('pagination-dot-pro');
+        if (i === 0) dot.classList.add('active-pro');
+        dot.dataset.index = i;
+        pagination.appendChild(dot);
+      });
+      const dots = document.querySelectorAll('.pagination-dot-pro');
+      function goToSlide(index) {
+        slides[currentSlide].classList.remove('active-pro');
+        dots[currentSlide].classList.remove('active-pro');
+        currentSlide = index;
+        slides[currentSlide].classList.add('active-pro');
+        dots[currentSlide].classList.add('active-pro');
+        resetInterval();
       }
-    }
-    
-    setTimeout(startSlideShow, 6000);
-  });
-
-  // Pause/reprise au survol
-  container.addEventListener('mouseenter', pauseSlideShow);
-  container.addEventListener('mouseleave', startSlideShow);
-
-  // Démarrer le slideshow
-  startSlideShow();
-});
-</script>
-
-<style>
-
-
-  @keyframes float {
-    0% {
-      transform: translateY(0) rotate(0deg);
-    }
-    50% {
-      transform: translateY(-15px) rotate(5deg);
-    }
-    100% {
-      transform: translateY(0) rotate(0deg);
-    }
-  }
-          
-  
-
-  
-  @media (max-width: 992px) {
-    .hero-section {
-      padding: 4rem 0 !important;
-      text-align: center;
-    }
-    
-    .hero-section h1 {
-      font-size: 2.5rem !important;
-    }
-    
-    .hero-section .floating-element {
-      display: none;
-    }
-    
-    .hero-section img {
-      transform: none !important;
-      margin-top: 2rem;
-    }
-  }
-        .btn-secondary-hero {
-            background: transparent;
-            border: 2px solid var(--marron-dore);
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 1.1rem;
-            color: var(--primary-color);
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            backdrop-filter: blur(10px);
-        }
-
-        .btn-secondary-hero:hover {
-            background: var(--primary-light);
-            border-color: var(--marron-dore);
-            transform: translateY(-2px);
-            color: var(--marron-dore);
-            text-decoration: none;
-            box-shadow: 0 10px 30px var(--primary-shadow);
-        }
-.btn-primary-hero {
-            background: var(--primary-gradient);
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 1.1rem;
-            color: white;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-        }
-
-  .btn-primary-hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s;
-        }
-
-.btn-primary-hero:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 20px 40px var(--primary-shadow);
-            color: #0c0c0c;
-            text-decoration: none;
-        }
-
-.btn-primary-hero:hover::before {
-            left: 100%;
-        }
-
-
-
-
-
-</style>
-
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<script>
-  // Initialisation des animations au défilement
-  document.addEventListener('DOMContentLoaded', function() {
-    AOS.init({
-      duration: 800,
-      easing: 'ease-out-quad',
-      once: true,
-      offset: 100
-    });
-    
-
-  });
-
-document.addEventListener('DOMContentLoaded', function() {
-  const images = document.querySelectorAll('.hero-image');
-  const indicators = document.querySelectorAll('.indicator');
-  let currentSlide = 0;
-  let slideInterval;
-
-  // Fonction pour changer de slide avec animation élégante
-  function changeSlide(newSlide, direction = 'next') {
-    if (newSlide === currentSlide) return;
-
-    const currentImage = images[currentSlide];
-    const newImage = images[newSlide];
-    const currentIndicator = indicators[currentSlide];
-    const newIndicator = indicators[newSlide];
-
-    // Animation de sortie de l'image actuelle
-    currentImage.classList.remove('active');
-    currentImage.classList.add('prev');
-    currentIndicator.classList.remove('active');
-
-    // Petite pause pour l'effet de transition
-    setTimeout(() => {
-      // Reset de l'ancienne image
-      currentImage.classList.remove('prev');
-      
-      // Animation d'entrée de la nouvelle image
-      newImage.classList.add('active');
-      newIndicator.classList.add('active');
-      
-      currentSlide = newSlide;
-    }, 200);
-  }
-
-  // Auto-play avec progression fluide
-  function startSlideShow() {
-    slideInterval = setInterval(() => {
-      const nextSlide = (currentSlide + 1) % images.length;
-      changeSlide(nextSlide);
-    }, 4000); // Change toutes les 4 secondes
-  }
-
-  // Pause au survol
-  function pauseSlideShow() {
-    clearInterval(slideInterval);
-  }
-
-  // Gestion des clics sur les indicateurs
-  indicators.forEach((indicator, index) => {
-    indicator.addEventListener('click', () => {
-      pauseSlideShow();
-      changeSlide(index);
-      // Reprendre après 6 secondes
-      setTimeout(startSlideShow, 6000);
-    });
-  });
-
-  // Contrôles tactiles pour mobile
-  let startX = 0;
-  const container = document.querySelector('.image-slider-container');
-  
-  container.addEventListener('touchstart', (e) => {
-    startX = e.touches[0].clientX;
-    pauseSlideShow();
-  });
-
-  container.addEventListener('touchend', (e) => {
-    const endX = e.changedTouches[0].clientX;
-    const diff = startX - endX;
-
-    if (Math.abs(diff) > 50) { // Minimum swipe distance
-      if (diff > 0) {
-        // Swipe gauche - image suivante
-        const nextSlide = (currentSlide + 1) % images.length;
-        changeSlide(nextSlide);
-      } else {
-        // Swipe droite - image précédente
-        const prevSlide = (currentSlide - 1 + images.length) % images.length;
-        changeSlide(prevSlide);
+      function nextSlide() {
+        let next = currentSlide + 1;
+        if (next >= slides.length) next = 0;
+        goToSlide(next);
       }
+      function prevSlide() {
+        let prev = currentSlide - 1;
+        if (prev < 0) prev = slides.length - 1;
+        goToSlide(prev);
+      }
+      function resetInterval() {
+        clearInterval(slideInterval);
+        slideInterval = setInterval(nextSlide, 5000);
+      }
+      nextBtn.addEventListener('click', nextSlide);
+      prevBtn.addEventListener('click', prevSlide);
+      dots.forEach(dot => {
+        dot.addEventListener('click', () => {
+          goToSlide(+dot.dataset.index);
+        });
+      });
+      // Auto-play
+      slideInterval = setInterval(nextSlide, 5000);
+      // Pause sur hover
+      const slider = document.querySelector('.slider-container-pro');
+      slider.addEventListener('mouseenter', () => clearInterval(slideInterval));
+      slider.addEventListener('mouseleave', resetInterval);
+      // Swipe mobile
+      let touchStartX = 0;
+      slider.addEventListener('touchstart', (e) => {
+        touchStartX = e.touches[0].clientX;
+        clearInterval(slideInterval);
+      });
+      slider.addEventListener('touchend', (e) => {
+        const touchEndX = e.changedTouches[0].clientX;
+        if (touchStartX - touchEndX > 50) nextSlide();
+        if (touchStartX - touchEndX < -50) prevSlide();
+        resetInterval();
+      });
+    });
+    // Création des particules
+    function createParticles() {
+      const particlesContainer = document.getElementById('particles');
+      const particleCount = window.innerWidth < 768 ? 200 : 400; // Augmenter le nombre de particules
+      // Créer toutes les particules initiales
+      for (let i = 0; i < particleCount; i++) {
+        createParticle(particlesContainer);
+      }
+      // Recréer continuellement les particules
+      setInterval(() => {
+        // Vérifier si nous avons besoin de plus de particules
+        if (particlesContainer.children.length < particleCount * 0.8) {
+          createParticle(particlesContainer);
+        }
+      }, 100); // Intervalle plus court pour un flux continu
     }
-    
-    setTimeout(startSlideShow, 6000);
-  });
+    function createParticle(container) {
+      const particle = document.createElement('div');
+      particle.className = 'particle';
+      // Taille aléatoire
+      const size = Math.random() * 5 + 2;
+      // Position de départ aléatoire sur toute la largeur et hauteur de la section
+      const startX = Math.random() * window.innerWidth;
+      const startY = Math.random() * window.innerHeight;
+      // Durée aléatoire (plus courte pour un flux plus régulier)
+      const duration = Math.random() * 5 + 10; // 10-15 secondes
+      // Appliquer les styles
+      particle.style.left = startX + 'px';
+      particle.style.top = startY + 'px'; // Position initiale aléatoire sur la hauteur
+      particle.style.width = size + 'px';
+      particle.style.height = size + 'px';
+      particle.style.animationDuration = duration + 's';
+      particle.style.animationDelay = '0s'; // Pas de délai
+      // Ajouter la particule au conteneur
+      container.appendChild(particle);
+      // Forcer le navigateur à reconnaître l'animation immédiatement
+      setTimeout(() => {
+        particle.style.opacity = "0.7";
+      }, 10);
+      // Supprimer la particule après l'animation
+      setTimeout(() => {
+        if (particle.parentNode) {
+          particle.parentNode.removeChild(particle);
+        }
+      }, duration * 1000);
+    }
+  </script>
 
-  // Pause/reprise au survol
-  container.addEventListener('mouseenter', pauseSlideShow);
-  container.addEventListener('mouseleave', startSlideShow);
 
-  // Démarrer le slideshow
-  startSlideShow();
-});
-</script>
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -929,9 +1114,9 @@ body {
                 <div class="feature-icon">
                     <i class="bi bi-calendar-check"></i>
                 </div>
-                <h3 class="feature-title">Réservation Intelligente</h3>
+                <h3 class="feature-title">Réservation En Ligne</h3>
                 <p class="feature-description">
-                    Système de réservation intuitif avec IA intégrée. 
+                    Système de réservation intelligent. 
                     Réservez votre espace idéal en moins de 30 secondes.
                 </p>
             </div>
@@ -957,7 +1142,7 @@ body {
                 </div>
                 <h3 class="feature-title">Connectivité Premium</h3>
                 <p class="feature-description">
-                    Fibre optique ultra-haute vitesse 1Gb/s symétrique. 
+                    Fibre optique ultra-haute vitesse 200Gb/s symétrique. 
                     Network redondant pour une connexion sans interruption.
                 </p>
             </div>
@@ -1088,6 +1273,77 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+<style>
+/* Styles améliorés pour une apparence professionnelle */
+#spaces .card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+#spaces .card-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.1) !important;
+}
+
+#spaces .card-img-top {
+  transition: transform 0.5s ease;
+}
+
+#spaces .card:hover .card-img-top {
+  transform: scale(1.03);
+}
+
+#spaces .list-group-item {
+  border: none;
+  padding: 0.5rem 0;
+  background: transparent;
+}
+
+#spaces .card-footer {
+  border-top: 1px solid rgba(0,0,0,0.05);
+}
+
+#spaces .carousel-indicators button {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.5);
+  border: none;
+  margin: 0 3px;
+}
+
+#spaces .carousel-indicators .active {
+  background-color: var(--bs-primary);
+}
+
+#meetingRoomCarousel .carousel-indicators {
+  position: static;
+  margin: 0;
+}
+
+#meetingRoomCarousel .carousel-indicators button {
+  width: 8px;
+  height: 8px;
+}
+
+/* Amélioration de l'accessibilité */
+@media (prefers-reduced-motion: reduce) {
+  #spaces .card,
+  #spaces .card-img-top {
+    transition: none;
+  }
+}
+
+/* Styles responsives */
+@media (max-width: 992px) {
+  #spaces .card {
+    margin-bottom: 1.5rem;
+  }
+}
+</style>
+
+
 
 
 
@@ -1136,7 +1392,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
         <article class="card h-100 border-0 shadow-sm">
           <div class="position-relative">
-            <img src="{{ url_for('static', filename='post1.jpg') }}" 
+            <img src="{{ url_for('static', filename='bureau.jpg') }}" 
                  class="card-img-top" 
                  alt="Bureau privé moderne"
                  loading="lazy"
@@ -1145,32 +1401,27 @@ document.addEventListener('DOMContentLoaded', function() {
           <div class="card-body">
             <div class="d-flex justify-content-between align-items-center mb-3">
               <h3 class="h4 card-title mb-0">Bureau Privé</h3>
-              <span class="badge bg-light text-dark">1 personne</span>
+              <span class="badge bg-light text-dark">3 personne</span>
             </div>
             <p class="card-text">Espace de travail privé et silencieux pour une productivité maximale.</p>
             <ul class="list-group list-group-flush mb-3">
-              <li class="list-group-item d-flex align-items-center">
-                <i class="bi bi-check-circle-fill text-success me-2" aria-hidden="true"></i>
-                Wi-Fi haut débit
-              </li>
-              <li class="list-group-item d-flex align-items-center">
-                <i class="bi bi-check-circle-fill text-success me-2" aria-hidden="true"></i>
-                Climatisation individuelle
-              </li>
-              <li class="list-group-item d-flex align-items-center">
-                <i class="bi bi-check-circle-fill text-success me-2" aria-hidden="true"></i>
-                Casier sécurisé
-              </li>
+                <li class="list-group-item d-flex align-items-center">
+                  <i class="bi bi-wifi text-success me-2" aria-hidden="true"></i>
+                  Wifi - 200Mb/s
+                </li>
+                <li class="list-group-item d-flex align-items-center">
+                  <i class="bi bi-lock-fill text-success me-2" aria-hidden="true"></i>
+                  Espace privé
+                </li>
+
+                <li class="list-group-item d-flex align-items-center">
+                  <i class="bi bi-cash text-success me-2" aria-hidden="true"></i>
+                  30dh/h - 3000dh/mois
+                </li>
             </ul>
           </div>
           <div class="card-footer bg-white border-0">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-              <div>
-                <span class="h5">30dh/h</span>
-                <span class="text-muted" aria-hidden="true"> | </span>
-                <span class="h5">300dh/mois</span>
-              </div>
-            </div>
+
             <a href="#booking" class="btn btn-primary w-100" aria-label="Réserver un Bureau Privé">Réserver maintenant</a>
           </div>
         </article>
@@ -1193,28 +1444,23 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
             <p class="card-text">Espace collaboratif dynamique pour les travailleurs indépendants et petites équipes.</p>
             <ul class="list-group list-group-flush mb-3">
-              <li class="list-group-item d-flex align-items-center">
-                <i class="bi bi-check-circle-fill text-success me-2" aria-hidden="true"></i>
-                Wi-Fi ultra rapide
-              </li>
-              <li class="list-group-item d-flex align-items-center">
-                <i class="bi bi-check-circle-fill text-success me-2" aria-hidden="true"></i>
-                Accès 24/7
-              </li>
-              <li class="list-group-item d-flex align-items-center">
-                <i class="bi bi-check-circle-fill text-success me-2" aria-hidden="true"></i>
-                Café gratuit
-              </li>
+                <li class="list-group-item d-flex align-items-center">
+                  <i class="bi bi-wifi text-success me-2" aria-hidden="true"></i>
+                  Wifi - 200Mb/s
+                </li>
+                <li class="list-group-item d-flex align-items-center">
+                  <i class="bi bi-people-fill text-success me-2" aria-hidden="true"></i>
+                  Espace partagé
+                </li>
+
+                <li class="list-group-item d-flex align-items-center">
+                  <i class="bi bi-cash text-success me-2" aria-hidden="true"></i>
+                  20dh/j - 700dh/mois
+                </li>
             </ul>
           </div>
           <div class="card-footer bg-white border-0">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-              <div>
-                <span class="h5">30dh/jour</span>
-                <span class="text-muted" aria-hidden="true"> | </span>
-                <span class="h5">700dh/mois</span>
-              </div>
-            </div>
+
             <a href="#booking" class="btn btn-primary w-100" aria-label="Réserver l'Open Space">Réserver maintenant</a>
           </div>
         </article>
@@ -1227,19 +1473,19 @@ document.addEventListener('DOMContentLoaded', function() {
             <div id="meetingRoomImageCarousel" class="carousel slide" style="height: 200px;">
               <div class="carousel-inner h-100">
                 <div class="carousel-item active h-100">
-                  <img src="{{ url_for('static', filename='post1.jpg') }}" 
+                  <img src="{{ url_for('static', filename='salle15.jpg') }}" 
                        class="d-block w-100 h-100" 
                        alt="Petite salle de réunion pour 8 personnes"
                        style="object-fit: cover;">
                 </div>
                 <div class="carousel-item h-100">
-                  <img src="{{ url_for('static', filename='post2.jpg') }}" 
+                  <img src="{{ url_for('static', filename='salle15.jpg') }}" 
                        class="d-block w-100 h-100" 
                        alt="Salle de réunion moyenne pour 15 personnes"
                        style="object-fit: cover;">
                 </div>
                 <div class="carousel-item h-100">
-                  <img src="{{ url_for('static', filename='post3.jpg') }}" 
+                  <img src="{{ url_for('static', filename='salle23.jpg') }}" 
                        class="d-block w-100 h-100" 
                        alt="Grande salle de réunion pour 23 personnes"
                        style="object-fit: cover;">
@@ -1268,16 +1514,17 @@ document.addEventListener('DOMContentLoaded', function() {
                   <h5 class="h6">8 personnes</h5>
                   <ul class="list-group list-group-flush">
                     <li class="list-group-item d-flex align-items-center">
-                      <i class="bi bi-check-circle-fill text-success me-2" aria-hidden="true"></i>
-                      Écran tactile 55"
+                      <i class="bi bi-people text-success me-2" aria-hidden="true"></i>
+                      Espace d’attente pour les invités 
                     </li>
                     <li class="list-group-item d-flex align-items-center">
-                      <i class="bi bi-check-circle-fill text-success me-2" aria-hidden="true"></i>
-                      50dh/h
+                      <i class="bi bi-projector text-success me-2" aria-hidden="true"></i>
+                      Vidéoprojecteur / Tableau feutre
                     </li>
+
                     <li class="list-group-item d-flex align-items-center">
-                      <i class="bi bi-check-circle-fill text-success me-2" aria-hidden="true"></i>
-                      5000dh/mois
+                      <i class="bi bi-cash text-success me-2" aria-hidden="true"></i>
+                      50dh/h - 5000dh/mois
                     </li>
                   </ul>
                 </div>
@@ -1285,34 +1532,38 @@ document.addEventListener('DOMContentLoaded', function() {
                   <h5 class="h6">15 personnes</h5>
                   <ul class="list-group list-group-flush">
                     <li class="list-group-item d-flex align-items-center">
-                      <i class="bi bi-check-circle-fill text-success me-2" aria-hidden="true"></i>
-                      Écran tactile 75" + vidéoprojecteur
+                      <i class="bi bi-people text-success me-2" aria-hidden="true"></i>
+                      Espace d’attente pour les invités 
                     </li>
                     <li class="list-group-item d-flex align-items-center">
-                      <i class="bi bi-check-circle-fill text-success me-2" aria-hidden="true"></i>
-                      100dh/h
+                      <i class="bi bi-projector text-success me-2" aria-hidden="true"></i>
+                      Vidéoprojecteur / Tableau feutre
                     </li>
+
                     <li class="list-group-item d-flex align-items-center">
-                      <i class="bi bi-check-circle-fill text-success me-2" aria-hidden="true"></i>
-                      6500dh/mois
+                      <i class="bi bi-cash text-success me-2" aria-hidden="true"></i>
+                      100dh/h - 6500dh/mois
                     </li>
                   </ul>
                 </div>
                 <div class="carousel-item h-100">
                   <h5 class="h6">23 personnes</h5>
                   <ul class="list-group list-group-flush">
+
                     <li class="list-group-item d-flex align-items-center">
-                      <i class="bi bi-check-circle-fill text-success me-2" aria-hidden="true"></i>
-                      Écran tactile 85" + système audio
+                      <i class="bi bi-people text-success me-2" aria-hidden="true"></i>
+                      Espace d’attente pour les invités 
                     </li>
                     <li class="list-group-item d-flex align-items-center">
-                      <i class="bi bi-check-circle-fill text-success me-2" aria-hidden="true"></i>
-                      150dh/h
+                      <i class="bi bi-projector text-success me-2" aria-hidden="true"></i>
+                      Vidéoprojecteur / Tableau feutre
                     </li>
+
                     <li class="list-group-item d-flex align-items-center">
-                      <i class="bi bi-check-circle-fill text-success me-2" aria-hidden="true"></i>
-                      8000dh/mois
+                      <i class="bi bi-cash text-success me-2" aria-hidden="true"></i>
+                      150dh/h - 8000dh/mois
                     </li>
+
                   </ul>
                 </div>
               </div>
@@ -1419,6 +1670,13 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
+
+
+
+
+
+
+
 <!-- Booking Section - Formulaire Ultra Pro -->
 <section id="booking" class="py-5 bg-white" aria-labelledby="booking-heading"  data-aos="fade-up">
   <div class="container">
@@ -1470,7 +1728,7 @@ document.addEventListener('DOMContentLoaded', function() {
                       <div class="card-body">
                         <h4 class="h5">Bureau Privé</h4>
                         <ul class="list-unstyled text-muted small mb-3">
-                          <li class="mb-1"><i class="bi bi-person-fill me-2"></i> 1 personne</li>
+                          <li class="mb-1"><i class="bi bi-person-fill me-2"></i> 3 personne</li>
                           <li class="mb-1"><i class="bi bi-wifi me-2"></i> Wi-Fi haut débit</li>
                           <li><i class="bi bi-lock-fill me-2"></i> Espace privé</li>
                         </ul>
@@ -1488,9 +1746,9 @@ document.addEventListener('DOMContentLoaded', function() {
                       <div class="card-body">
                         <h4 class="h5">Open Space</h4>
                         <ul class="list-unstyled text-muted small mb-3">
+                          <li class="mb-1"><i class="bi bi-person-fill me-2"></i> 1 personne</li>
+                          <li class="mb-1"><i class="bi bi-wifi me-2"></i> Wi-Fi haut débit</li>
                           <li class="mb-1"><i class="bi bi-people-fill me-2"></i> Espace partagé</li>
-                          <li class="mb-1"><i class="bi bi-cup-hot-fill me-2"></i> Café gratuit</li>
-                          <li><i class="bi bi-clock-fill me-2"></i> Accès 24/7</li>
                         </ul>
                         <div class="form-check">
                           <input class="form-check-input" type="radio" name="spaceType" id="openSpace" value="open" data-price-hourly="" data-price-daily="30" data-price-monthly="700">
@@ -1507,8 +1765,8 @@ document.addEventListener('DOMContentLoaded', function() {
                         <h4 class="h5">Salle de Réunion</h4>
                         <ul class="list-unstyled text-muted small mb-3">
                           <li class="mb-1"><i class="bi bi-person-video3 me-2"></i> 8-23 personnes</li>
+                          <li class="mb-1"><i class="bi bi-wifi me-2"></i> Wi-Fi haut débit</li>
                           <li class="mb-1"><i class="bi bi-tv-fill me-2"></i> Équipement pro</li>
-                          <li><i class="bi bi-collection-play-fill me-2"></i> Vidéoconférence</li>
                         </ul>
                         <div class="form-check">
                           <input class="form-check-input" type="radio" name="spaceType" id="meetingRoom" value="meeting" data-price-hourly="50" data-price-daily="" data-price-monthly="5000">
@@ -1871,6 +2129,18 @@ document.addEventListener('DOMContentLoaded', function() {
         // Mettre à jour l'affichage et recalculer le prix
         updateSpaceName();
         calculatePrice();
+        // Si la salle de réunion est sélectionnée, afficher les options de la salle de réunion
+        if (radioButton.id === 'meetingRoom') {
+          document.getElementById('meetingRoomOptions').style.display = 'block';
+        } else {
+          document.getElementById('meetingRoomOptions').style.display = 'none';
+        }
+
+        // Déclencher manuellement les événements de changement pour les champs de date
+        const bookingTypeRadio = document.querySelector('input[name="bookingType"]:checked');
+        if (bookingTypeRadio) {
+          bookingTypeRadio.dispatchEvent(new Event('change'));
+        }
       }
     });
   });
@@ -1920,6 +2190,18 @@ document.addEventListener('DOMContentLoaded', function() {
       
       updateTabStatus();
       calculatePrice();
+
+          // Déclencher manuellement les événements de changement pour les champs de type de réservation
+      const bookingTypeRadio = document.querySelector('input[name="bookingType"]:checked');
+      if (bookingTypeRadio) {
+        bookingTypeRadio.dispatchEvent(new Event('change'));
+      }
+
+      // Déclencher manuellement les événements de changement pour les champs de type d'espace
+      const spaceTypeRadio = document.querySelector('input[name="spaceType"]:checked');
+      if (spaceTypeRadio) {
+        spaceTypeRadio.dispatchEvent(new Event('change'));
+      }
     });
   });
 
@@ -2336,7 +2618,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <div class="row justify-content-center">
             <div class="col-12 col-md-10 col-lg-8">
               <div class="gallery-card mx-auto">
-                <img src="{{ url_for('static', filename='post1.jpg') }}" class="d-block w-100 rounded" alt="Bureau Privé" loading="lazy">
+                <img src="{{ url_for('static', filename='post26.jpg') }}" class="d-block w-100 rounded" alt="Bureau Privé" loading="lazy">
                 <div class="gallery-caption">
                   <h3>Bureau Privé</h3>
                   <p>Un espace tranquille pour une productivité maximale</p>
@@ -2351,7 +2633,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <div class="row justify-content-center">
             <div class="col-12 col-md-10 col-lg-8">
               <div class="gallery-card mx-auto">
-                <img src="{{ url_for('static', filename='post2.jpg') }}" class="d-block w-100 rounded" alt="Open Space" loading="lazy">
+                <img src="{{ url_for('static', filename='post1.jpg') }}" class="d-block w-100 rounded" alt="Open Space" loading="lazy">
                 <div class="gallery-caption">
                   <h3>Open Space</h3>
                   <p>Collaborez dans un espace ouvert et dynamique</p>
@@ -2366,7 +2648,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <div class="row justify-content-center">
             <div class="col-12 col-md-10 col-lg-8">
               <div class="gallery-card mx-auto">
-                <img src="{{ url_for('static', filename='post3.jpg') }}" class="d-block w-100 rounded" alt="Salle de Réunion" loading="lazy">
+                <img src="{{ url_for('static', filename='post28.jpg') }}" class="d-block w-100 rounded" alt="Salle de Réunion" loading="lazy">
                 <div class="gallery-caption">
                   <h3>Salle de Réunion</h3>
                   <p>Préparez vos présentations dans un cadre professionnel</p>
@@ -2381,7 +2663,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <div class="row justify-content-center">
             <div class="col-12 col-md-10 col-lg-8">
               <div class="gallery-card mx-auto">
-                <img src="{{ url_for('static', filename='post4.jpg') }}" class="d-block w-100 rounded" alt="Espace Détente" loading="lazy">
+                <img src="{{ url_for('static', filename='post7.jpg') }}" class="d-block w-100 rounded" alt="Espace Détente" loading="lazy">
                 <div class="gallery-caption">
                   <h3>Espace Détente</h3>
                   <p>Prendre une pause dans un espace confortable</p>
@@ -2854,38 +3136,34 @@ document.addEventListener('DOMContentLoaded', function() {
             <ul class="list-unstyled">
               <li class="mb-3 d-flex">
                 <i class="bi bi-geo-alt-fill text-primary me-2 mt-1" aria-hidden="true"></i>
-                <span>123 Boulevard de l'Innovation<br>75011 Paris, France</span>
+                <span>39 Av. Sanhaja<br>Tanger 90060، Maroc</span>
               </li>
               <li class="mb-3 d-flex">
-                <i class="bi bi-telephone-fill text-primary me-2 mt-1" aria-hidden="true"></i>
-                <span><a href="tel:+33123456789">+33 1 23 45 67 89</a></span>
+                <i class="bi bi-telephone-fill text-primary me-2 " aria-hidden="true"></i>
+                <span><a href="tel:+212666042749"> +212 6660-42749</a></span>
+
               </li>
               <li class="mb-3 d-flex">
-                <i class="bi bi-envelope-fill text-primary me-2 mt-1" aria-hidden="true"></i>
-                <span><a href="mailto:contact@cowork-plus.fr">contact@cowork-plus.fr</a></span>
+                <i class="bi bi-telephone text-primary me-2 " aria-hidden="true"></i>
+                <span><a href="tel:+212539940885">+212 5399-40885</a></span>
+
+              </li>
+              <li class="mb-3 d-flex">
+                <i class="bi bi-envelope-fill text-primary me-2 " aria-hidden="true"></i>
+                <span><a href="mailto:alphacoworking2@gmail.com">alphacoworking2@gmail.com</a></span>
               </li>
             </ul>
           </address>
           
           <h3 class="h5 fw-bold mt-4 mb-3">Horaires d'accueil</h3>
-          <ul class="list-unstyled">
-            <li class="mb-2 d-flex">
-              <i class="bi bi-clock text-primary me-2 mt-1" aria-hidden="true"></i>
-              <span>Lundi - Vendredi: 8h00 - 20h00</span>
-            </li>
-            <li class="mb-2 d-flex">
-              <i class="bi bi-clock text-primary me-2 mt-1" aria-hidden="true"></i>
-              <span>Samedi: 9h00 - 18h00</span>
-            </li>
-            <li class="mb-2 d-flex">
-              <i class="bi bi-clock text-primary me-2 mt-1" aria-hidden="true"></i>
-              <span>Dimanche: 10h00 - 16h00</span>
-            </li>
-          </ul>
+          <li class="mb-2 d-flex">
+            <i class="bi bi-clock text-primary me-2 " aria-hidden="true"></i>
+            <span>Lundi - Dimanche: 8h30 - 20h30</span>
+          </li>
           
           <div class="mt-4">
             <a href="#booking" class="btn btn-primary" aria-label="Réserver une visite de nos espaces">
-              <i class="bi bi-calendar-event me-2" aria-hidden="true"></i>Réserver une visite
+              <i class="bi bi-calendar-event me-2" aria-hidden="true"></i>Réserver maintenant
             </a>
           </div>
         </div>
@@ -2978,10 +3256,9 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="mb-3">
               <i class="bi bi-stars fs-2 text-warning"></i>
             </div>
-            <p class="card-text">"Un espace incroyable pour travailler en paix. Le Wi-Fi est ultra rapide et l'équipe est toujours disponible."</p>
+            <p class="card-text">I want to book my place for every single day for the rest of the month hahaha 😂😂 wlahela i really really loved it! 😍 i had trouble finding a place li ykoun comfortable w calm w at the same time fih good wifi.. wlahela tbarkelah elikom</p>
             <div class="mt-4">
-              <h5 class="mb-0">Sophie M.</h5>
-              <small class="text-muted">Freelance Designer</small>
+              <h5 class="mb-0">Mme. Fadwa</h5>
             </div>
           </div>
         </div>
@@ -2992,10 +3269,9 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="mb-3">
               <i class="bi bi-stars fs-2 text-warning"></i>
             </div>
-            <p class="card-text">"Un espace incroyable pour travailler en paix. Le Wi-Fi est ultra rapide et l'équipe est toujours disponible."</p>
+            <p class="card-text">Je trouve que le lieu est idéal pour se concentrer pour être productif dans notre activité. Les locaux sont neufs, propres et la déco est minimaliste avec des couleurs très bien choisies. L'accueil est très souriant et chaleureux 😊👍.</p>
             <div class="mt-4">
-              <h5 class="mb-0">Sophie M.</h5>
-              <small class="text-muted">Freelance Designer</small>
+              <h5 class="mb-0">Mlle. Mouna</h5>
             </div>
           </div>
         </div>
@@ -3006,10 +3282,9 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="mb-3">
               <i class="bi bi-stars fs-2 text-warning"></i>
             </div>
-            <p class="card-text">"Un espace incroyable pour travailler en paix. Le Wi-Fi est ultra rapide et l'équipe est toujours disponible."</p>
+            <p class="card-text"> L’open space est calme et propice au travail, avec une ambiance respectée par tous. Deux espaces sont disponibles pour se détendre, manger ou prier. Chaque poste, spacieux comme un grand bureau d’angle, dispose de 3 prises et 2 ports USB. Climatisé et sécurisé avec des casiers, c’est un environnement très pratique.</p>
             <div class="mt-4">
-              <h5 class="mb-0">Sophie M.</h5>
-              <small class="text-muted">Freelance Designer</small>
+              <h5 class="mb-0">M. Mohamed</h5>
             </div>
           </div>
         </div>
@@ -3050,8 +3325,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </h3>
             <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#faqAccordion">
               <div class="accordion-body">
-                La réservation se fait en ligne via notre plateforme. Sélectionnez simplement l'espace, la date et l'horaire qui vous conviennent, puis finalisez votre paiement. Vous recevrez une confirmation par email.
-              </div>
+                La réservation peut se faire en ligne, en présentiel ou par téléphone. Sélectionnez simplement l’espace, la date et l’horaire qui vous conviennent, puis finalisez votre paiement en choisissant votre méthode de paiement. Vous recevrez une confirmation par email.              </div>
             </div>
           </div>
           
@@ -3064,7 +3338,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </h3>
             <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#faqAccordion">
               <div class="accordion-body">
-                Nous acceptons les cartes bancaires (Visa, MasterCard, American Express), les virements bancaires, ainsi que PayPal. Les paiements en espèces ne sont pas acceptés.
+                Nous acceptons les virements bancaires et les paiements en espèces.
               </div>
             </div>
           </div>
@@ -3078,8 +3352,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </h3>
             <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#faqAccordion">
               <div class="accordion-body">
-                Oui, vous pouvez annuler ou modifier votre réservation selon nos conditions d'annulation. Les détails vous seront indiqués lors de la réservation.
-              </div>
+                Oui, vous pouvez annuler ou modifier votre réservation. Il suffit de nous en informer soit en vous rendant à la réception, soit par téléphone, soit en remplissant le formulaire de contact ci-dessus.              </div>
             </div>
           </div>
 
@@ -3101,12 +3374,11 @@ document.addEventListener('DOMContentLoaded', function() {
           <div class="accordion-item mb-3 border-0 shadow-sm" data-aos="zoom-in" data-aos-delay="500">
             <h3 class="accordion-header" id="headingFive">
               <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-                Y a-t-il un service de restauration ?
-              </button>
+                Est-ce qu’on peut amener de la nourriture avec soi ?              </button>
             </h3>
             <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#faqAccordion">
               <div class="accordion-body">
-                Nous proposons un service de café et boissons sur place. Pour les repas, vous trouverez plusieurs options de restauration à proximité.
+                Oui, c’est autorisé dans tous les espaces.
               </div>
             </div>
           </div>
@@ -3115,12 +3387,12 @@ document.addEventListener('DOMContentLoaded', function() {
           <div class="accordion-item mb-3 border-0 shadow-sm" data-aos="zoom-in" data-aos-delay="600">
             <h3 class="accordion-header" id="headingSix">
               <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
-                Puis-je avoir une adresse de domiciliation ?
+                Est-ce que l’espace est sécurisé ?
               </button>
             </h3>
             <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix" data-bs-parent="#faqAccordion">
               <div class="accordion-body">
-                Oui, nous proposons un service de domiciliation commerciale qui vous permet d'utiliser notre adresse pour votre entreprise.
+                Oui, nos locaux sont surveillés par des caméras de sécurité.
               </div>
             </div>
           </div>
@@ -3129,12 +3401,12 @@ document.addEventListener('DOMContentLoaded', function() {
           <div class="accordion-item mb-3 border-0 shadow-sm" data-aos="zoom-in" data-aos-delay="700">
             <h3 class="accordion-header" id="headingSeven">
               <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
-                Les espaces sont-ils accessibles en dehors des heures d'ouverture ?
+                Que faire si j’ai une réclamation ou un problème ?
               </button>
             </h3>
             <div id="collapseSeven" class="accordion-collapse collapse" aria-labelledby="headingSeven" data-bs-parent="#faqAccordion">
               <div class="accordion-body">
-                Oui, nos membres peuvent accéder à certains espaces 24h/24 et 7j/7 grâce à un système sécurisé.
+                Si vous avez une réclamation ou rencontrez un problème, cliquez simplement sur le bouton ci-dessous pour nous en informer. Notre équipe vous répondra dans les plus brefs délais.
               </div>
             </div>
           </div>
@@ -3143,12 +3415,12 @@ document.addEventListener('DOMContentLoaded', function() {
           <div class="accordion-item mb-3 border-0 shadow-sm"  data-aos="zoom-in" data-aos-delay="800">
             <h3 class="accordion-header" id="headingEight">
               <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
-                Comment fonctionne le système de facturation ?
+                Quelles sont les options de stationnement à proximité ?
               </button>
             </h3>
             <div id="collapseEight" class="accordion-collapse collapse" aria-labelledby="headingEight" data-bs-parent="#faqAccordion">
               <div class="accordion-body">
-                La facturation est mensuelle et vous recevez une facture détaillée par email. Vous pouvez également consulter vos factures dans votre espace client.
+                Bien que notre espace ALPHACoworking à Tanger ne dispose pas de parking dédié, il y a de nombreux espaces publics disponibles à proximité pour le stationnement.
               </div>
             </div>
           </div>

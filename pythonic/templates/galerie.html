@@ -315,27 +315,76 @@
             transform: translateY(0);
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero-title {
-                font-size: 2.5rem;
-            }
-            
-            .gallery-grid {
-                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-                gap: 20px;
-            }
-            
-            .filter-nav {
-                flex-wrap: wrap;
-                gap: 10px;
-            }
-            
-            .filter-btn {
-                padding: 12px 24px;
-                font-size: 0.9rem;
-            }
+
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2rem; /* Réduit la taille de la police pour les mobiles */
+    }
+    .gallery-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Ajuste la largeur des colonnes pour les petits écrans */
+        gap: 15px; /* Réduit l'espace entre les éléments */
+    }
+    .filter-nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+    .filter-btn {
+        padding: 10px 20px; /* Réduit le padding pour les boutons sur mobile */
+        font-size: 0.8rem;
+    }
+    .hero-content {
+        padding: 80px 0 40px; /* Ajuste le padding pour les écrans mobiles */
+    }
+}
+
+
+    .modal-close-btn {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        z-index: 1000;
+        background-color: rgba(0, 0, 0, 0.5);
+        border-radius: 50%;
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .modal-close-btn:hover {
+        background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    .modal-close-btn span {
+        font-size: 20px;
+        line-height: 20px; /* Assure que la ligne est bien centrée */
+        color: white;
+        font-weight: bold;
+        display: inline-block; /* Aide au bon alignement */
+    }
+
+    @media (max-width: 768px) {
+        .modal-close-btn {
+            width: 32px;
+            height: 32px;
+            top: 10px;
+            right: 10px;
         }
+
+        .modal-close-btn span {
+            font-size: 18px;
+            line-height: 18px; /* Ajustement pour mobile */
+        }
+    }
+
     </style>
 
     <!-- Hero Section -->
@@ -355,18 +404,19 @@
                 <button class="filter-btn active" data-filter="*">
                     <i class="fas fa-th me-2"></i>Tous les Espaces
                 </button>
-                <button class="filter-btn" data-filter="bureaux">
-                    <i class="fas fa-briefcase me-2"></i>Bureaux Privatifs
-                </button>
                 <button class="filter-btn" data-filter="open-space">
                     <i class="fas fa-users me-2"></i>Open Space
                 </button>
                 <button class="filter-btn" data-filter="salles">
                     <i class="fas fa-presentation-screen me-2"></i>Salles de Réunion
                 </button>
-                <button class="filter-btn" data-filter="communs">
-                    <i class="fas fa-coffee me-2"></i>Espaces Communs
+                <button class="filter-btn" data-filter="bureaux">
+                    <i class="fas fa-briefcase me-2"></i>Bureaux Privé
                 </button>
+                <button class="filter-btn" data-filter="communs">
+                    <i class="fas fa-presentation-screen me-2"></i>Espaces Communs
+                </button>
+
             </div>
         </div>
     </section>
@@ -384,12 +434,16 @@
     <div class="modal fade" id="galleryModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-centered">
             <div class="modal-content">
+                <button type="button" class="modal-close-btn" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
                 <div class="modal-body">
                     <img src="" id="modalImage" class="img-fluid">
                 </div>
             </div>
         </div>
     </div>
+
 
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
@@ -398,22 +452,37 @@
     <script>
         // Gallery data with all 15 images
         const galleryData = [
-            { src: '/static/post1.jpg', title: 'Bureau Exécutif Premium', desc: 'Espace privatif haut de gamme avec vue panoramique', category: 'bureaux', badge: 'Premium' },
-            { src: '/static/post2.jpg', title: 'Open Space Innovation', desc: 'Environnement collaboratif moderne et inspirant', category: 'open-space', badge: 'Innovant' },
-            { src: '/static/post3.jpg', title: 'Salle de Réunion Prestige', desc: 'Équipement technologique de pointe pour vos réunions', category: 'salles', badge: 'Tech' },
-            { src: '/static/post4.jpg', title: 'Espace Détente Premium', desc: 'Zone de relaxation avec design contemporain', category: 'communs', badge: 'Confort' },
-            { src: '/static/post5.jpg', title: 'Bureau Directorial', desc: 'Espace de direction avec finitions luxueuses', category: 'bureaux', badge: 'Luxe' },
-            { src: '/static/post6.jpg', title: 'Hub Collaboratif', desc: 'Centre névralgique pour le travail en équipe', category: 'open-space', badge: 'Dynamique' },
-            { src: '/static/post7.jpg', title: 'Salle de Conférence', desc: 'Auditorium professionnel pour grandes présentations', category: 'salles', badge: 'Grand Format' },
-            { src: '/static/post8.jpg', title: 'Lounge Exécutif', desc: 'Espace de networking haut de gamme', category: 'communs', badge: 'Élégance' },
-            { src: '/static/post9.jpg', title: 'Studio Créatif', desc: 'Environnement inspirant pour les équipes créatives', category: 'bureaux', badge: 'Créatif' },
-            { src: '/static/post10.jpg', title: 'Espace Coworking Plus', desc: 'Zone de travail flexible et moderne', category: 'open-space', badge: 'Flexibilité' },
-            { src: '/static/post11.jpg', title: 'Boardroom Excellence', desc: 'Salle de conseil d\'administration prestigieuse', category: 'salles', badge: 'Prestige' },
-            { src: '/static/post12.jpg', title: 'Café Business', desc: 'Point de rencontre avec service premium', category: 'communs', badge: 'Premium' },
-            { src: '/static/post1.jpg', title: 'Suite Executive', desc: 'Bureau de direction avec salon intégré', category: 'bureaux', badge: 'Suite' },
-            { src: '/static/post2.jpg', title: 'Atelier Innovation', desc: 'Espace modulable pour sessions créatives', category: 'open-space', badge: 'Modulable' },
-            { src: '/static/post3.jpg', title: 'Salon VIP', desc: 'Espace d\'accueil exclusif pour clients privilégiés', category: 'communs', badge: 'VIP' }
+            { src: '/static/post1.jpg', title: 'Open Space', desc: 'Espace partagé favorisant l’échange et l’efficacité au quotidien', category: 'open-space', badge: 'Collaboration' },
+            { src: '/static/post2.jpg', title: 'Open Space', desc: 'Postes de travail flexibles dans une ambiance professionnelle', category: 'open-space', badge: 'Productivité' },
+            { src: '/static/post3.jpg', title: 'Open Space', desc: 'Zone ouverte pour équipes dynamiques et freelances', category: 'open-space', badge: 'Synergie' },
+            { src: '/static/post5.jpg', title: 'Open Space', desc: 'Design haut de gamme pour une expérience de travail élégante', category: 'open-space', badge: 'Premium' },
+            { src: '/static/post6.jpg', title: 'Open Space', desc: 'Ambiance stimulante pour booster la créativité', category: 'open-space', badge: 'Inspiration' },
+            { src: '/static/post7.jpg', title: 'Salle d\'attente', desc: 'Espace chaleureux pour accueillir vos invités en toute sérénité', category: 'communs', badge: 'Confort' },
+            { src: '/static/post8.jpg', title: 'Salle d\'attente', desc: 'Ambiance chic et apaisante avant vos réunions', category: 'communs', badge: 'Design' },
+            { src: '/static/post9.jpg', title: 'Open Space', desc: 'Espace aéré pensé pour la concentration et la performance', category: 'open-space', badge: 'Focus' },
+            { src: '/static/post10.jpg', title: 'Open Space', desc: 'Modularité et liberté de travail en toute simplicité', category: 'open-space', badge: 'Flexible' },
+            { src: '/static/post11.jpg', title: 'Salle d\'attente des invités', desc: 'Un accueil élégant pour valoriser votre image', category: 'communs', badge: 'Réception' },
+            { src: '/static/post12.jpg', title: 'Salle d\'attente des invités', desc: 'Espace premium pour vos invités de marque', category: 'communs', badge: 'Business Class' },
+            { src: '/static/post13.jpg', title: 'Salle d\'attente des invités', desc: 'Ambiance raffinée pour vos moments d’attente', category: 'communs', badge: 'Élégance' },
+            { src: '/static/post14.jpg', title: 'Salle de Réunion', desc: 'Réunions réussies avec un équipement haut de gamme', category: 'salles', badge: 'Pro' },
+            { src: '/static/post15.jpg', title: 'Salle d\'attente des invités', desc: 'Salon VIP pour un accueil personnalisé', category: 'communs', badge: 'VIP' },
+            { src: '/static/post16.jpg', title: 'Salle d\'attente des invités', desc: 'Confort premium pour vos visiteurs', category: 'communs', badge: 'Exclusif' },
+            { src: '/static/post17.jpg', title: 'Salle de Réunion', desc: 'Espace polyvalent pour vos réunions d’équipe ou rendez-vous clients', category: 'salles', badge: 'Adaptatif' },
+            { src: '/static/post18.jpg', title: 'Bureau Privé', desc: 'Bureau fermé haut standing pour une concentration optimale', category: 'bureaux', badge: 'Concentration' },
+            { src: '/static/post19.jpg', title: 'Salle de Réunion', desc: 'Salle lumineuse et connectée pour vos échanges stratégiques', category: 'salles', badge: 'Connecté' },
+            { src: '/static/post20.jpg', title: 'Bureau Privé', desc: 'Espace sécurisé et calme pour professionnels exigeants', category: 'bureaux', badge: 'Privé' },
+            { src: '/static/post21.jpg', title: 'Salle de Réunion', desc: 'Parfait pour les workshops et présentations interactives', category: 'salles', badge: 'Workshop' },
+            { src: '/static/post22.jpg', title: 'Salle de Réunion', desc: 'Technologie avancée et design pour vos réunions', category: 'salles', badge: 'Tech+' },
+            { src: '/static/post23.jpg', title: 'Open Space', desc: 'Travaillez dans une atmosphère stimulante et bien pensée', category: 'open-space', badge: 'Dynamique' },
+            { src: '/static/post24.jpg', title: 'Salle de Réunion', desc: 'Espace parfaitement équipé pour vos rendez-vous d’affaires', category: 'salles', badge: 'Business' },
+            { src: '/static/post25.jpg', title: 'Salle de Réunion', desc: 'Un cadre soigné pour vos échanges professionnels', category: 'salles', badge: 'Corporate' },
+            { src: '/static/post26.jpg', title: 'Bureau Privé', desc: 'Votre cocon de productivité en toute tranquillité', category: 'bureaux', badge: 'Focus' },
+            { src: '/static/post27.jpg', title: 'Salle de Réunion', desc: 'Conçue pour l’impact, pensée pour l’efficacité', category: 'salles', badge: 'Stratégique' },
+            { src: '/static/post28.jpg', title: 'Salle de Réunion', desc: 'Aménagement sur mesure pour vos événements pro', category: 'salles', badge: 'Sur-mesure' }
         ];
+
+
+
 
         // Initialize gallery
         function initializeGallery() {

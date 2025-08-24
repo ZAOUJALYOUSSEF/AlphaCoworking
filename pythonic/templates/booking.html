@@ -1,12 +1,10 @@
 {% extends "dashboard.html" %}
-
 {% block bookings %}
-
 <div class="container-fluid mt-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2><i class="bi bi-calendar-check me-2"></i> Gestion des Réservations</h2>
-        <div class="d-flex align-items-center gap-3">
-            <!-- Formulaire de recherche existant -->
+        <h2 class="m-0"><i class="bi bi-calendar-check me-2"></i> Gestion des Réservations</h2>
+        <div class="d-flex align-items-center gap-3 flex-wrap">
+            <!-- Formulaire de recherche -->
             <form class="d-flex" method="GET" action="{{ url_for('reservation.admin_bookings') }}">
                 <div class="input-group">
                     <input class="form-control" type="search" name="search" placeholder="Rechercher par nom" value="{{ search_query if search_query else '' }}">
@@ -14,7 +12,7 @@
                         <i class="bi bi-search"></i>
                     </button>
                 </div>
-                    <!-- Champs cachés pour conserver les autres filtres -->
+                <!-- Champs cachés -->
                 {% if date_filter %}
                 <input type="hidden" name="date" value="{{ date_filter }}">
                 {% endif %}
@@ -23,67 +21,61 @@
                 {% endif %}
                 <input type="hidden" name="page" value="1">
             </form>
-
-
-
             <!-- Bouton Nouvelle Réservation -->
             <a href="{{ url_for('reservation.create_booking') }}" class="btn btn-primary">
                 <i class="bi bi-plus-lg me-1"></i> Nouvelle Réservation
             </a>
-
-            <!-- Filtre de statut existant -->
+            <!-- Filtre de statut -->
             <div class="dropdown">
                 <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="statusFilter" data-bs-toggle="dropdown">
                     <i class="bi bi-funnel me-1"></i>
                     {% if status_filter %}{{ status_filter|capitalize }}{% else %}Tous les statuts{% endif %}
                 </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{{ url_for('reservation.admin_bookings',
-                                status=None,
-                                search=search_query if search_query else '',
-                                date=date_filter if date_filter else '',
-                                page=1) }}">Toutes</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="{{ url_for('reservation.admin_bookings',
-                                status='pending',
-                                search=search_query if search_query else '',
-                                date=date_filter if date_filter else '',
-                                page=1) }}">En attente</a></li>
-                        <li><a class="dropdown-item" href="{{ url_for('reservation.admin_bookings',
-                                status='confirmed',
-                                search=search_query if search_query else '',
-                                date=date_filter if date_filter else '',
-                                page=1) }}">Confirmées</a></li>
-                        <li><a class="dropdown-item" href="{{ url_for('reservation.admin_bookings',
-                                status='cancelled',
-                                search=search_query if search_query else '',
-                                date=date_filter if date_filter else '',
-                                page=1) }}">Annulées</a></li>
-                        <li><a class="dropdown-item" href="{{ url_for('reservation.admin_bookings',
-                                status='completed',
-                                search=search_query if search_query else '',
-                                date=date_filter if date_filter else '',
-                                page=1) }}">Terminées</a></li>
-                    </ul>
-
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="{{ url_for('reservation.admin_bookings',
+                            status=None,
+                            search=search_query if search_query else '',
+                            date=date_filter if date_filter else '',
+                            page=1) }}">Toutes</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="{{ url_for('reservation.admin_bookings',
+                            status='pending',
+                            search=search_query if search_query else '',
+                            date=date_filter if date_filter else '',
+                            page=1) }}">En attente</a></li>
+                    <li><a class="dropdown-item" href="{{ url_for('reservation.admin_bookings',
+                            status='confirmed',
+                            search=search_query if search_query else '',
+                            date=date_filter if date_filter else '',
+                            page=1) }}">Confirmées</a></li>
+                    <li><a class="dropdown-item" href="{{ url_for('reservation.admin_bookings',
+                            status='cancelled',
+                            search=search_query if search_query else '',
+                            date=date_filter if date_filter else '',
+                            page=1) }}">Annulées</a></li>
+                    <li><a class="dropdown-item" href="{{ url_for('reservation.admin_bookings',
+                            status='completed',
+                            search=search_query if search_query else '',
+                            date=date_filter if date_filter else '',
+                            page=1) }}">Terminées</a></li>
+                </ul>
             </div>
         </div>
     </div>
 
-        {% if search_query %}
-        <div class="alert alert-info mt-3">
-            Résultats de la recherche pour "<strong>{{ search_query }}</strong>"
-            {% if date_filter %}- Filtré par date: <strong>{{ date_filter }}</strong>{% endif %}
-        </div>
-        {% elif date_filter %}
-        <div class="alert alert-info mt-3">
-            Filtré par date: <strong>{{ date_filter }}</strong>
-        </div>
-        {% endif %}
+    <!-- Alertes de filtre -->
+    {% if search_query %}
+    <div class="alert alert-info mt-3">
+        Résultats de la recherche pour "<strong>{{ search_query }}</strong>"
+        {% if date_filter %}- Filtré par date: <strong>{{ date_filter }}</strong>{% endif %}
+    </div>
+    {% elif date_filter %}
+    <div class="alert alert-info mt-3">
+        Filtré par date: <strong>{{ date_filter }}</strong>
+    </div>
+    {% endif %}
 
-
-
-
+    <!-- Tableau des réservations -->
     <div class="card shadow-sm">
         <div class="card-body">
             <div class="table-responsive">
@@ -149,13 +141,10 @@
                                     {% endif %}
                                 {% endif %}
                             </td>
-
-
                             <td>{{ booking.total_price }} DH</td>
                             <td>{{ booking.created_by }}</td>
-
                             <td>
-                                <span class="badge rounded-pill 
+                                <span class="badge rounded-pill
                                     {% if booking.status == 'pending' %}bg-warning text-dark
                                     {% elif booking.status == 'confirmed' %}bg-success
                                     {% elif booking.status == 'cancelled' %}bg-danger
@@ -164,7 +153,7 @@
                                 </span>
                             </td>
                             <td>
-                                <a href="{{ url_for('reservation.booking_detail', booking_id=booking.id) }}" 
+                                <a href="{{ url_for('reservation.booking_detail', booking_id=booking.id) }}"
                                    class="btn btn-sm btn-outline-primary" title="Voir détails">
                                     <i class="bi bi-eye"></i>
                                 </a>
@@ -181,8 +170,6 @@
                 </table>
             </div>
 
-            <!-- Pagination -->
-            <!-- Pagination -->
             <!-- Pagination -->
             <nav aria-label="Page navigation" class="mt-4">
                 <ul class="pagination justify-content-center">
@@ -222,346 +209,289 @@
                 </ul>
             </nav>
 
-            <!-- Filtre de date en bas à droite -->
-            <!-- Filtre de date en bas à droite avec un meilleur design -->
+            <!-- Filtre de date avec boutons "Aujourd'hui" et "Réinitialiser" -->
             <div class="row mt-4">
-                <div class="col-md-12 d-flex justify-content-end">
-                    <div class="card shadow-sm" style="width: 100%; max-width: 450px; border-radius: 12px; border: none;">
+                <div class="col-12">
+                    <div class="card shadow-sm">
                         <div class="card-body p-3">
-                            <div class="date-filter-container">
-                                <form method="GET" action="{{ url_for('reservation.admin_bookings') }}" class="d-flex flex-column flex-md-row gap-3 align-items-md-center">
-                                    <!-- Sélecteur de date -->
-                                    <div class="date-picker-container flex-grow-1 position-relative">
-                                        <div class="input-group">
-                                            <span class="input-group-text bg-white border-end-0">
-                                                <i class="bi bi-calendar text-primary"></i>
-                                            </span>
-                                            <input type="date"
-                                                class="form-control border-start-0 date-input"
-                                                name="date"
-                                                id="dateFilter"
-                                                value="{{ date_filter if date_filter else '' }}">
-                                        </div>
-                                    </div>
-
-                                    <!-- Boutons d'action -->
-                                    <div class="d-flex gap-2">
-                                        <!-- Bouton Aujourd'hui -->
-                                        <a href="{{ url_for('reservation.admin_bookings',
-                                                status=status_filter if status_filter else '',
-                                                search=search_query if search_query else '',
-                                                date=today_date,
-                                                page=1) }}"
-                                        class="btn btn-outline-primary today-btn d-flex align-items-center justify-content-center"
-                                        style="height: 40px; min-width: 100px;">
-                                            <i class="bi bi-calendar-today me-1"></i>
-                                            <span>Aujourd'hui</span>
-                                        </a>
-
-                                        <!-- Bouton Filtrer -->
-                                        <button type="submit"
-                                                class="btn btn-primary filter-btn d-flex align-items-center justify-content-center"
-                                                style="height: 40px; min-width: 100px;">
-                                            <i class="bi bi-funnel me-1"></i>
-                                            <span>Filtrer</span>
-                                        </button>
-
-                                        <!-- Bouton Réinitialiser -->
-
-                                    </div>
-
-                                    <!-- Champs cachés -->
-                                    {% if status_filter %}
-                                    <input type="hidden" name="status" value="{{ status_filter }}">
-                                    {% endif %}
-                                    {% if search_query %}
-                                    <input type="hidden" name="search" value="{{ search_query }}">
-                                    {% endif %}
-                                    <input type="hidden" name="page" value="1">
-                                </form>
-                            </div>
+                            <form method="GET" action="{{ url_for('reservation.admin_bookings') }}" class="d-flex flex-column flex-md-row gap-3 align-items-md-center">
+                                <div class="input-group flex-grow-1">
+                                    <input type="date" class="form-control" name="date" id="dateFilter" value="{{ date_filter if date_filter else '' }}">
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <button type="submit" class="btn btn-primary filter-btn">
+                                        <i class="bi bi-funnel me-1"></i> Appliquer
+                                    </button>
+                                    <a href="{{ url_for('reservation.admin_bookings',
+                                            date=none,
+                                            status=status_filter if status_filter else '',
+                                            search=search_query if search_query else '',
+                                            page=1) }}" class="btn btn-outline-danger reset-btn">
+                                        <i class="bi bi-arrow-clockwise me-1"></i> Réinitialiser
+                                    </a>
+                                    <button type="button" class="btn btn-outline-secondary today-btn" id="todayBtn">
+                                        <i class="bi bi-calendar-day me-1"></i> Aujourd'hui
+                                    </button>
+                                </div>
+                                <!-- Champs cachés -->
+                                {% if status_filter %}
+                                <input type="hidden" name="status" value="{{ status_filter }}">
+                                {% endif %}
+                                {% if search_query %}
+                                <input type="hidden" name="search" value="{{ search_query }}">
+                                {% endif %}
+                                <input type="hidden" name="page" value="1">
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
-
-
-
-
         </div>
     </div>
 </div>
+
+<!-- Style consolidé -->
 <style>
-    .badge.bg-light.text-dark {
-        font-size: 0.8em;
-        font-weight: normal;
-        padding: 0.2em 0.4em;
-    }
-    <style>
-    /* Style pour le filtre de date */
-    .date-filter-card {
-        transition: all 0.3s ease;
-        border: none;
-        border-radius: 10px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-    .date-filter-card:hover {
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-    }
-    #dateFilter {
-        border-top-right-radius: 0 !important;
-        border-bottom-right-radius: 0 !important;
-    }
-    .input-group-text {
-        border-top-left-radius: 10px !important;
-        border-bottom-left-radius: 10px !important;
-        background-color: #f8f9fa !important;
+:root {
+    --primary: #2c3e50;
+    --secondary: #f9c50d;
+    --success: #2ecc71;
+    --warning: #f39c12;
+    --danger: #e74c3c;
+    --light: #ecf0f1;
+    --dark: #2c3e50;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --border-radius: 8px;
+    --transition: all 0.3s ease;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+    color: var(--dark);
+}
+
+h2 {
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.card {
+    border-radius: var(--border-radius);
+    border: none;
+    box-shadow: var(--shadow);
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+.table-responsive {
+    margin-bottom: 1rem;
+    overflow-x: auto;
+}
+
+.table th {
+    background-color: var(--light);
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.badge {
+    font-weight: 500;
+    font-size: 0.8rem;
+    padding: 0.35em 0.65em;
+}
+
+.badge.bg-warning {
+    background-color: var(--warning) !important;
+}
+
+.badge.bg-success {
+    background-color: var(--success) !important;
+}
+
+.badge.bg-danger {
+    background-color: var(--danger) !important;
+}
+
+.badge.bg-secondary {
+    background-color: #614c92ff !important;
+}
+
+.btn-primary {
+    background-color: var(--secondary);
+    border-color: var(--secondary);
+}
+
+.btn-primary:hover {
+    background-color: #daa60a;
+    border-color: #daa60a;
+}
+
+.btn-outline-secondary {
+    border-color: #bdc3c7;
+    color: var(--dark);
+}
+
+.btn-outline-secondary:hover {
+    background-color: var(--dark);
+    color: white;
+}
+
+.btn-outline-danger {
+    border-color: var(--danger);
+    color: var(--danger);
+}
+
+.btn-outline-danger:hover {
+    background-color: var(--danger);
+    color: white;
+}
+
+.input-group {
+    max-width: 300px;
+}
+
+.input-group input {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.input-group button {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.dropdown-menu {
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    border: none;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: var(--secondary);
+    border-color: var(--secondary);
+}
+
+.pagination .page-link {
+    color: var(--primary);
+}
+
+.pagination .page-link:hover {
+    background-color: var(--light);
+}
+
+.filter-btn, .today-btn, .reset-btn {
+    border-radius: 6px;
+    transition: var(--transition);
+}
+
+.filter-btn:hover {
+    background-color: #daa60a;
+    transform: translateY(-1px);
+}
+
+.today-btn:hover {
+    background-color: var(--secondary);
+    color: var(--dark);
+    border-color: var(--secondary);
+}
+
+.reset-btn:hover {
+    background-color: var(--danger);
+    color: white;
+    transform: translateY(-1px);
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .table-responsive {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
     }
 
-    /* Pour mobile */
-    @media (max-width: 768px) {
-        .card[style*="width: 350px"] {
-            width: 100% !important;
-        }
-        .d-flex.form {
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-        .d-flex.form button {
-            width: 100% !important;
-        }
-    }
-
-
- /* Style général pour le filtre */
-    .filter-card {
-        width: 100%;
-        max-width: 350px;
-        transition: all 0.3s ease;
-    }
-
-    /* Style pour les inputs et boutons */
-    .input-group-text {
-        background-color: #f8f9fa !important;
-        border-color: #dee2e6 !important;
-    }
-
-    /* Style pour les boutons */
-    .filter-btn {
-        height: 40px;
-        padding: 0 1rem;
-        display: flex;
-        align-items: center;
-    }
-
-    .filter-btn i {
-        font-size: 1rem;
-    }
-
-    /* Bouton "Aujourd'hui" spécifique */
-    .today-btn {
+    table.table th,
+    table.table td {
+        font-size: 0.85rem;
         white-space: nowrap;
-        height: 40px;
-        padding: 0 0.75rem;
-        border-radius: 0.25rem;
-        transition: all 0.2s ease;
     }
 
-    .today-btn:hover {
-        background-color: rgba(13, 110, 253, 0.1) !important;
-        color: #0d6efd !important;
-        transform: translateY(-1px);
+    .d-flex.justify-content-between.align-items-center.mb-4 {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
     }
 
-    /* Bouton de réinitialisation */
-    .reset-btn {
-        width: 40px !important;
-        height: 40px !important;
-        padding: 0 !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-    }
-
-    .reset-btn:hover {
-        transform: scale(1.1) !important;
-    }
-
-    /* Pour mobile */
-    @media (max-width: 768px) {
-        .card[style*="width: 350px"] {
-            width: 100% !important;
-            max-width: none !important;
-        }
-
-        .d-flex.gap-2 {
-            flex-direction: column;
-        }
-
-        .form-control {
-            width: 100% !important;
-        }
-
-        .btn {
-            width: 100%;
-            margin-bottom: 0.5rem;
-            justify-content: center !important;
-        }
-
-        .reset-btn {
-            width: 100% !important;
-        }
-    }
-
- /* Style pour le conteneur de filtre */
-    .date-filter-container {
+    form.d-flex {
+        flex-direction: column;
+        gap: 0.5rem;
         width: 100%;
     }
 
-    /* Style pour le sélecteur de date */
-    .date-picker-container {
-        position: relative;
+    form.d-flex .input-group {
+        width: 100%;
     }
 
-    .date-picker-container .input-group {
-        border-radius: 8px;
-        overflow: hidden;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-        border: 1px solid #dee2e6;
+    .d-flex.align-items-center.gap-3 {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
     }
 
-    .date-picker-container .input-group-text {
-        background-color: white !important;
-        border: none !important;
-        padding: 0 12px;
+    .btn, .dropdown, .btn-outline-secondary, .btn-primary {
+        width: 100%;
     }
 
-    .date-input {
-        border: none !important;
-        padding-left: 0;
-        background-color: white;
+    .dropdown-menu {
+        width: 100%;
     }
 
-    .date-input:focus {
-        box-shadow: none;
-        outline: none;
+    .pagination {
+        flex-wrap: wrap;
+        gap: 0.25rem;
     }
 
-    /* Style pour les boutons */
-    .today-btn {
-        background-color: #fff;
-        border-color: #0d6efd;
-        color: #0d6efd;
-        transition: all 0.2s ease;
-        border-radius: 6px;
+    .page-link {
+        padding: 0.375rem 0.55rem;
+        font-size: 0.85rem;
     }
 
-    .today-btn:hover {
-        background-color: rgba(13, 110, 253, 0.1);
-        color: #0b5ed7;
-        transform: translateY(-1px);
+    .badge {
+        font-size: 0.75rem;
     }
 
-    .filter-btn {
-        background-color: #0d6efd;
-        border-color: #0d6efd;
-        transition: all 0.2s ease;
-        border-radius: 6px;
+    small.text-muted {
+        font-size: 0.75rem;
     }
 
-    .filter-btn:hover {
-        background-color: #0b5ed7;
-        transform: translateY(-1px);
+    h2 {
+        font-size: 1.25rem;
     }
 
-    .reset-btn {
-        border-color: #dc3545;
-        color: #dc3545;
-        transition: all 0.2s ease;
-        border-radius: 6px;
+    .d-flex.gap-2 {
+        flex-direction: column;
+        width: 100%;
     }
 
-    .reset-btn:hover {
-        background-color: #dc3545;
-        color: white;
+    .filter-btn, .today-btn, .reset-btn {
+        width: 100%;
     }
-
-    /* Effet de focus pour le groupe d'input */
-    .input-group:focus-within {
-        border-color: #86b7fe !important;
-        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
-    }
-
-    /* Pour mobile */
-    @media (max-width: 768px) {
-        .card[style*="width: 100%"] {
-            width: 100% !important;
-            max-width: none !important;
-        }
-
-        .d-flex.flex-column.flex-md-row {
-            flex-direction: column !important;
-        }
-
-        .date-picker-container {
-            width: 100%;
-            margin-bottom: 1rem;
-        }
-
-        .d-flex.gap-2 {
-            width: 100%;
-            flex-wrap: wrap;
-        }
-
-        .today-btn, .filter-btn {
-            width: 100%;
-            margin-bottom: 0.5rem;
-        }
-
-        .reset-btn {
-            width: 100%;
-            height: 40px;
-            justify-content: center;
-        }
-    }
-    
-    
+}
 </style>
 
-
-
+<!-- Script pour le bouton "Aujourd'hui" -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const dateFilterForm = document.querySelector('#dateFilterForm');
-
-    // Empêcher la soumission automatique quand on change la date
+    const todayBtn = document.getElementById('todayBtn');
     const dateInput = document.getElementById('dateFilter');
-    if (dateInput) {
-        dateInput.addEventListener('change', function(e) {
-            // Ne pas empêcher la soumission, mais on pourrait ajouter une validation ici
-        });
 
-        // Si vous voulez une soumission automatique quand une date est sélectionnée :
-        // dateFilterForm.addEventListener('change', function() {
-        //     this.submit();
-        // });
-    }
-
-    // Ajout d'un effet de hover sur le bouton de réinitialisation
-    const resetButtons = document.querySelectorAll('.btn-outline-danger');
-    resetButtons.forEach(button => {
-        button.addEventListener('mouseenter', function() {
-            this.style.transform = 'scale(1.05)';
-        });
-        button.addEventListener('mouseleave', function() {
-            this.style.transform = 'scale(1)';
-        });
+    todayBtn.addEventListener('click', function() {
+        const today = new Date().toISOString().split('T')[0];
+        dateInput.value = today;
+        // Soumettre automatiquement le formulaire
+        todayBtn.closest('form').submit();
     });
 });
 </script>
-
-</script>
-
-
-
 {% endblock %}
